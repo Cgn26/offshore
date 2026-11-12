@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { Mail, MapPin, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import Logo from './Logo';
 import NewsletterSignup from './NewsletterSignup';
 import { COMPANY_INFO } from '../mockData';
@@ -21,14 +21,6 @@ export default function Footer() {
 
             {/* Direct Contact Pills */}
             <div className="space-y-2 pt-2 text-xs">
-              <a 
-                href={`tel:${COMPANY_INFO.phone}`} 
-                className="flex items-center gap-2.5 text-neutral-800 hover:text-emerald-700 transition-colors font-medium"
-              >
-                <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span className="font-bold text-neutral-950">{COMPANY_INFO.phoneDisplay}</span>
-                <span className="text-neutral-500">(Direct UK Line)</span>
-              </a>
               <a 
                 href={`mailto:${COMPANY_INFO.email}`} 
                 className="flex items-center gap-2.5 text-neutral-700 hover:text-neutral-950 transition-colors"

@@ -12,7 +12,7 @@ export default function Careers() {
     email: '',
     phone: '',
     role: CAREER_ROLES[0].title,
-    experience: 'Senior (5+ years)',
+    experience: 'Junior / Entry Level (0-2 years)',
     portfolio: '',
     availability: '1 Month',
     coverNote: '',
@@ -33,7 +33,12 @@ export default function Careers() {
 
   const handleSelectRole = (roleTitle) => {
     setSelectedRole(roleTitle);
-    setFormData((prev) => ({ ...prev, role: roleTitle }));
+    const isJunior = roleTitle.toLowerCase().includes('junior');
+    setFormData((prev) => ({ 
+      ...prev, 
+      role: roleTitle,
+      experience: isJunior ? 'Junior / Entry Level (0-2 years)' : prev.experience
+    }));
     const formElement = document.getElementById('application-form');
     if (formElement) {
       formElement.scrollIntoView({ behavior: 'smooth' });
@@ -193,6 +198,11 @@ export default function Careers() {
                       <span className="text-emerald-700 font-mono font-bold">
                         {role.salary}
                       </span>
+                      {role.trainingNote && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-[11px]">
+                          Training Provided After Assessment
+                        </span>
+                      )}
                     </div>
 
                     <h3 className="text-xl font-heading font-bold text-neutral-950">
@@ -367,7 +377,8 @@ export default function Careers() {
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                 >
-                  <option value="Junior / Mid-Level (2-4 years)">Mid-Level (2 - 4 years)</option>
+                  <option value="Junior / Entry Level (0-2 years)">Junior / Entry Level (0 - 2 years &bull; Training Provided)</option>
+                  <option value="Mid-Level (2-4 years)">Mid-Level (2 - 4 years)</option>
                   <option value="Senior (5+ years)">Senior (5+ years)</option>
                   <option value="Lead / Staff Architect (8+ years)">Lead / Staff Architect (8+ years)</option>
                 </select>

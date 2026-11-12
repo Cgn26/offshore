@@ -2,12 +2,9 @@ export const COMPANY_INFO = {
   name: 'GreensLeaf',
   fullName: 'GreensLeaf Limited',
   tagline: 'Enterprise IT Engineering & Intelligent AI Systems',
-  phone: '02034884882',
-  phoneDisplay: '020 3488 4882',
-  phoneIntl: '+442034884882',
   email: 'connect@greensleaf.uk',
   address: 'Victory House, Chobham Street, Luton, Bedfordshire, England, LU1 3BS',
-  operatingHours: 'Monday – Friday, 08:30 – 18:00 GMT (24/7 Incident Escalation)',
+  operatingHours: 'Monday – Friday, 08:30 – 18:00 GMT (24/7 Monitored Inquiries)',
 };
 
 export const CORE_METRICS = [
@@ -175,6 +172,38 @@ export const INDUSTRIES = [
 ];
 
 export const CAREER_ROLES = [
+  {
+    id: 'junior-ai-engineer',
+    title: 'Junior AI Engineer',
+    department: 'Artificial Intelligence',
+    location: 'Hybrid (Luton / London & Remote)',
+    type: 'Full-Time • Permanent',
+    salary: '£33,500 - £38,700',
+    description: 'Assist in building, testing, and deploying custom retrieval-augmented generation (RAG) pipelines, generative AI solutions, and model integrations. Full comprehensive training will be provided following initial technical assessment.',
+    trainingNote: 'Comprehensive training will be provided after initial technical assessment.',
+    requirements: [
+      'Foundational programming knowledge in Python, TypeScript, or modern web frameworks',
+      'Keen interest in Large Language Models (LLMs), prompt engineering, and vector databases',
+      'Strong problem-solving attitude and dedication to engineering best practices',
+      'Structured industry training provided after initial technical assessment under senior UK engineering mentorship',
+    ],
+  },
+  {
+    id: 'junior-ai-researcher',
+    title: 'Junior AI Researcher',
+    department: 'Artificial Intelligence',
+    location: 'Hybrid (Luton / London & Remote)',
+    type: 'Full-Time • Permanent',
+    salary: '£33,500 - £38,700',
+    description: 'Conduct empirical benchmarking, vector indexing optimization, hallucination reduction testing, and data curation for enterprise AI systems. Full structured training will be provided following initial technical assessment.',
+    trainingNote: 'Comprehensive training will be provided after initial technical assessment.',
+    requirements: [
+      'Degree or academic background in Computer Science, Mathematics, Data Science, or related quantitative discipline',
+      'Understanding of machine learning principles, evaluation metrics, and experimental design',
+      'Analytical mindset with strong written documentation and investigative skills',
+      'Structured training will be provided after initial technical assessment by our lead AI researchers',
+    ],
+  },
   {
     id: 'senior-fullstack',
     title: 'Senior Full-Stack Engineer (React & Python/Node)',

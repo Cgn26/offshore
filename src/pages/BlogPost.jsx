@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, ArrowUpRight, Phone } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, ArrowUpRight, Mail } from 'lucide-react';
 import { BLOG_POSTS, COMPANY_INFO } from '../mockData';
 
 export default function BlogPost() {
@@ -86,11 +86,11 @@ export default function BlogPost() {
             <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
           <a
-            href={`tel:${COMPANY_INFO.phone}`}
+            href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent(`Inquiry regarding ${post.title}`)}`}
             className="px-5 py-2.5 rounded-xl bg-white border border-neutral-300 text-neutral-800 hover:text-neutral-950 hover-button-scale font-semibold text-xs transition-colors inline-flex items-center gap-2 shadow-2xs"
           >
-            <Phone className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Call {COMPANY_INFO.phoneDisplay}</span>
+            <Mail className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Email {COMPANY_INFO.email}</span>
           </a>
         </div>
       </div>

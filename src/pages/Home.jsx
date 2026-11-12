@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowUpRight, Bot, Code2, Cloud, ShieldCheck, Headphones, 
-  BarChart3, CheckCircle2, ChevronDown, ChevronRight, Phone, 
+  BarChart3, CheckCircle2, ChevronDown, ChevronRight, Mail, 
   Sparkles, Zap, Award, Lock, Server, Users2, Building2
 } from 'lucide-react';
 import { COMPANY_INFO, CORE_METRICS, SERVICES, INDUSTRIES, TESTIMONIALS, FAQS, CLIENT_LOGOS } from '../mockData';
@@ -48,11 +48,11 @@ export default function Home({ onOpenLogoModal }) {
               </Link>
               
               <a
-                href={`tel:${COMPANY_INFO.phone}`}
+                href={`mailto:${COMPANY_INFO.email}`}
                 className="hover-button-scale w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white text-neutral-900 font-semibold text-sm sm:text-base hover:bg-neutral-50 border border-neutral-300 shadow-2xs transition-all duration-200 flex items-center justify-center gap-2.5"
               >
-                <Phone className="w-4 h-4 text-emerald-700" />
-                <span>Call {COMPANY_INFO.phoneDisplay}</span>
+                <Mail className="w-4 h-4 text-emerald-700" />
+                <span>Email {COMPANY_INFO.email}</span>
               </a>
             </div>
 
@@ -443,11 +443,11 @@ export default function Home({ onOpenLogoModal }) {
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
               <a
-                href={`tel:${COMPANY_INFO.phone}`}
-                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-white border border-neutral-300 text-neutral-900 font-semibold text-sm hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2 shadow-2xs"
+                href={`mailto:${COMPANY_INFO.email}`}
+                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-white border border-neutral-300 text-neutral-900 font-semibold text-sm hover:bg-neutral-50 hover-button-scale transition-colors flex items-center justify-center gap-2 shadow-2xs"
               >
-                <Phone className="w-4 h-4 text-emerald-700" />
-                <span>Call {COMPANY_INFO.phoneDisplay}</span>
+                <Mail className="w-4 h-4 text-emerald-700" />
+                <span>Email {COMPANY_INFO.email}</span>
               </a>
             </div>
           </div>

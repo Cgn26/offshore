@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import FloatingCallButton from './components/FloatingCallButton';
 import CookieBanner from './components/CookieBanner';
 import LogoDownloadModal from './components/LogoDownloadModal';
 
@@ -56,9 +55,6 @@ export default function App() {
 
         {/* Global Footer */}
         <Footer onOpenLogoModal={() => setLogoModalOpen(true)} />
-
-        {/* Persistent Floating CTA: Call 02034884882 */}
-        <FloatingCallButton />
 
         {/* UK GDPR Cookie Notice */}
         <CookieBanner />

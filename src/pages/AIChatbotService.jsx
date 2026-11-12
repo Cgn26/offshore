@@ -81,10 +81,10 @@ export default function AIChatbotService() {
               <ArrowUpRight className="w-4 h-4" />
             </Link>
             <a
-              href={`tel:${COMPANY_INFO.phone}`}
-              className="px-6 py-3.5 rounded-xl bg-white border border-neutral-300 text-neutral-900 font-semibold text-sm hover:bg-neutral-50 transition-colors shadow-2xs"
+              href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent('AI Chatbot Architecture Feasibility Review')}`}
+              className="px-6 py-3.5 rounded-xl bg-white border border-neutral-300 text-neutral-900 font-semibold text-sm hover:bg-neutral-50 hover-button-scale transition-colors shadow-2xs"
             >
-              Call 020 3488 4882
+              Email AI Specialists
             </a>
           </div>
         </div>

@@ -113,10 +113,10 @@ export default function Services() {
                       </Link>
                     )}
                     <a
-                      href={`tel:${COMPANY_INFO.phone}`}
+                      href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent(`Inquiry regarding ${srv.title}`)}`}
                       className="px-5 py-3 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-800 hover:text-neutral-950 hover:bg-neutral-200 hover-button-scale text-xs font-semibold transition-colors"
                     >
-                      Call Senior Engineer
+                      Email Technical Lead
                     </a>
                   </div>
                 </div>

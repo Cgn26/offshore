@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Phone, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Mail } from 'lucide-react';
 import Logo from './Logo';
 import { COMPANY_INFO } from '../mockData';
 
@@ -55,15 +55,15 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Actions: Direct UK Phone & Compact CTA */}
+          {/* Actions: Direct Email & Compact CTA */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href={`tel:${COMPANY_INFO.phone}`}
+              href={`mailto:${COMPANY_INFO.email}`}
               className="hover-button-scale flex items-center gap-1.5 text-xs font-semibold text-neutral-700 hover:text-emerald-700 transition-colors"
-              title={`Direct Line: ${COMPANY_INFO.phoneDisplay}`}
+              title={`Direct Email: ${COMPANY_INFO.email}`}
             >
-              <Phone className="w-3.5 h-3.5 text-emerald-700" />
-              <span>{COMPANY_INFO.phoneDisplay}</span>
+              <Mail className="w-3.5 h-3.5 text-emerald-700" />
+              <span>{COMPANY_INFO.email}</span>
             </a>
 
             <Link
@@ -77,14 +77,6 @@ export default function Navbar() {
 
           {/* Tablet & Mobile Controls */}
           <div className="flex lg:hidden items-center gap-2">
-            <a
-              href={`tel:${COMPANY_INFO.phone}`}
-              className="p-2 rounded-lg text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors"
-              aria-label="Call GreensLeaf"
-              title="Call GreensLeaf"
-            >
-              <Phone className="w-4 h-4" />
-            </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-colors border border-neutral-200"
@@ -121,11 +113,11 @@ export default function Navbar() {
 
           <div className="pt-3 border-t border-neutral-200 space-y-2">
             <a
-              href={`tel:${COMPANY_INFO.phone}`}
+              href={`mailto:${COMPANY_INFO.email}`}
               className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-800 font-medium text-xs"
             >
-              <Phone className="w-3.5 h-3.5 text-emerald-700" />
-              <span>Call {COMPANY_INFO.phoneDisplay}</span>
+              <Mail className="w-3.5 h-3.5 text-emerald-700" />
+              <span>{COMPANY_INFO.email}</span>
             </a>
             <Link
               to="/contact"

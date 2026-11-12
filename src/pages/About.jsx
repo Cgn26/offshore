@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Building2, Users2, ShieldCheck, Award, ArrowUpRight, 
-  MapPin, Phone, Mail, Clock, CheckCircle2 
+  MapPin, Mail, Clock, CheckCircle2 
 } from 'lucide-react';
 import { COMPANY_INFO, CORE_METRICS } from '../mockData';
 
@@ -76,16 +76,6 @@ export default function About() {
               <div>
                 <strong className="text-neutral-900 block text-xs font-heading">Registered Address:</strong>
                 <span className="text-neutral-600">{COMPANY_INFO.address}</span>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <Phone className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-neutral-900 block text-xs font-heading">Direct Telephone:</strong>
-                <a href={`tel:${COMPANY_INFO.phone}`} className="text-emerald-700 font-bold hover:underline font-mono">
-                  {COMPANY_INFO.phoneDisplay}
-                </a>
               </div>
             </div>
 
