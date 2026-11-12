@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 const DATA_DIR = path.join(__dirname, 'data');
 const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json');
 const NEWSLETTER_FILE = path.join(DATA_DIR, 'newsletter.json');
+const CAREERS_FILE = path.join(DATA_DIR, 'careers.json');
 
 // Ensure data folder and storage files exist
 if (!fs.existsSync(DATA_DIR)) {
@@ -26,6 +27,9 @@ if (!fs.existsSync(INQUIRIES_FILE)) {
 }
 if (!fs.existsSync(NEWSLETTER_FILE)) {
   fs.writeFileSync(NEWSLETTER_FILE, JSON.stringify([], null, 2));
+}
+if (!fs.existsSync(CAREERS_FILE)) {
+  fs.writeFileSync(CAREERS_FILE, JSON.stringify([], null, 2));
 }
 
 // Helpers for reading/writing persistent store
@@ -235,6 +239,105 @@ app.get('/api/newsletter', (req, res) => {
   res.json({
     total: subscribers.length,
     subscribers,
+  });
+});
+
+// POST /api/career - Submit a career application
+app.post('/api/career', async (req, res) => {
+  try {
+    const {
+      fullName,
+      email,
+      phone,
+      role,
+      experience,
+      portfolio,
+      availability,
+      coverNote,
+      consent,
+    } = req.body;
+
+    if (!fullName || !email || !role) {
+      return res.status(400).json({
+        error: 'Full Name, Email, and Position are required.',
+      });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        error: 'Please provide a valid email address.',
+      });
+    }
+
+    const newApplication = {
+      id: 'app_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+      fullName: fullName.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone ? phone.trim() : 'N/A',
+      role: role.trim(),
+      experience: experience || 'Mid-Level',
+      portfolio: portfolio ? portfolio.trim() : 'N/A',
+      availability: availability || 'Immediate / 1 Month',
+      coverNote: coverNote ? coverNote.trim() : '',
+      consent: Boolean(consent),
+      timestamp: new Date().toISOString(),
+      status: 'under_review',
+    };
+
+    const careers = readJson(CAREERS_FILE);
+    careers.unshift(newApplication);
+    writeJson(CAREERS_FILE, careers);
+
+    console.log(`[CAREER APPLICATION] Saved ${newApplication.id} for ${newApplication.fullName} (${newApplication.role})`);
+
+    // Resend notification if configured
+    if (resendClient) {
+      try {
+        await resendClient.emails.send({
+          from: 'GreensLeaf Careers <onboarding@resend.dev>',
+          to: ['connect@greensleaf.uk'],
+          replyTo: newApplication.email,
+          subject: `[GreensLeaf Career Application] ${newApplication.role}: ${newApplication.fullName}`,
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e4e4e7; border-radius: 8px;">
+              <h2 style="color: #09090b; border-bottom: 2px solid #16a34a; padding-bottom: 8px;">New Job Application Received</h2>
+              <p><strong>Candidate:</strong> ${newApplication.fullName}</p>
+              <p><strong>Email:</strong> ${newApplication.email}</p>
+              <p><strong>Phone:</strong> ${newApplication.phone}</p>
+              <p><strong>Position:</strong> ${newApplication.role}</p>
+              <p><strong>Experience:</strong> ${newApplication.experience}</p>
+              <p><strong>Portfolio / Profile:</strong> ${newApplication.portfolio}</p>
+              <p><strong>Availability:</strong> ${newApplication.availability}</p>
+              <div style="margin-top: 15px; padding: 12px; background: #f4f4f5; border-radius: 6px;">
+                <strong>Candidate Note:</strong>
+                <p style="white-space: pre-wrap; margin-top: 5px;">${newApplication.coverNote}</p>
+              </div>
+            </div>
+          `,
+        });
+      } catch (e) {
+        console.warn('[EMAIL NOTIFICATION FAILED] Career email error:', e.message);
+      }
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: 'Thank you for your application! Our technical hiring team will review your profile and contact you.',
+      applicationId: newApplication.id,
+    });
+  } catch (err) {
+    console.error('Error saving career application:', err);
+    return res.status(500).json({ error: 'Failed to submit application. Please try again or email connect@greensleaf.uk' });
+  }
+});
+
+// GET /api/career - Admin listing of applications
+app.get('/api/career', (req, res) => {
+  const careers = readJson(CAREERS_FILE);
+  res.json({
+    total: careers.length,
+    applications: careers,
   });
 });
 

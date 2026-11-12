@@ -20,21 +20,21 @@ export default function Services() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-20">
       {/* Page Header */}
       <div className="max-w-3xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
           <Layers className="w-3.5 h-3.5" />
           <span>UK Engineering Practices</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Comprehensive <br />
-          <span className="text-emerald-400">Enterprise IT Services</span>
+          <span className="text-emerald-700">Enterprise IT Services</span>
         </h1>
-        <p className="text-lg text-neutral-400 leading-relaxed">
+        <p className="text-lg text-neutral-600 leading-relaxed">
           From custom AI agents to multi-region cloud infrastructures, GreensLeaf delivers battle-tested technology with senior UK engineers and guaranteed uptime SLAs.
         </p>
       </div>
 
       {/* Services List Detailed */}
-      <div className="space-y-16">
+      <div className="space-y-12">
         {SERVICES.map((srv, idx) => {
           const Icon = iconMap[srv.icon] || Code2;
           const isAi = srv.id === 'ai-chatbot';
@@ -43,15 +43,15 @@ export default function Services() {
             <div
               key={srv.id}
               id={srv.id}
-              className={`rounded-3xl glass-panel p-8 sm:p-12 border relative overflow-hidden transition-all ${
+              className={`rounded-3xl bg-white p-8 sm:p-12 border relative overflow-hidden transition-all ${
                 isAi 
-                  ? 'border-emerald-500/40 bg-gradient-to-br from-emerald-950/20 via-neutral-900 to-neutral-950 shadow-[0_0_50px_rgba(34,197,94,0.06)]' 
-                  : 'border-neutral-800'
+                  ? 'border-emerald-300 bg-gradient-to-br from-emerald-50/30 via-white to-white shadow-sm ring-1 ring-emerald-500/10' 
+                  : 'border-neutral-200/90 shadow-xs hover:shadow-md'
               }`}
             >
               {isAi && (
-                <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-bold uppercase">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Flagship AI Service</span>
                 </div>
               )}
@@ -62,31 +62,31 @@ export default function Services() {
                   <div className="flex items-center gap-4">
                     <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border ${
                       isAi 
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' 
-                        : 'bg-neutral-800 text-white border-neutral-700'
+                        ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
+                        : 'bg-neutral-100 text-neutral-900 border-neutral-200'
                     }`}>
                       <Icon className="w-7 h-7" />
                     </div>
                     <div>
-                      <span className="text-xs font-mono text-neutral-500">SERVICE // 0{idx + 1}</span>
-                      <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">
+                      <span className="text-xs font-mono text-neutral-400">PRACTICE // 0{idx + 1}</span>
+                      <h2 className="text-2xl sm:text-3xl font-heading font-bold text-neutral-950">
                         {srv.title}
                       </h2>
                     </div>
                   </div>
 
-                  <p className="text-base text-neutral-300 leading-relaxed">
+                  <p className="text-base text-neutral-600 leading-relaxed">
                     {srv.description}
                   </p>
 
                   <div className="space-y-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-900">
                       Core Technical Highlights
                     </h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                       {srv.highlights.map((h, hIdx) => (
-                        <div key={hIdx} className="flex items-start gap-2 text-xs text-neutral-200">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                        <div key={hIdx} className="flex items-start gap-2 text-xs text-neutral-700">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                           <span>{h}</span>
                         </div>
                       ))}
@@ -98,7 +98,7 @@ export default function Services() {
                     {isAi ? (
                       <Link
                         to="/services/ai-chatbot"
-                        className="px-6 py-3 rounded-xl bg-emerald-500 text-neutral-950 font-bold text-xs hover:bg-emerald-400 transition-colors inline-flex items-center gap-2"
+                        className="px-6 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition-colors inline-flex items-center gap-2 shadow-xs"
                       >
                         <span>Deep Dive AI Chatbot Architecture</span>
                         <ArrowUpRight className="w-4 h-4" />
@@ -106,7 +106,7 @@ export default function Services() {
                     ) : (
                       <Link
                         to={`/contact?service=${encodeURIComponent(srv.title)}`}
-                        className="px-6 py-3 rounded-xl bg-white text-neutral-950 font-bold text-xs hover:bg-neutral-200 transition-colors inline-flex items-center gap-2"
+                        className="px-6 py-3 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition-colors inline-flex items-center gap-2 shadow-xs"
                       >
                         <span>Inquire About This Service</span>
                         <ArrowUpRight className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function Services() {
                     )}
                     <a
                       href={`tel:${COMPANY_INFO.phone}`}
-                      className="px-5 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-white text-xs font-semibold transition-colors"
+                      className="px-5 py-3 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-800 hover:text-neutral-950 hover:bg-neutral-200 text-xs font-semibold transition-colors"
                     >
                       Call Senior Engineer
                     </a>
@@ -122,17 +122,17 @@ export default function Services() {
                 </div>
 
                 {/* Right Specs Card */}
-                <div className="lg:col-span-5 space-y-6 bg-neutral-950/70 border border-neutral-800/80 p-6 rounded-2xl">
+                <div className="lg:col-span-5 space-y-6 bg-neutral-50/80 border border-neutral-200 p-6 rounded-2xl">
                   {/* Deliverables */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                      <Terminal className="w-3.5 h-3.5" />
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                      <Terminal className="w-3.5 h-3.5 text-emerald-600" />
                       <span>Standard Deliverables</span>
                     </h4>
-                    <ul className="space-y-2 text-xs text-neutral-300">
+                    <ul className="space-y-2 text-xs text-neutral-700">
                       {srv.deliverables.map((del, dIdx) => (
                         <li key={dIdx} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
                           <span>{del}</span>
                         </li>
                       ))}
@@ -140,16 +140,16 @@ export default function Services() {
                   </div>
 
                   {/* Tech Stack Pills */}
-                  <div className="space-y-3 border-t border-neutral-800/80 pt-4">
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
-                      <Cpu className="w-3.5 h-3.5" />
+                  <div className="space-y-3 border-t border-neutral-200 pt-4">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-800 flex items-center gap-1.5">
+                      <Cpu className="w-3.5 h-3.5 text-neutral-600" />
                       <span>Production Tech Stack</span>
                     </h4>
                     <div className="flex flex-wrap gap-1.5">
                       {srv.techStack.map((tech, tIdx) => (
                         <span
                           key={tIdx}
-                          className="px-2.5 py-1 rounded-md bg-neutral-900 border border-neutral-800 text-[11px] font-mono text-neutral-300"
+                          className="px-2.5 py-1 rounded-md bg-white border border-neutral-200 text-[11px] font-mono text-neutral-800 shadow-2xs"
                         >
                           {tech}
                         </span>

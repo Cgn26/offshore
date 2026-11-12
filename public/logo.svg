@@ -1,36 +1,29 @@
-<svg width="800" height="240" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="600" height="180" viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4ade80" />
-      <stop offset="100%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#16a34a" />
     </linearGradient>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#18181b" />
       <stop offset="100%" stop-color="#09090b" />
     </linearGradient>
-    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#22c55e" flood-opacity="0.3" />
-    </filter>
   </defs>
 
   <!-- Logo Mark (Rounded Badge with Leaf Monogram) -->
-  <rect x="20" y="20" width="200" height="200" rx="44" fill="url(#bgGrad)" stroke="#27272a" stroke-width="3" />
+  <rect x="20" y="20" width="140" height="140" rx="32" fill="url(#bgGrad)" stroke="#27272a" stroke-width="2" />
   
   <!-- Stylized Geometric Leaf / G -->
-  <path d="M 120 56 C 85 56 60 84 60 120 C 60 156 86 184 122 184 C 158 184 180 156 180 120 L 180 114 L 120 114" 
-        stroke="url(#leafGrad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M 90 48 C 65 48 48 68 48 90 C 48 114 65 132 90 132 C 114 132 130 114 130 90 L 130 86 L 90 86" 
+        stroke="url(#leafGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
   
-  <path d="M 96 146 C 114 130 134 110 160 84" 
-        stroke="#4ade80" stroke-width="7" stroke-linecap="round" opacity="0.85" />
+  <path d="M 72 108 C 85 96 100 82 116 66" 
+        stroke="#4ade80" stroke-width="5" stroke-linecap="round" opacity="0.9" />
   
-  <circle cx="120" cy="80" r="8" fill="#4ade80" filter="url(#subtleGlow)" />
+  <circle cx="90" cy="64" r="5" fill="#4ade80" />
 
-  <!-- Typography -->
-  <text x="260" y="132" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="76" letter-spacing="-2" fill="#ffffff">
-    Greens<tspan fill="#22c55e">Leaf</tspan>
-  </text>
-  
-  <text x="265" y="176" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="20" letter-spacing="6" fill="#a1a1aa">
-    UK ENTERPRISE IT &amp; AI
+  <!-- Typography: GreensLeaf -->
+  <text x="185" y="112" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="72" letter-spacing="-2" fill="#09090b">
+    Greens<tspan fill="#16a34a">Leaf</tspan>
   </text>
 </svg>

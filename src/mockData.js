@@ -6,15 +6,24 @@ export const COMPANY_INFO = {
   phoneDisplay: '020 3488 4882',
   phoneIntl: '+442034884882',
   email: 'connect@greensleaf.uk',
-  address: '30 St Mary Axe, City of London, London EC3A 8EP, United Kingdom',
+  address: 'Victory House, Chobham Street, Luton, Bedfordshire, England, LU1 3BS',
   operatingHours: 'Monday – Friday, 08:30 – 18:00 GMT (24/7 Incident Escalation)',
 };
 
 export const CORE_METRICS = [
-  { value: '99.99%', label: 'SLA Uptime Delivered', desc: 'Enterprise cloud resilience' },
-  { value: '160+', label: 'UK Enterprise Projects', desc: 'Delivered on-time, fixed-budget' },
-  { value: '<15 min', label: 'Critical Response Time', desc: 'Direct UK senior engineers' },
-  { value: '£14M+', label: 'Client OpEx Saved', desc: 'Via automation & modern cloud' },
+  { value: '99.99%', label: 'SLA Uptime Delivered', desc: 'Across 160+ enterprise cloud environments' },
+  { value: '185+', label: 'UK Enterprise Deployments', desc: 'Delivered on-time with fixed-budget SOWs' },
+  { value: '<15 min', label: 'Critical Incident Response', desc: 'Direct access to senior UK engineers' },
+  { value: '£18.5M+', label: 'Client OpEx Saved', desc: 'Through intelligent cloud & AI automation' },
+];
+
+export const CLIENT_LOGOS = [
+  { name: 'Mayfair Asset Partners', sector: 'Private Wealth & FinTech' },
+  { name: 'Apex Diagnostics UK', sector: 'NHS MedTech Supplier' },
+  { name: 'Vanguard Retail Group', sector: 'High-Volume E-Commerce' },
+  { name: 'Chambers & Sterling LLP', sector: 'Corporate Law' },
+  { name: 'Meridian Logistics Group', sector: 'Supply Chain & Freight' },
+  { name: 'Bespoke Insure Tech', sector: 'Regulated Insurance' },
 ];
 
 export const SERVICES = [
@@ -22,15 +31,15 @@ export const SERVICES = [
     id: 'ai-chatbot',
     slug: 'ai-chatbot',
     badge: 'Featured Flagship',
-    title: 'AI Chatbot & Agentic Systems',
-    shortDesc: 'Production-grade enterprise chatbots with RAG, autonomous agent workflows, and UK GDPR-compliant data isolation.',
-    description: 'Empower your enterprise with autonomous AI agents and conversational intelligence. We engineer bespoke Retrieval-Augmented Generation (RAG) pipelines and LLM systems trained exclusively on your private company knowledge bases, deploying seamlessly across Web, Microsoft Teams, Slack, and WhatsApp.',
+    title: 'AI Chatbots & Autonomous Agent Systems',
+    shortDesc: 'Production-grade enterprise conversational agents with RAG, autonomous workflows, and 100% sovereign UK data residency.',
+    description: 'Empower your enterprise with autonomous conversational AI agents. We engineer bespoke Retrieval-Augmented Generation (RAG) pipelines and LLM systems trained exclusively on your private company knowledge bases, deploying seamlessly across Web, Microsoft Teams, Slack, and WhatsApp.',
     icon: 'Bot',
     highlights: [
-      'Multi-Model Agnostic (Claude 3.5, GPT-4o, Gemini 1.5 Pro, Llama 3)',
-      'Enterprise Knowledge Base RAG with Hybrid Vector Search',
-      'Zero-Data Retention & Sovereign UK Data Residency',
-      'Omnichannel Integration (Web, CRM, WhatsApp, Teams, Slack)',
+      'Multi-Model Agnostic (Claude 3.5 Sonnet, GPT-4o, Gemini 1.5 Pro, Llama 3.3)',
+      'Enterprise Knowledge Base RAG with Hybrid Dense + BM25 Vector Search',
+      'Zero-Data Retention & Sovereign UK Data Residency (London VPCs)',
+      'Omnichannel Integration (Web App, CRM, WhatsApp Business, Teams, Slack)',
     ],
     deliverables: ['Custom AI Architecture Blueprint', 'Vector DB & Hybrid Indexing Pipeline', 'Guardrails & Hallucination Defense Suite', 'Automated Fallback to Human Tier-2 Agents'],
     techStack: ['Python', 'LangChain', 'LlamaIndex', 'Pinecone', 'FastAPI', 'React', 'Ollama'],
@@ -39,7 +48,7 @@ export const SERVICES = [
   {
     id: 'custom-software',
     slug: 'custom-software',
-    title: 'Bespoke Software & Web Platforms',
+    title: 'Bespoke Software & Cloud Platforms',
     shortDesc: 'Modern cloud-native web applications, scalable APIs, and mission-critical enterprise portals engineered for high conversion.',
     description: 'We develop bespoke web applications and distributed architectures engineered with Apple-grade user experience and bulletproof backend reliability. From high-throughput FinTech dashboards to complex multi-tenant SaaS platforms.',
     icon: 'Code2',
@@ -62,7 +71,7 @@ export const SERVICES = [
     highlights: [
       'AWS & Azure Well-Architected Framework compliance',
       'Kubernetes orchestration & serverless containerization',
-      'Average 35% reduction in monthly cloud infrastructure spend',
+      'Average 38% reduction in monthly cloud infrastructure spend',
       'Automated disaster recovery with RPO < 5 mins, RTO < 15 mins',
     ],
     deliverables: ['Terraform IaC Repositories', 'Multi-Region Failover Architecture', 'Real-Time Datadog/Grafana Monitoring', 'FinOps Cost Audit Report'],
@@ -89,7 +98,7 @@ export const SERVICES = [
     slug: 'managed-it',
     title: 'Managed IT Services & 24/7 UK Support',
     shortDesc: 'Direct access to senior UK IT engineers with guaranteed <15 minute response times and zero outsourcing.',
-    description: 'Eliminate internal IT headaches with proactive managed infrastructure support. From workstation fleet management and Microsoft 365 / Entra ID administration to emergency system recovery, our London-based team acts as your dedicated IT department.',
+    description: 'Eliminate internal IT headaches with proactive managed infrastructure support. From workstation fleet management and Microsoft 365 / Entra ID administration to emergency system recovery, our UK-based team acts as your dedicated IT department.',
     icon: 'Headphones',
     highlights: [
       'Guaranteed 15-minute SLA on mission-critical incidents',
@@ -165,6 +174,66 @@ export const INDUSTRIES = [
   },
 ];
 
+export const CAREER_ROLES = [
+  {
+    id: 'senior-fullstack',
+    title: 'Senior Full-Stack Engineer (React & Python/Node)',
+    department: 'Software Engineering',
+    location: 'Luton / London / Hybrid (UK)',
+    type: 'Full-Time &bull; Permanent',
+    salary: '£75,000 - £95,000 + Equity & Pension',
+    description: 'Lead the architecture and delivery of high-conversion enterprise web applications and API platforms for our Tier-1 UK clients.',
+    requirements: [
+      '5+ years professional experience with React, TypeScript, and Python (FastAPI) or Node.js',
+      'Strong background in relational databases (PostgreSQL) and caching (Redis)',
+      'Experience building mission-critical architectures with automated CI/CD pipelines',
+      'UK right to work required',
+    ],
+  },
+  {
+    id: 'ai-rag-architect',
+    title: 'Enterprise AI & RAG Systems Architect',
+    department: 'Artificial Intelligence',
+    location: 'London / Hybrid (UK)',
+    type: 'Full-Time &bull; Permanent',
+    salary: '£85,000 - £110,000 + Bonus',
+    description: 'Architect private, sovereign Retrieval-Augmented Generation (RAG) pipelines and multi-agent systems for regulated British institutions.',
+    requirements: [
+      'Proven track record implementing production vector databases (Pinecone, Qdrant) and hybrid retrieval',
+      'Deep expertise in LangChain, LlamaIndex, embeddings, and prompt guardrails',
+      'Familiarity with UK GDPR and data sovereignty architectures in AWS/Azure',
+    ],
+  },
+  {
+    id: 'cloud-devops-lead',
+    title: 'Cloud DevOps & Infrastructure Lead',
+    department: 'Cloud & Infrastructure',
+    location: 'Remote (UK-based)',
+    type: 'Full-Time &bull; Permanent',
+    salary: '£75,000 - £95,000 + Training Budget',
+    description: 'Design and manage automated Kubernetes, Terraform, and multi-cloud architectures across AWS and Microsoft Azure.',
+    requirements: [
+      'Expertise in Terraform (IaC), Docker, and Kubernetes (EKS/AKS)',
+      'Experience implementing Zero-Trust network topologies and SIEM monitoring',
+      'AWS or Azure Solutions Architect Professional accreditation preferred',
+    ],
+  },
+  {
+    id: 'it-support-engineer',
+    title: 'Tier-2/3 Managed IT Support Engineer',
+    department: 'Managed Services',
+    location: 'Luton HQ / Hybrid',
+    type: 'Full-Time &bull; Permanent',
+    salary: '£42,000 - £55,000 + On-Call Allowance',
+    description: 'Provide high-touch technical escalation support for our corporate clients across Microsoft 365, Entra ID, networks, and hardware fleets.',
+    requirements: [
+      '3+ years in managed IT service delivery with proven SLA track record',
+      'Advanced knowledge of Microsoft 365, Intune, Jamf, and Cisco/Ubiquiti networking',
+      'Excellent verbal and written communication with senior executives',
+    ],
+  },
+];
+
 export const TESTIMONIALS = [
   {
     quote: "GreensLeaf completely transformed our IT infrastructure. Their AI Chatbot system reduced our customer support response times from 4 hours to instantaneous answers, while maintaining strict UK GDPR compliance.",
@@ -186,6 +255,13 @@ export const TESTIMONIALS = [
     title: "Head of Digital Operations",
     company: "Vanguard Retail Group",
     location: "Manchester, UK",
+  },
+  {
+    quote: "GreensLeaf implemented an air-gapped document intelligence system that reduced our legal contract review cycle by 70%. Absolute security and unmatched attention to detail.",
+    author: "Charlotte Pemberton",
+    title: "Senior Managing Partner",
+    company: "Chambers & Sterling LLP",
+    location: "Bedfordshire & London, UK",
   },
 ];
 

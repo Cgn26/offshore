@@ -8,25 +8,25 @@ import { COMPANY_INFO, CORE_METRICS } from '../mockData';
 
 export default function About({ onOpenLogoModal }) {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-24">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-20">
       {/* Header */}
       <div className="max-w-3xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
           <span>The GreensLeaf Story</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Engineering clarity in an era of <br />
-          <span className="text-emerald-400">enterprise complexity.</span>
+          <span className="text-emerald-700">enterprise complexity.</span>
         </h1>
-        <p className="text-lg text-neutral-400 leading-relaxed">
-          GreensLeaf was founded in London to provide UK enterprises with an authentic alternative to bloated consultancies and disconnected offshore agencies.
+        <p className="text-lg text-neutral-600 leading-relaxed">
+          GreensLeaf was founded to provide UK enterprises with an authentic alternative to bloated legacy consultancies and fragmented offshore agencies.
         </p>
       </div>
 
       {/* Narrative Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        <div className="lg:col-span-7 space-y-6 text-sm text-neutral-300 leading-relaxed">
-          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">
+        <div className="lg:col-span-7 space-y-6 text-sm text-neutral-700 leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-neutral-950">
             Our Mission &amp; Engineering Ethos
           </h2>
           <p>
@@ -39,78 +39,78 @@ export default function About({ onOpenLogoModal }) {
             When you engage GreensLeaf, the architects who scope your statement of work are the same senior engineers who write your code, audit your security parameters, and deploy your production clusters.
           </p>
 
-          <div className="pt-4 border-t border-neutral-800 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Our 4 Core Operating Commitments:</h4>
+          <div className="pt-4 border-t border-neutral-200 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-950">Our 4 Core Operating Commitments:</h4>
             <div className="space-y-2">
               <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong className="text-white">Direct Access to Senior Engineers:</strong> Zero account manager bottlenecks. Immediate technical alignment.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-neutral-950">Direct Access to Senior Engineers:</strong> Zero account manager bottlenecks. Immediate technical alignment.</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong className="text-white">Strict UK Data Sovereignty:</strong> Complete compliance with the UK Data Protection Act 2018 and GDPR.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-neutral-950">Strict UK Data Sovereignty:</strong> Complete compliance with the UK Data Protection Act 2018 and GDPR.</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong className="text-white">Transparent Milestone SOWs:</strong> Fixed-price accountability with clear acceptance criteria.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-neutral-950">Transparent Milestone SOWs:</strong> Fixed-price accountability with clear acceptance criteria.</span>
               </div>
               <div className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span><strong className="text-white">Zero Technical Debt:</strong> We leave you with clean, modular, fully-documented code your internal team can proudly maintain.</span>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-neutral-950">Zero Technical Debt:</strong> We leave you with clean, modular, fully-documented code your internal team can proudly maintain.</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* London Office & HQ Card */}
-        <div className="lg:col-span-5 rounded-3xl glass-panel p-8 border border-neutral-800 space-y-6">
-          <div className="space-y-2 border-b border-neutral-800 pb-4">
-            <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest">Headquarters</span>
-            <h3 className="text-xl font-bold text-white">City of London Operations</h3>
+        {/* UK Registered Office Card */}
+        <div className="lg:col-span-5 rounded-3xl bg-white p-8 border border-neutral-200 shadow-sm space-y-6">
+          <div className="space-y-2 border-b border-neutral-200 pb-4">
+            <span className="text-xs font-mono text-emerald-700 uppercase tracking-widest font-semibold">Headquarters</span>
+            <h3 className="text-xl font-bold text-neutral-950">UK Office &amp; Operations</h3>
           </div>
 
           <div className="space-y-4 text-xs">
             <div className="flex items-start gap-3">
-              <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-neutral-200 block text-xs">Registered Address:</strong>
-                <span className="text-neutral-400">{COMPANY_INFO.address}</span>
+                <strong className="text-neutral-900 block text-xs">Registered Address:</strong>
+                <span className="text-neutral-600">{COMPANY_INFO.address}</span>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Phone className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <Phone className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-neutral-200 block text-xs">Direct Telephone:</strong>
-                <a href={`tel:${COMPANY_INFO.phone}`} className="text-emerald-400 font-bold hover:underline">
+                <strong className="text-neutral-900 block text-xs">Direct Telephone:</strong>
+                <a href={`tel:${COMPANY_INFO.phone}`} className="text-emerald-700 font-bold hover:underline">
                   {COMPANY_INFO.phoneDisplay}
                 </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Mail className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <Mail className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-neutral-200 block text-xs">Inquiry Email:</strong>
-                <a href={`mailto:${COMPANY_INFO.email}`} className="text-neutral-300 hover:text-white">
+                <strong className="text-neutral-900 block text-xs">Inquiry Email:</strong>
+                <a href={`mailto:${COMPANY_INFO.email}`} className="text-neutral-700 hover:text-neutral-950">
                   {COMPANY_INFO.email}
                 </a>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Clock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <Clock className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-neutral-200 block text-xs">Standard Business Hours:</strong>
-                <span className="text-neutral-400">{COMPANY_INFO.operatingHours}</span>
+                <strong className="text-neutral-900 block text-xs">Standard Business Hours:</strong>
+                <span className="text-neutral-600">{COMPANY_INFO.operatingHours}</span>
               </div>
             </div>
           </div>
 
-          <div className="pt-2 border-t border-neutral-800">
+          <div className="pt-2 border-t border-neutral-200">
             <button
               onClick={onOpenLogoModal}
-              className="w-full py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 text-xs font-semibold text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
+              className="w-full py-2.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-800 hover:text-neutral-950 hover:bg-neutral-200 transition-colors"
             >
               Download GreensLeaf Brand Assets (PNG/SVG)
             </button>
@@ -119,19 +119,19 @@ export default function About({ onOpenLogoModal }) {
       </div>
 
       {/* Certifications Banner */}
-      <div className="rounded-2xl glass-panel p-8 border border-neutral-800 text-center space-y-4">
-        <h3 className="text-xl font-bold text-white">UK Accreditations &amp; Technical Standards</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-semibold text-neutral-300 pt-2">
-          <div className="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800">
+      <div className="rounded-2xl bg-white p-8 border border-neutral-200 shadow-2xs text-center space-y-4">
+        <h3 className="text-xl font-bold text-neutral-950">UK Accreditations &amp; Technical Standards</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-semibold text-neutral-800 pt-2">
+          <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
             Cyber Essentials Plus Ready
           </div>
-          <div className="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800">
+          <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
             ISO 27001 Aligned Controls
           </div>
-          <div className="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800">
+          <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
             AWS Select Tier Partner
           </div>
-          <div className="p-4 rounded-xl bg-neutral-950/80 border border-neutral-800">
+          <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
             Microsoft Solutions Partner
           </div>
         </div>

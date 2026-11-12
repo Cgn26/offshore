@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, PhoneCall } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { COMPANY_INFO } from '../mockData';
 
 export default function FloatingCallButton() {
@@ -14,17 +14,17 @@ export default function FloatingCallButton() {
     >
       {/* Sliding Tooltip Badge */}
       <div 
-        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full glass-panel shadow-2xl transition-all duration-300 pointer-events-none ${
+        className={`hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-white border border-neutral-200/90 shadow-xl transition-all duration-300 pointer-events-none ${
           isHovered 
             ? 'opacity-100 translate-x-0 scale-100' 
             : 'opacity-0 translate-x-2 scale-95 pointer-events-none'
         }`}
       >
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-        <span className="text-xs font-medium text-neutral-300">
-          UK Direct Hotline:
+        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+        <span className="text-xs font-medium text-neutral-600">
+          UK Direct Line:
         </span>
-        <span className="text-xs font-bold text-white tracking-wide">
+        <span className="text-xs font-bold text-neutral-950 tracking-wide">
           {COMPANY_INFO.phoneDisplay}
         </span>
       </div>
@@ -32,17 +32,14 @@ export default function FloatingCallButton() {
       {/* Main Floating Trigger Button */}
       <a
         href={`tel:${COMPANY_INFO.phone}`}
-        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-neutral-900 border border-emerald-500/40 text-emerald-400 shadow-[0_8px_30px_rgb(0,0,0,0.6)] hover:bg-emerald-500 hover:text-neutral-950 hover:border-emerald-400 hover:scale-105 active:scale-95 transition-all duration-300 glow-pill focus:outline-none focus:ring-2 focus:ring-emerald-400/50"
+        className="group relative flex items-center justify-center w-14 h-14 rounded-full bg-neutral-900 border border-neutral-800 text-white shadow-xl hover:bg-emerald-600 hover:border-emerald-500 hover:scale-105 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
         aria-label={`Call GreensLeaf at ${COMPANY_INFO.phoneDisplay}`}
         title={`Call GreensLeaf UK (${COMPANY_INFO.phoneDisplay})`}
       >
-        {/* Pulsing ring animation */}
-        <span className="absolute -inset-1 rounded-full bg-emerald-500/20 animate-pulse pointer-events-none" />
-
-        <Phone className="w-6 h-6 transition-transform duration-300 group-hover:rotate-12" />
+        <Phone className="w-6 h-6 transition-transform duration-300 group-hover:rotate-12 text-emerald-400 group-hover:text-white" />
         
         {/* Status indicator dot */}
-        <span className="absolute top-1 right-1 w-3 h-3 bg-emerald-500 border-2 border-neutral-950 rounded-full" />
+        <span className="absolute top-1 right-1 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full" />
       </a>
     </aside>
   );

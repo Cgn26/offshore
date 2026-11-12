@@ -118,6 +118,38 @@ async function runTests() {
     assert(dupRes.status === 200, `Duplicate subscription handled gracefully with HTTP 200`);
     assert(dupData.message.includes('already subscribed'), `Informs subscriber they are already subscribed`);
 
+    // 7. Career Application Submission Check
+    console.log(`\n[TEST 7] Testing Career Application Submission`);
+    const careerPayload = {
+      fullName: 'Sarah Jenkins',
+      email: 'sarah.jenkins@devuk.org',
+      phone: '07123456789',
+      role: 'Senior Full-Stack Engineer (React & Python/Node)',
+      experience: 'Senior (5+ years)',
+      portfolio: 'https://github.com/sarahjenkins',
+      availability: '1 Month',
+      coverNote: 'Excited about GreensLeaf enterprise cloud & RAG systems.',
+      consent: true,
+    };
+    const careerRes = await fetch(`${BASE_URL}/api/career`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(careerPayload),
+    });
+    const careerData = await careerRes.json();
+    assert(careerRes.status === 201, `Career submission returns HTTP 201 Created`);
+    assert(careerData.success === true, `Career response flag success is true`);
+    assert(typeof careerData.applicationId === 'string', `Career application ID created: ${careerData.applicationId}`);
+
+    // 8. Career Retrieval Check
+    console.log(`\n[TEST 8] Testing Career Application Retrieval`);
+    const getCareersRes = await fetch(`${BASE_URL}/api/career`);
+    const getCareersData = await getCareersRes.json();
+    assert(getCareersRes.status === 200, `GET /api/career returns HTTP 200`);
+    assert(Array.isArray(getCareersData.applications), `Returns array of job applications`);
+    const foundApp = getCareersData.applications.some(a => a.email === 'sarah.jenkins@devuk.org');
+    assert(foundApp, `Candidate application preserved in database`);
+
     console.log(`\n==================================================`);
     console.log(`API Test Results: ${passed} Passed, ${failed} Failed`);
     console.log(`==================================================\n`);

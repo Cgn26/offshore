@@ -8,7 +8,6 @@ export default function CookieBanner() {
   useEffect(() => {
     const consent = localStorage.getItem('greensleaf_cookie_consent');
     if (!consent) {
-      // Delay showing banner slightly for smoother UX
       const timer = setTimeout(() => setIsVisible(true), 1200);
       return () => clearTimeout(timer);
     }
@@ -32,24 +31,24 @@ export default function CookieBanner() {
       role="region"
       aria-label="Cookie consent banner"
     >
-      <div className="glass-panel p-5 rounded-2xl border border-neutral-700/80 shadow-2xl relative space-y-3">
+      <div className="bg-white/95 backdrop-blur-md p-5 rounded-2xl border border-neutral-200/90 shadow-xl relative space-y-3">
         <button
           onClick={handleDecline}
-          className="absolute top-4 right-4 p-1 rounded-md text-neutral-400 hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-1 rounded-md text-neutral-400 hover:text-neutral-700 transition-colors"
           aria-label="Dismiss cookie notice"
         >
           <X className="w-4 h-4" />
         </button>
 
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+          <div className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 shrink-0 mt-0.5">
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div className="space-y-1 pr-4">
-            <h4 className="text-sm font-heading font-semibold text-white">
+            <h4 className="text-sm font-heading font-semibold text-neutral-900">
               UK GDPR &amp; Privacy Compliance
             </h4>
-            <p className="text-xs text-neutral-400 leading-relaxed">
+            <p className="text-xs text-neutral-600 leading-relaxed">
               We use strictly necessary technical cookies to enhance navigation, analyze site performance, and ensure enterprise-grade security under the UK Data Protection Act 2018.
             </p>
           </div>
@@ -58,19 +57,19 @@ export default function CookieBanner() {
         <div className="flex flex-wrap items-center gap-2 pt-1">
           <button
             onClick={handleAccept}
-            className="px-3.5 py-1.5 rounded-lg bg-white text-neutral-950 font-semibold text-xs hover:bg-neutral-200 transition-colors shadow-sm"
+            className="px-3.5 py-1.5 rounded-lg bg-neutral-900 text-white font-semibold text-xs hover:bg-neutral-800 transition-colors shadow-xs"
           >
             Accept All
           </button>
           <button
             onClick={handleDecline}
-            className="px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 hover:text-white hover:bg-neutral-700 font-medium text-xs transition-colors"
+            className="px-3 py-1.5 rounded-lg bg-neutral-100 text-neutral-700 hover:bg-neutral-200 font-medium text-xs transition-colors"
           >
             Essential Only
           </button>
           <Link
             to="/cookies"
-            className="text-xs text-neutral-400 hover:text-emerald-400 underline underline-offset-4 ml-auto"
+            className="text-xs text-neutral-500 hover:text-emerald-700 underline underline-offset-4 ml-auto"
           >
             Cookie Policy
           </Link>

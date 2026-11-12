@@ -11,51 +11,42 @@ if (!fs.existsSync(PUBLIC_DIR)) {
   fs.mkdirSync(PUBLIC_DIR, { recursive: true });
 }
 
-// 1. Create crisp SVG Logo
-const svgLogo = `<svg width="800" height="240" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+// 1. Create clean SVG Logo (No bottom tagline, pure minimal lockup)
+const svgLogo = `<svg width="600" height="180" viewBox="0 0 600 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#4ade80" />
-      <stop offset="100%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#16a34a" />
     </linearGradient>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#18181b" />
       <stop offset="100%" stop-color="#09090b" />
     </linearGradient>
-    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#22c55e" flood-opacity="0.3" />
-    </filter>
   </defs>
 
   <!-- Logo Mark (Rounded Badge with Leaf Monogram) -->
-  <rect x="20" y="20" width="200" height="200" rx="44" fill="url(#bgGrad)" stroke="#27272a" stroke-width="3" />
+  <rect x="20" y="20" width="140" height="140" rx="32" fill="url(#bgGrad)" stroke="#27272a" stroke-width="2" />
   
   <!-- Stylized Geometric Leaf / G -->
-  <path d="M 120 56 C 85 56 60 84 60 120 C 60 156 86 184 122 184 C 158 184 180 156 180 120 L 180 114 L 120 114" 
-        stroke="url(#leafGrad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  <path d="M 90 48 C 65 48 48 68 48 90 C 48 114 65 132 90 132 C 114 132 130 114 130 90 L 130 86 L 90 86" 
+        stroke="url(#leafGrad)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none" />
   
-  <path d="M 96 146 C 114 130 134 110 160 84" 
-        stroke="#4ade80" stroke-width="7" stroke-linecap="round" opacity="0.85" />
+  <path d="M 72 108 C 85 96 100 82 116 66" 
+        stroke="#4ade80" stroke-width="5" stroke-linecap="round" opacity="0.9" />
   
-  <circle cx="120" cy="80" r="8" fill="#4ade80" filter="url(#subtleGlow)" />
+  <circle cx="90" cy="64" r="5" fill="#4ade80" />
 
-  <!-- Typography -->
-  <text x="260" y="132" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="76" letter-spacing="-2" fill="#ffffff">
-    Greens<tspan fill="#22c55e">Leaf</tspan>
-  </text>
-  
-  <text x="265" y="176" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="20" letter-spacing="6" fill="#a1a1aa">
-    UK ENTERPRISE IT &amp; AI
+  <!-- Typography: GreensLeaf -->
+  <text x="185" y="112" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="72" letter-spacing="-2" fill="#09090b">
+    Greens<tspan fill="#16a34a">Leaf</tspan>
   </text>
 </svg>`;
 
 fs.writeFileSync(path.join(PUBLIC_DIR, 'logo.svg'), svgLogo, 'utf-8');
-console.log('✓ Created public/logo.svg');
+console.log('✓ Created public/logo.svg (clean lockup without tagline)');
 
-// 2. Pure JavaScript PNG Generator (Zero native dependencies)
-// Writes a 512x512 PNG with the exact black rounded badge, green leaf accent, and typography
+// 2. Pure JavaScript PNG Generator (512x512)
 function createPng(width, height) {
-  // CRC32 table
   const crcTable = new Uint32Array(256);
   for (let n = 0; n < 256; n++) {
     let c = n;
@@ -84,7 +75,6 @@ function createPng(width, height) {
     return Buffer.concat([len, combined, crcBuf]);
   }
 
-  // Raw RGBA pixel buffer
   const rawBytes = Buffer.alloc(height * (1 + width * 4));
   let offset = 0;
 
@@ -92,46 +82,41 @@ function createPng(width, height) {
     rawBytes[offset++] = 0; // Filter byte: None
 
     for (let x = 0; x < width; x++) {
-      let r = 9;   // #090a0f deep background
-      let g = 10;
-      let b = 15;
+      // Light background (#fbfbfd)
+      let r = 251;
+      let g = 251;
+      let b = 253;
       let a = 255;
 
-      // Centered rounded card bounds (64 to width - 64)
       const cx = width / 2;
       const cy = height / 2;
-      const cardSize = width * 0.82;
+      const cardSize = width * 0.72;
       const half = cardSize / 2;
       const rx = Math.abs(x - cx);
       const ry = Math.abs(y - cy);
-      const radius = 60;
+      const radius = 54;
 
       const insideCard = (rx <= half && ry <= half - radius) ||
                          (ry <= half && rx <= half - radius) ||
                          (Math.hypot(rx - (half - radius), ry - (half - radius)) <= radius);
 
       if (insideCard) {
-        // Gradient badge background (#161822 to #0f1017)
-        const t = (y / height);
-        r = Math.round(22 - t * 8);
-        g = Math.round(24 - t * 8);
-        b = Math.round(34 - t * 10);
+        // Dark minimal emblem inside card (#18181b)
+        r = 24;
+        g = 24;
+        b = 27;
 
-        // Center Leaf / G Icon
+        // Leaf / G Icon
         const dx = x - cx;
-        const dy = y - (cy - 30);
+        const dy = y - cy;
         const distFromCircle = Math.hypot(dx, dy);
 
         // Circular ring
-        if (distFromCircle >= 65 && distFromCircle <= 95) {
-          // Arc angle
-          const angle = Math.atan2(dy, dx);
-          // G shaped cut: right opening
+        if (distFromCircle >= 65 && distFromCircle <= 96) {
           if (!(dx > 10 && dy > -20 && dy < 40)) {
-            // Leaf green gradient
-            r = 34;
-            g = 197;
-            b = 94;
+            r = 22;
+            g = 163;
+            b = 74; // emerald green
           }
         }
 
@@ -150,23 +135,11 @@ function createPng(width, height) {
           b = 128;
         }
 
-        // Glowing dot
+        // Accent dot
         if (Math.hypot(dx, dy + 80) <= 14) {
           r = 134;
           g = 239;
           b = 172;
-        }
-
-        // Subtle bottom text bar indicator
-        if (Math.abs(y - (cy + 130)) < 12 && Math.abs(x - cx) < 140) {
-          r = 244;
-          g = 244;
-          b = 245;
-        }
-        if (Math.abs(y - (cy + 160)) < 6 && Math.abs(x - cx) < 90) {
-          r = 161;
-          g = 161;
-          b = 170;
         }
       }
 
@@ -177,25 +150,19 @@ function createPng(width, height) {
     }
   }
 
-  // PNG Header
   const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
-
-  // IHDR
   const ihdr = Buffer.alloc(13);
   ihdr.writeUInt32BE(width, 0);
   ihdr.writeUInt32BE(height, 4);
-  ihdr[8] = 8; // 8-bit depth
-  ihdr[9] = 6; // Color type: RGBA
-  ihdr[10] = 0; // Compression: deflate
-  ihdr[11] = 0; // Filter: standard
-  ihdr[12] = 0; // Interlace: none
+  ihdr[8] = 8;
+  ihdr[9] = 6;
+  ihdr[10] = 0;
+  ihdr[11] = 0;
+  ihdr[12] = 0;
   const ihdrChunk = makeChunk('IHDR', ihdr);
 
-  // IDAT
   const compressed = zlib.deflateSync(rawBytes, { level: 9 });
   const idatChunk = makeChunk('IDAT', compressed);
-
-  // IEND
   const iendChunk = makeChunk('IEND', Buffer.alloc(0));
 
   return Buffer.concat([signature, ihdrChunk, idatChunk, iendChunk]);
@@ -203,4 +170,4 @@ function createPng(width, height) {
 
 const pngBuffer = createPng(512, 512);
 fs.writeFileSync(path.join(PUBLIC_DIR, 'logo.png'), pngBuffer);
-console.log('✓ Created public/logo.png (512x512 high-res PNG)');
+console.log('✓ Created public/logo.png (512x512 high-res clean PNG)');

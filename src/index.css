@@ -8,8 +8,8 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #08090d;
-    color: #f3f4f6;
+    background-color: #fbfbfd;
+    color: #18181b;
     overflow-x: hidden;
   }
 
@@ -19,12 +19,13 @@
   }
 }
 
-/* Custom Glass & Apple Minimalist Utilities */
+/* Apple-Style Minimalist Light Utilities */
 .glass-panel {
-  background: rgba(18, 20, 29, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
 }
 
 .glass-panel-hover {
@@ -32,43 +33,31 @@
 }
 
 .glass-panel-hover:hover {
-  background: rgba(26, 29, 41, 0.85);
-  border-color: rgba(255, 255, 255, 0.16);
+  background: #ffffff;
+  border-color: rgba(161, 161, 170, 0.6);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
   transform: translateY(-2px);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, #09090b 0%, #3f3f46 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-subtle {
-  background: linear-gradient(135deg, #f4f4f5 0%, #71717a 100%);
+  background: linear-gradient(135deg, #27272a 0%, #71717a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .grid-bg {
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
 }
 
 .glow-pill {
-  position: relative;
-}
-
-.glow-pill::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
