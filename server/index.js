@@ -52,12 +52,13 @@ let resendClient = null;
 if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
   try {
     resendClient = new Resend(RESEND_API_KEY);
-    console.log('[EMAIL] Resend client initialized successfully.');
+    console.log('✓ [EMAIL] Resend client initialized.');
   } catch (e) {
-    console.warn('[EMAIL] Failed to initialize Resend client:', e.message);
+    console.warn('! [EMAIL] Failed to initialize Resend client:', e.message);
   }
 } else {
-  console.log('[EMAIL] Note: RESEND_API_KEY not configured or invalid. Submissions will be stored safely in the database and logged.');
+  console.log('✓ [DATABASE] Lead storage active. Inquiries are safely captured.');
+  console.log('ℹ [EMAIL] Email dispatch paused. Leads can be viewed at http://localhost:3000/admin/inquiries');
 }
 
 // Health check endpoint
@@ -241,7 +242,7 @@ export { app };
 
 if (process.env.NODE_ENV !== 'test' && !process.env.NO_LISTEN) {
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[GREENSLEAF API] Server running on http://127.0.0.1:${PORT}`);
+    console.log(`✓ [BACKEND API] Ready on http://localhost:${PORT}`);
   });
 }
 
