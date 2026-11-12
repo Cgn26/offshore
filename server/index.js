@@ -93,16 +93,42 @@ const initPostgres = async () => {
         full_name VARCHAR(255) NOT NULL,
         email VARCHAR(255) NOT NULL,
         phone VARCHAR(64),
+        dob VARCHAR(32),
+        address TEXT,
+        postcode VARCHAR(32),
+        rtw_status VARCHAR(64),
+        rtw_share_code VARCHAR(64),
+        education_level VARCHAR(128),
+        education_field VARCHAR(128),
+        institution VARCHAR(255),
+        graduation_year VARCHAR(32),
+        uk_experience TEXT,
         role VARCHAR(255) NOT NULL,
         experience VARCHAR(128),
         portfolio TEXT,
         availability VARCHAR(128),
         cover_note TEXT,
+        declarations TEXT,
         consent BOOLEAN DEFAULT TRUE,
         timestamp TIMESTAMPTZ DEFAULT NOW(),
         status VARCHAR(32) DEFAULT 'under_review'
       );
     `;
+    try {
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS dob VARCHAR(32);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS address TEXT;`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS postcode VARCHAR(32);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS rtw_status VARCHAR(64);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS rtw_share_code VARCHAR(64);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS education_level VARCHAR(128);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS education_field VARCHAR(128);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS institution VARCHAR(255);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS graduation_year VARCHAR(32);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS uk_experience TEXT;`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS declarations TEXT;`;
+    } catch (migErr) {
+      console.log('ℹ [POSTGRES] Career columns migration note:', migErr.message);
+    }
     await sql`
       CREATE TABLE IF NOT EXISTS newsletter (
         id VARCHAR(64) PRIMARY KEY,
@@ -365,24 +391,39 @@ app.get('/api/newsletter', async (req, res) => {
   });
 });
 
-// POST /api/career - Submit a career application
+// POST /api/career - Submit a candidate application & digital resume
 app.post('/api/career', async (req, res) => {
   try {
     const {
       fullName,
       email,
       phone,
+      dob,
+      addressLine1,
+      city,
+      postcode,
+      rtwStatus,
+      rtwShareCode,
+      educationLevel,
+      educationField,
+      institution,
+      graduationYear,
+      ukExperiences,
+      noUkExperience,
       role,
       experience,
       portfolio,
       availability,
       coverNote,
+      confirmRtw,
+      confirmAccuracy,
+      consentGdpr,
       consent,
     } = req.body;
 
     if (!fullName || !email || !role) {
       return res.status(400).json({
-        error: 'Full Name, Email, and Position are required.',
+        error: 'Full Legal Name, Email, and Position Applied For are required.',
       });
     }
 
@@ -393,17 +434,37 @@ app.post('/api/career', async (req, res) => {
       });
     }
 
+    const fullAddress = [addressLine1, city].filter(Boolean).join(', ') || 'N/A';
+    const cleanPostcode = (postcode || '').trim().toUpperCase() || 'N/A';
+    const cleanUkExperience = Array.isArray(ukExperiences) ? ukExperiences : [];
+    const declarationsObj = {
+      confirmRtw: Boolean(confirmRtw),
+      confirmAccuracy: Boolean(confirmAccuracy),
+      consentGdpr: Boolean(consentGdpr || consent),
+    };
+
     const newApplication = {
       id: 'app_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
       fullName: fullName.trim(),
       email: email.trim().toLowerCase(),
       phone: phone ? phone.trim() : 'N/A',
+      dob: dob ? dob.trim() : 'N/A',
+      address: fullAddress,
+      postcode: cleanPostcode,
+      rtwStatus: rtwStatus || 'N/A',
+      rtwShareCode: (rtwShareCode || '').trim().toUpperCase() || 'N/A',
+      educationLevel: educationLevel || 'N/A',
+      educationField: educationField ? educationField.trim() : 'N/A',
+      institution: institution ? institution.trim() : 'N/A',
+      graduationYear: graduationYear ? graduationYear.trim() : 'N/A',
+      ukExperience: JSON.stringify(cleanUkExperience),
       role: role.trim(),
-      experience: experience || 'Mid-Level',
+      experience: experience || 'Entry Level / Junior',
       portfolio: portfolio ? portfolio.trim() : 'N/A',
       availability: availability || 'Immediate / 1 Month',
       coverNote: coverNote ? coverNote.trim() : '',
-      consent: Boolean(consent),
+      declarations: JSON.stringify(declarationsObj),
+      consent: Boolean(consentGdpr || consent),
       timestamp: new Date().toISOString(),
       status: 'under_review',
     };
@@ -412,13 +473,21 @@ app.post('/api/career', async (req, res) => {
     if (sql) {
       try {
         await sql`
-          INSERT INTO careers (id, full_name, email, phone, role, experience, portfolio, availability, cover_note, consent, timestamp, status)
-          VALUES (${newApplication.id}, ${newApplication.fullName}, ${newApplication.email}, ${newApplication.phone}, ${newApplication.role}, ${newApplication.experience}, ${newApplication.portfolio}, ${newApplication.availability}, ${newApplication.coverNote}, ${newApplication.consent}, ${newApplication.timestamp}, ${newApplication.status})
+          INSERT INTO careers (
+            id, full_name, email, phone, dob, address, postcode,
+            rtw_status, rtw_share_code, education_level, education_field, institution, graduation_year,
+            uk_experience, role, experience, portfolio, availability, cover_note, declarations, consent, timestamp, status
+          )
+          VALUES (
+            ${newApplication.id}, ${newApplication.fullName}, ${newApplication.email}, ${newApplication.phone}, ${newApplication.dob}, ${newApplication.address}, ${newApplication.postcode},
+            ${newApplication.rtwStatus}, ${newApplication.rtwShareCode}, ${newApplication.educationLevel}, ${newApplication.educationField}, ${newApplication.institution}, ${newApplication.graduationYear},
+            ${newApplication.ukExperience}, ${newApplication.role}, ${newApplication.experience}, ${newApplication.portfolio}, ${newApplication.availability}, ${newApplication.coverNote}, ${newApplication.declarations}, ${newApplication.consent}, ${newApplication.timestamp}, ${newApplication.status}
+          )
         `;
         savedToPostgres = true;
-        console.log(`✓ [POSTGRES] Saved career application ${newApplication.id}`);
+        console.log(`✓ [POSTGRES] Saved candidate application dossier ${newApplication.id}`);
       } catch (err) {
-        console.warn('! [POSTGRES] Failed saving career application, using JSON fallback:', err.message);
+        console.warn('! [POSTGRES] Failed saving career application to DB, falling back to JSON:', err.message);
       }
     }
 
@@ -429,44 +498,99 @@ app.post('/api/career', async (req, res) => {
       console.log(`✓ [JSON STORE] Saved career application ${newApplication.id}`);
     }
 
-    // Resend notification if configured
+    // Resend notification email formatted as an Executive Candidate Application Dossier
     if (resendClient) {
       try {
+        const expRows = cleanUkExperience.length > 0
+          ? cleanUkExperience.map((exp, i) => `
+              <div style="background: #ffffff; border: 1px solid #e4e4e7; border-radius: 6px; padding: 12px; margin-bottom: 8px;">
+                <div style="font-weight: bold; color: #09090b;">${i + 1}. ${exp.role || 'Role'} at ${exp.company || 'Employer'}</div>
+                <div style="font-size: 12px; color: #71717a; margin-top: 2px;">Dates: ${exp.startDate || 'N/A'} - ${exp.currentlyWorking ? 'Present (Currently Employed)' : (exp.endDate || 'N/A')}</div>
+                ${exp.summary ? `<div style="font-size: 13px; color: #27272a; margin-top: 6px; white-space: pre-wrap;">${exp.summary}</div>` : ''}
+              </div>
+            `).join('')
+          : '<p style="color: #71717a; font-style: italic;">No commercial UK employment in last 12 months (Entry-Level / Graduate Candidate).</p>';
+
         await resendClient.emails.send({
           from: SENDER_EMAIL,
           to: [TARGET_EMAIL],
           replyTo: newApplication.email,
-          subject: `[GreensLeaf Career Application] ${newApplication.role}: ${newApplication.fullName}`,
+          subject: `[GreensLeaf Candidate Dossier] ${newApplication.role}: ${newApplication.fullName} (Ref: ${newApplication.id})`,
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; padding: 20px; border: 1px solid #e4e4e7; border-radius: 8px;">
-              <h2 style="color: #09090b; border-bottom: 2px solid #16a34a; padding-bottom: 8px;">New Job Application Received</h2>
-              <p><strong>Candidate:</strong> ${newApplication.fullName}</p>
-              <p><strong>Email:</strong> ${newApplication.email}</p>
-              <p><strong>Phone:</strong> ${newApplication.phone}</p>
-              <p><strong>Position:</strong> ${newApplication.role}</p>
-              <p><strong>Experience:</strong> ${newApplication.experience}</p>
-              <p><strong>Portfolio / Profile:</strong> ${newApplication.portfolio}</p>
-              <p><strong>Availability:</strong> ${newApplication.availability}</p>
-              <div style="margin-top: 15px; padding: 12px; background: #f4f4f5; border-radius: 6px;">
-                <strong>Candidate Note:</strong>
-                <p style="white-space: pre-wrap; margin-top: 5px;">${newApplication.coverNote}</p>
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 680px; margin: 0 auto; padding: 24px; border: 1px solid #e4e4e7; border-radius: 12px; background: #ffffff; color: #09090b;">
+              <div style="border-bottom: 2px solid #059669; padding-bottom: 12px; margin-bottom: 20px;">
+                <span style="font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #059669;">GreensLeaf Limited • Candidate Application Dossier</span>
+                <h1 style="font-size: 22px; font-weight: 800; margin: 6px 0 0 0; color: #09090b;">${newApplication.fullName}</h1>
+                <p style="font-size: 13px; color: #71717a; margin: 4px 0 0 0;">Applied for: <strong style="color: #059669;">${newApplication.role}</strong> • Notice: ${newApplication.availability}</p>
+              </div>
+
+              <!-- Personal Details -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">1. Personal & Contact Information</h3>
+              <table style="width: 100%; font-size: 13px; border-collapse: collapse; margin-bottom: 16px;">
+                <tr><td style="padding: 6px 0; color: #71717a; width: 160px;">Date of Birth:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.dob}</td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">Email Address:</td><td style="padding: 6px 0; font-weight: 600;"><a href="mailto:${newApplication.email}">${newApplication.email}</a></td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">Telephone:</td><td style="padding: 6px 0; font-weight: 600;"><a href="tel:${newApplication.phone}">${newApplication.phone}</a></td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">UK Residential Address:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.address}, ${newApplication.postcode}</td></tr>
+              </table>
+
+              <!-- Right to Work Verification -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">2. UK Right to Work (RTW) Verification</h3>
+              <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                <div style="font-size: 13px; margin-bottom: 4px;"><strong>Immigration / RTW Status:</strong> ${newApplication.rtwStatus}</div>
+                <div style="font-size: 13px;"><strong>Home Office RTW Share Code:</strong> <span style="font-family: monospace; font-weight: bold; background: #ffffff; padding: 3px 8px; border-radius: 4px; border: 1px solid #86efac; color: #047857;">${newApplication.rtwShareCode}</span></div>
+              </div>
+
+              <!-- Education -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">3. Academic Qualifications</h3>
+              <table style="width: 100%; font-size: 13px; border-collapse: collapse; margin-bottom: 16px;">
+                <tr><td style="padding: 6px 0; color: #71717a; width: 160px;">Highest Level Degree:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.educationLevel}</td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">Field of Study:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.educationField}</td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">Institution / University:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.institution}</td></tr>
+                <tr><td style="padding: 6px 0; color: #71717a;">Graduation Year:</td><td style="padding: 6px 0; font-weight: 600;">${newApplication.graduationYear}</td></tr>
+              </table>
+
+              <!-- UK Experience -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">4. UK Employment History (Past 12 Months)</h3>
+              <div style="margin-bottom: 16px;">${expRows}</div>
+
+              <!-- Technical Portfolio & Note -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">5. Technical Profile & Summary</h3>
+              <div style="font-size: 13px; margin-bottom: 8px;"><strong>Portfolio / GitHub / LinkedIn:</strong> <a href="${newApplication.portfolio}" target="_blank">${newApplication.portfolio}</a></div>
+              ${newApplication.coverNote ? `
+                <div style="background: #f4f4f5; border-radius: 8px; padding: 12px; font-size: 13px; color: #27272a; white-space: pre-wrap; margin-bottom: 16px;">
+                  <strong>Candidate Statement:</strong><br/>
+                  ${newApplication.coverNote}
+                </div>
+              ` : ''}
+
+              <!-- Declarations -->
+              <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #52525b; border-bottom: 1px solid #f4f4f5; padding-bottom: 4px; margin-top: 16px;">6. Statutory Declarations</h3>
+              <div style="font-size: 12px; color: #047857; margin-top: 6px;">
+                ✓ Right to Work Home Office verification check authorized<br/>
+                ✓ Statement of accuracy & pre-employment background checks confirmed<br/>
+                ✓ UK GDPR and Data Protection Act 2018 consent recorded
+              </div>
+
+              <div style="margin-top: 24px; padding-top: 12px; border-top: 1px solid #e4e4e7; font-size: 11px; color: #a1a1aa; text-align: center;">
+                Application ID: ${newApplication.id} • Received ${new Date(newApplication.timestamp).toUTCString()} • GreensLeaf Limited Recruitment
               </div>
             </div>
           `,
         });
+        console.log(`✓ [EMAIL] Candidate dossier dispatched via Resend for ${newApplication.id}`);
       } catch (e) {
-        console.warn('[EMAIL NOTIFICATION NOTICE] Resend returned:', e.message);
+        console.warn('! [EMAIL NOTIFICATION NOTICE] Resend returned:', e.message);
       }
     }
 
     return res.status(201).json({
       success: true,
-      message: 'Thank you for your application! Our technical hiring team will review your profile and contact you.',
+      message: 'Your job application and candidate credentials have been recorded with GreensLeaf Limited technical recruitment.',
       applicationId: newApplication.id,
     });
   } catch (err) {
     console.error('Error saving career application:', err);
-    return res.status(500).json({ error: 'Failed to submit application. Please try again or email connect@greensleaf.uk' });
+    return res.status(500).json({ error: 'Failed to process application. Please try again or email connect@greensleaf.uk' });
   }
 });
 
@@ -480,11 +604,22 @@ app.get('/api/career', async (req, res) => {
         fullName: r.full_name,
         email: r.email,
         phone: r.phone,
+        dob: r.dob,
+        address: r.address,
+        postcode: r.postcode,
+        rtwStatus: r.rtw_status,
+        rtwShareCode: r.rtw_share_code,
+        educationLevel: r.education_level,
+        educationField: r.education_field,
+        institution: r.institution,
+        graduationYear: r.graduation_year,
+        ukExperience: r.uk_experience,
         role: r.role,
         experience: r.experience,
         portfolio: r.portfolio,
         availability: r.availability,
         coverNote: r.cover_note,
+        declarations: r.declarations,
         consent: r.consent,
         timestamp: r.timestamp,
         status: r.status,

@@ -322,61 +322,143 @@ export default function AdminInquiries() {
               </p>
             </div>
           ) : (
-            filteredCareers.map((app) => (
-              <div
-                key={app.id}
-                className="rounded-2xl bg-white p-6 border border-neutral-200 shadow-2xs space-y-4"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-neutral-100 border border-neutral-200 text-neutral-800 flex items-center justify-center font-bold text-xs">
-                      <User className="w-4 h-4 text-emerald-600" />
+            filteredCareers.map((app) => {
+              let parsedExperiences = [];
+              try {
+                if (typeof app.ukExperience === 'string' && app.ukExperience.startsWith('[')) {
+                  parsedExperiences = JSON.parse(app.ukExperience);
+                } else if (Array.isArray(app.ukExperience)) {
+                  parsedExperiences = app.ukExperience;
+                }
+              } catch {}
+
+              return (
+                <div
+                  key={app.id}
+                  className="rounded-2xl bg-white p-6 border border-neutral-200 shadow-2xs space-y-4"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-800 flex items-center justify-center font-bold text-xs">
+                        <User className="w-5 h-5 text-emerald-600" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-base font-bold text-neutral-950">{app.fullName}</h3>
+                          {app.dob && app.dob !== 'N/A' && (
+                            <span className="text-[11px] px-2 py-0.5 rounded bg-neutral-100 text-neutral-600 font-mono">
+                              DOB: {app.dob}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-[11px] text-neutral-500 flex flex-wrap items-center gap-2 mt-0.5">
+                          <span className="font-semibold text-neutral-900">{app.role}</span>
+                          <span>&bull;</span>
+                          <span className="text-emerald-700 font-medium">{app.experience}</span>
+                          <span>&bull;</span>
+                          <span>Notice: {app.availability}</span>
+                          <span>&bull;</span>
+                          <span className="font-mono text-neutral-400">Ref: {app.id}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-neutral-950">{app.fullName}</h3>
-                      <div className="text-[11px] text-neutral-500 flex items-center gap-2">
-                        <span className="font-semibold text-neutral-900">{app.role}</span>
-                        <span>&bull;</span>
-                        <span className="text-emerald-700 font-medium">{app.experience}</span>
-                        <span>&bull;</span>
-                        <span>Notice: {app.availability}</span>
+
+                    <div className="flex items-center gap-2 text-[11px] text-neutral-400">
+                      <Calendar className="w-3.5 h-3.5 text-neutral-400" />
+                      <span>{new Date(app.timestamp).toLocaleString('en-GB')}</span>
+                    </div>
+                  </div>
+
+                  {/* Contact & Address Strip */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-neutral-50 p-3 rounded-xl border border-neutral-100">
+                    <div className="flex items-center gap-2 text-neutral-700">
+                      <Mail className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <a href={`mailto:${app.email}`} className="hover:underline font-medium">{app.email}</a>
+                    </div>
+                    <div className="flex items-center gap-2 text-neutral-700">
+                      <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <a href={`tel:${app.phone}`} className="hover:underline font-medium">{app.phone}</a>
+                    </div>
+                    {app.address && app.address !== 'N/A' && (
+                      <div className="flex items-center gap-2 text-neutral-700 truncate">
+                        <span className="font-semibold text-neutral-900">Address:</span>
+                        <span className="text-neutral-600 truncate">{app.address}{app.postcode && app.postcode !== 'N/A' ? `, ${app.postcode}` : ''}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* RTW & Education Badges */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    {/* RTW Verification */}
+                    <div className="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/80 space-y-1">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
+                        <span>Home Office Right to Work</span>
+                      </div>
+                      <div className="text-neutral-800 font-medium">{app.rtwStatus || 'Not specified'}</div>
+                      {app.rtwShareCode && app.rtwShareCode !== 'N/A' && (
+                        <div className="text-[11px] text-emerald-900 font-mono mt-1">
+                          Share Code / Ref: <span className="font-bold bg-white px-2 py-0.5 rounded border border-emerald-300">{app.rtwShareCode}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Education */}
+                    <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200 space-y-1">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-700">
+                        Academic Qualifications
+                      </div>
+                      <div className="text-neutral-900 font-semibold">{app.educationLevel || 'Degree not specified'}</div>
+                      <div className="text-[11px] text-neutral-600">
+                        {app.educationField || ''} {app.institution ? `at ${app.institution}` : ''} {app.graduationYear ? `(${app.graduationYear})` : ''}
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-[11px] text-neutral-400">
-                    <Calendar className="w-3 h-3 text-neutral-400" />
-                    <span>{new Date(app.timestamp).toLocaleString('en-GB')}</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-neutral-700">
-                    <Mail className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <a href={`mailto:${app.email}`} className="hover:underline">{app.email}</a>
-                  </div>
-                  <div className="flex items-center gap-2 text-neutral-700">
-                    <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <a href={`tel:${app.phone}`} className="hover:underline">{app.phone}</a>
-                  </div>
-                  {app.portfolio && app.portfolio !== 'N/A' && (
-                    <div className="flex items-center gap-2 text-neutral-700">
-                      <span className="font-semibold text-neutral-900">Profile:</span>
-                      <a href={app.portfolio} target="_blank" rel="noreferrer" className="text-emerald-700 hover:underline truncate max-w-[200px]">
-                        {app.portfolio}
-                      </a>
+                  {/* UK Work Experience (Past 12 Months) */}
+                  {parsedExperiences.length > 0 && (
+                    <div className="space-y-2 border-t border-neutral-100 pt-3">
+                      <div className="text-xs font-bold text-neutral-900 uppercase tracking-wider font-heading">
+                        UK Employment History (Past 12 Months):
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                        {parsedExperiences.map((exp, expIdx) => (
+                          <div key={expIdx} className="p-2.5 rounded-lg bg-neutral-50 border border-neutral-200 text-xs space-y-1">
+                            <div className="font-bold text-neutral-950">{exp.role || 'Role'}</div>
+                            <div className="text-emerald-700 font-medium text-[11px]">{exp.company || 'Company'}</div>
+                            <div className="text-[10px] text-neutral-500">
+                              {exp.startDate} - {exp.currentlyWorking ? 'Present' : exp.endDate || 'N/A'}
+                            </div>
+                            {exp.summary && (
+                              <p className="text-[11px] text-neutral-600 pt-1 leading-snug">{exp.summary}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
-                </div>
 
-                {app.coverNote && (
-                  <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs space-y-1">
-                    <div className="font-semibold text-neutral-900">Candidate Introduction:</div>
-                    <p className="text-neutral-600 leading-relaxed whitespace-pre-wrap">{app.coverNote}</p>
+                  {/* Profile Link & Cover Note */}
+                  <div className="space-y-2 border-t border-neutral-100 pt-3">
+                    {app.portfolio && app.portfolio !== 'N/A' && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="font-semibold text-neutral-900">Portfolio / GitHub / LinkedIn:</span>
+                        <a href={app.portfolio} target="_blank" rel="noreferrer" className="text-emerald-700 hover:underline font-mono text-[11px] truncate max-w-md">
+                          {app.portfolio}
+                        </a>
+                      </div>
+                    )}
+
+                    {app.coverNote && (
+                      <div className="p-3 rounded-xl bg-neutral-50 border border-neutral-200 text-xs space-y-1">
+                        <div className="font-semibold text-neutral-900">Candidate Statement &amp; Systems Engineered:</div>
+                        <p className="text-neutral-600 leading-relaxed whitespace-pre-wrap">{app.coverNote}</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))
+                </div>
+              );
+            })
           )}
         </div>
       )}
