@@ -334,12 +334,12 @@ export default function Careers() {
         </div>
       </div>
 
-      {/* Formal Candidate Application & Resume Dossier */}
+      {/* Formal Candidate Application */}
       <div id="application-form" className="rounded-3xl bg-white p-6 sm:p-12 border border-neutral-200/90 shadow-sm space-y-8">
         <div className="space-y-2 border-b border-neutral-200 pb-5">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
             <FileText className="w-3.5 h-3.5" />
-            <span>GreensLeaf Limited &bull; Employment Application &amp; Resume Dossier</span>
+            <span>GreensLeaf Limited &bull; Employment Application </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-neutral-950">
             Candidate Application
