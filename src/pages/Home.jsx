@@ -25,31 +25,31 @@ export default function Home({ onOpenLogoModal }) {
       <section className="relative bg-white border-b border-neutral-200/80 pt-16 pb-20 sm:pt-24 sm:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-8">
-            {/* Main Bold Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
+            {/* Main Bold Headline with Animate.css Entrance */}
+            <h1 className="animate__animated animate__fadeInDown text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
               High-Reliability <br className="hidden sm:inline" />
               <span className="text-neutral-950">Cloud Platforms &amp; </span>
               <span className="text-emerald-700">Private AI</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base sm:text-xl text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+            <p className="animate__animated animate__fadeInUp text-base sm:text-xl text-neutral-700 max-w-2xl mx-auto leading-relaxed">
               GreensLeaf designs, deploys, and maintains cloud infrastructure and private conversational AI for UK businesses. Direct access to named senior UK engineers, fixed-scope proposals, and strict sovereign data governance.
             </p>
 
-            {/* Dual CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            {/* Dual CTAs with Hover.css Effects */}
+            <div className="animate__animated animate__fadeInUp flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link
                 to="/contact"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-neutral-950 text-white font-bold text-sm sm:text-base hover:bg-neutral-800 transition-all duration-200 shadow-sm flex items-center justify-center gap-2 active:scale-95"
+                className="hover-button-scale w-full sm:w-auto px-8 py-3.5 rounded-xl bg-neutral-950 text-white font-bold text-sm sm:text-base hover:bg-neutral-800 transition-all duration-200 shadow-sm flex items-center justify-center gap-2 group"
               >
                 <span>Book Technical Consultation</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
               </Link>
               
               <a
                 href={`tel:${COMPANY_INFO.phone}`}
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white text-neutral-900 font-semibold text-sm sm:text-base hover:bg-neutral-50 border border-neutral-300 shadow-2xs transition-all duration-200 flex items-center justify-center gap-2.5 active:scale-95"
+                className="hover-button-scale w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white text-neutral-900 font-semibold text-sm sm:text-base hover:bg-neutral-50 border border-neutral-300 shadow-2xs transition-all duration-200 flex items-center justify-center gap-2.5"
               >
                 <Phone className="w-4 h-4 text-emerald-700" />
                 <span>Call {COMPANY_INFO.phoneDisplay}</span>
@@ -58,19 +58,19 @@ export default function Home({ onOpenLogoModal }) {
 
             {/* Trust Badges */}
             <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 sm:gap-x-8 text-xs font-semibold text-neutral-700">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+              <div className="hover-lift flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
                 <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>Cyber Essentials Plus Ready</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+              <div className="hover-lift flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
                 <Lock className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>UK GDPR &amp; DPA 2018 Compliant</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+              <div className="hover-lift flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
                 <Award className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>ISO 27001 Aligned Controls</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+              <div className="hover-lift flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
                 <Server className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>London Sovereign VPCs</span>
               </div>
@@ -87,7 +87,7 @@ export default function Home({ onOpenLogoModal }) {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-left">
             {CLIENT_LOGOS.map((c, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-neutral-50/80 border border-neutral-200/70 hover:border-neutral-300 transition-colors">
+              <div key={idx} className="hover-lift p-3.5 rounded-xl bg-neutral-50/80 border border-neutral-200/70 hover:border-emerald-400/80 transition-all cursor-default">
                 <div className="font-heading font-bold text-xs text-neutral-900">{c.name}</div>
                 <div className="text-[11px] text-neutral-500 mt-1 leading-relaxed">{c.sector}</div>
               </div>
@@ -102,9 +102,9 @@ export default function Home({ onOpenLogoModal }) {
           {CORE_METRICS.map((metric, idx) => (
             <div 
               key={idx}
-              className="bg-white p-5 sm:p-6 lg:p-8 rounded-2xl border border-neutral-200/90 text-center space-y-1 relative group hover:border-neutral-300 hover:shadow-md transition-all shadow-xs"
+              className="hover-lift bg-white p-5 sm:p-6 lg:p-8 rounded-2xl border border-neutral-200/90 text-center space-y-1 relative group hover:border-emerald-300 transition-all shadow-xs"
             >
-              <div className="text-3xl sm:text-4xl font-heading font-extrabold text-neutral-950">
+              <div className="text-3xl sm:text-4xl font-heading font-extrabold text-neutral-950 group-hover:text-emerald-700 transition-colors">
                 {metric.value}
               </div>
               <div className="text-sm font-semibold text-neutral-900">
@@ -128,19 +128,19 @@ export default function Home({ onOpenLogoModal }) {
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight">
               Engineered for resilience, <br />
-              scaled for <span className="text-emerald-700">maximum conversion.</span>
+              built for <span className="text-emerald-700">enterprise uptime.</span>
             </h2>
           </div>
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-700 hover:text-neutral-950 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-700 hover:text-emerald-700 transition-colors group"
           >
             <span>View all 6 service specialisms</span>
-            <ChevronRight className="w-4 h-4 text-emerald-600" />
+            <ChevronRight className="w-4 h-4 text-emerald-600 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
 
-        {/* Services Grid */}
+        {/* Services Grid with Hover.css Effects */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {SERVICES.map((service) => {
             const IconComponent = iconMap[service.icon] || Code2;
@@ -149,9 +149,9 @@ export default function Home({ onOpenLogoModal }) {
             return (
               <div
                 key={service.id}
-                className={`bg-white p-8 rounded-2xl flex flex-col justify-between relative overflow-hidden group border transition-all ${
+                className={`hover-lift bg-white p-8 rounded-2xl flex flex-col justify-between relative overflow-hidden group border transition-all ${
                   isAi 
-                    ? 'border-emerald-300 bg-gradient-to-b from-emerald-50/40 via-white to-white shadow-sm ring-1 ring-emerald-500/10' 
+                    ? 'border-emerald-300 bg-gradient-to-b from-emerald-50/40 via-white to-white shadow-sm ring-1 ring-emerald-500/10 hover:border-emerald-500' 
                     : 'border-neutral-200/90 hover:border-neutral-300 shadow-xs hover:shadow-md'
                 }`}
               >
@@ -164,7 +164,7 @@ export default function Home({ onOpenLogoModal }) {
                 )}
 
                 <div className="space-y-5">
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border ${
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${
                     isAi 
                       ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
                       : 'bg-neutral-100 text-neutral-900 border-neutral-200'
@@ -197,7 +197,7 @@ export default function Home({ onOpenLogoModal }) {
                     className="inline-flex items-center justify-between w-full text-xs font-semibold text-neutral-800 group-hover:text-emerald-700 transition-colors"
                   >
                     <span>{isAi ? 'Explore AI Architecture & Demo' : 'Detailed Technical Specs'}</span>
-                    <ArrowUpRight className="w-4 h-4 text-emerald-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    <ArrowUpRight className="w-4 h-4 text-emerald-600 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                   </Link>
                 </div>
               </div>
@@ -225,14 +225,14 @@ export default function Home({ onOpenLogoModal }) {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/services/ai-chatbot"
-                  className="px-6 py-3 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 transition-all flex items-center gap-2 shadow-sm"
+                  className="hover-button-scale px-6 py-3 rounded-xl bg-neutral-950 text-white font-bold text-sm hover:bg-neutral-800 transition-all flex items-center gap-2 shadow-sm group"
                 >
                   <span>Explore AI Architecture &amp; Demo</span>
-                  <ArrowUpRight className="w-4 h-4" />
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
                 </Link>
                 <Link
                   to="/contact?service=AI+Chatbot+Development"
-                  className="px-6 py-3 rounded-xl bg-white text-neutral-800 hover:text-neutral-950 border border-neutral-300 font-semibold text-sm transition-all shadow-2xs"
+                  className="hover-button-scale px-6 py-3 rounded-xl bg-white text-neutral-800 hover:text-neutral-950 border border-neutral-300 font-semibold text-sm transition-all shadow-2xs"
                 >
                   Request Technical Feasibility Review
                 </Link>
@@ -241,22 +241,22 @@ export default function Home({ onOpenLogoModal }) {
 
             {/* Visual Simulator Preview */}
             <div className="lg:col-span-5">
-              <div className="rounded-2xl bg-neutral-50 border border-neutral-200/90 p-5 shadow-xs space-y-4">
+              <div className="hover-lift rounded-2xl bg-neutral-50 border border-neutral-200/90 p-5 shadow-xs space-y-4">
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-bold text-neutral-900 font-mono">GreensLeaf Assistant</span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 beacon-pulse" />
+                    <span className="text-xs font-bold text-neutral-950 font-mono">GreensLeaf Assistant</span>
                   </div>
                   <span className="text-[10px] text-neutral-500 font-mono">London VPC &bull; Sub-100ms</span>
                 </div>
 
                 <div className="space-y-2.5 text-xs">
                   <div className="p-3 rounded-xl bg-white text-neutral-700 border border-neutral-200/80 shadow-2xs">
-                    <strong className="text-neutral-400 block text-[10px] uppercase mb-1">Staff Query:</strong>
+                    <strong className="text-neutral-400 block text-[10px] uppercase mb-1 font-mono">Staff Query:</strong>
                     "Can we verify policy section 4.2 eligibility without sending customer PII to external APIs?"
                   </div>
                   <div className="p-3 rounded-xl bg-emerald-50/70 text-neutral-800 border border-emerald-200/80">
-                    <strong className="text-emerald-800 block text-[10px] uppercase mb-1">GreensLeaf Private Engine:</strong>
+                    <strong className="text-emerald-800 block text-[10px] uppercase mb-1 font-mono">GreensLeaf Private Engine:</strong>
                     "Yes. Embeddings and document chunks remain within your UK VPC. Analysis produces verified section citations with zero external retention, aligned with DPA 2018 and FCA requirements."
                   </div>
                 </div>
@@ -284,10 +284,10 @@ export default function Home({ onOpenLogoModal }) {
           {INDUSTRIES.map((ind) => (
             <div
               key={ind.id}
-              className="bg-white p-8 rounded-2xl border border-neutral-200/90 space-y-6 hover:border-neutral-300 hover:shadow-md transition-all shadow-xs"
+              className="hover-lift bg-white p-8 rounded-2xl border border-neutral-200/90 space-y-6 hover:border-emerald-300/80 transition-all shadow-xs"
             >
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 font-mono">
                   Sector Specialization
                 </span>
                 <h3 className="text-2xl font-heading font-bold text-neutral-950">
@@ -299,10 +299,10 @@ export default function Home({ onOpenLogoModal }) {
               </div>
 
               {/* Case Study Card */}
-              <div className="p-5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-3">
+              <div className="p-5 rounded-xl bg-neutral-50/90 border border-neutral-200/80 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-neutral-900">Case Study: {ind.caseStudy.client}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">Verified ROI</span>
+                  <span className="text-xs font-bold text-neutral-900 font-mono">Case Study: {ind.caseStudy.client}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase font-mono">Verified ROI</span>
                 </div>
                 <p className="text-xs text-neutral-600">
                   <strong className="text-neutral-800">Challenge: </strong>{ind.caseStudy.problem}
@@ -321,7 +321,7 @@ export default function Home({ onOpenLogoModal }) {
         </div>
       </section>
 
-      {/* WHY GREENSLEAF - APPLE MINIMALISM 4 PILLARS */}
+      {/* WHY GREENSLEAF - 4 PILLARS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-neutral-950 tracking-tight">
@@ -333,32 +333,32 @@ export default function Home({ onOpenLogoModal }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3">
-            <span className="text-2xl font-bold font-mono text-emerald-600">01</span>
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3 group hover:border-emerald-300/80 transition-all">
+            <span className="text-2xl font-bold font-mono text-emerald-600 group-hover:scale-110 group-hover:text-emerald-700 transition-transform duration-200 inline-block">01</span>
             <h4 className="text-base font-heading font-bold text-neutral-950">Direct Senior Engineers</h4>
             <p className="text-xs text-neutral-600 leading-relaxed">
               No account managers or offshore tier-1 desks. You communicate directly with the senior engineers designing your architecture.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3">
-            <span className="text-2xl font-bold font-mono text-emerald-600">02</span>
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3 group hover:border-emerald-300/80 transition-all">
+            <span className="text-2xl font-bold font-mono text-emerald-600 group-hover:scale-110 group-hover:text-emerald-700 transition-transform duration-200 inline-block">02</span>
             <h4 className="text-base font-heading font-bold text-neutral-950">Sovereign UK Data</h4>
             <p className="text-xs text-neutral-600 leading-relaxed">
               Full adherence to UK GDPR and the Data Protection Act 2018. All compute and storage remain inside British jurisdictions.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3">
-            <span className="text-2xl font-bold font-mono text-emerald-600">03</span>
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3 group hover:border-emerald-300/80 transition-all">
+            <span className="text-2xl font-bold font-mono text-emerald-600 group-hover:scale-110 group-hover:text-emerald-700 transition-transform duration-200 inline-block">03</span>
             <h4 className="text-base font-heading font-bold text-neutral-950">Fixed-Price Clarity</h4>
             <p className="text-xs text-neutral-600 leading-relaxed">
               Transparent, milestone-based Statements of Work (SOW). No runaway hourly billing or surprise infrastructure fees.
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3">
-            <span className="text-2xl font-bold font-mono text-emerald-600">04</span>
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-3 group hover:border-emerald-300/80 transition-all">
+            <span className="text-2xl font-bold font-mono text-emerald-600 group-hover:scale-110 group-hover:text-emerald-700 transition-transform duration-200 inline-block">04</span>
             <h4 className="text-base font-heading font-bold text-neutral-950">Zero Technical Debt</h4>
             <p className="text-xs text-neutral-600 leading-relaxed">
               We engineer maintainable, fully-documented TypeScript, Python, and IaC repositories that your team can own indefinitely.
@@ -370,13 +370,13 @@ export default function Home({ onOpenLogoModal }) {
       {/* TESTIMONIALS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         <div className="text-center space-y-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">Client Endorsements</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 font-mono">Client Endorsements</span>
           <h2 className="text-3xl font-extrabold text-neutral-950">Trusted by UK Technology Leaders</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {TESTIMONIALS.map((t, idx) => (
-            <div key={idx} className="bg-white p-7 rounded-2xl border border-neutral-200/90 shadow-xs flex flex-col justify-between space-y-6">
+            <div key={idx} className="hover-lift bg-white p-7 rounded-2xl border border-neutral-200/90 shadow-xs flex flex-col justify-between space-y-6 hover:border-neutral-300 transition-all">
               <p className="text-xs text-neutral-700 italic leading-relaxed">
                 "{t.quote}"
               </p>

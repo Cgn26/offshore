@@ -215,61 +215,61 @@ export default function AIChatbotService() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center">
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4 group hover:border-emerald-400/90 transition-all">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center transition-transform group-hover:scale-110">
               <Database className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-heading font-bold text-neutral-950">Hybrid Vector Pipeline</h3>
+            <h3 className="text-lg font-heading font-bold text-neutral-950 group-hover:text-emerald-700 transition-colors">Hybrid Vector Pipeline</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
               We combine BM25 exact keyword matching with dense neural embeddings (Pinecone, Qdrant) and cross-encoder re-ranking to guarantee sub-millisecond document retrieval with pin-point citation accuracy.
             </p>
             <ul className="text-xs text-neutral-700 space-y-1.5">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Chunking optimized for tables &amp; PDFs</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Dynamic metadata access filters</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center">
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4 group hover:border-emerald-400/90 transition-all">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center transition-transform group-hover:scale-110">
               <Lock className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-heading font-bold text-neutral-950">Zero-Data Retention &amp; GDPR</h3>
+            <h3 className="text-lg font-heading font-bold text-neutral-950 group-hover:text-emerald-700 transition-colors">Zero-Data Retention &amp; GDPR</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
               Zero telemetry leaks. Everything runs inside customer-owned VPCs in London with customer-managed encryption keys (KMS). No customer data is ever retained for model training.
             </p>
             <ul className="text-xs text-neutral-700 space-y-1.5">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Full UK DPA 2018 adherence</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Automated PII redaction filters</span>
               </li>
             </ul>
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center">
+          <div className="hover-lift bg-white p-6 rounded-2xl border border-neutral-200 shadow-xs space-y-4 group hover:border-emerald-400/90 transition-all">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center transition-transform group-hover:scale-110">
               <MessageSquare className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-heading font-bold text-neutral-950">Omnichannel Orchestration</h3>
+            <h3 className="text-lg font-heading font-bold text-neutral-950 group-hover:text-emerald-700 transition-colors">Omnichannel Orchestration</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
               Deploy your AI agent across every corporate touchpoint: embedded React web widget, Microsoft Teams bot, internal Slack channels, or verified WhatsApp Business API.
             </p>
             <ul className="text-xs text-neutral-700 space-y-1.5">
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Unified session state &amp; memory</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Graceful human handover routing</span>
               </li>
             </ul>

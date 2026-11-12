@@ -43,10 +43,10 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors nav-link-hover ${
                     isActive
                       ? 'text-neutral-950 bg-neutral-100 font-semibold'
-                      : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-50'
+                      : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-50/80'
                   }`
                 }
               >
@@ -59,7 +59,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <a
               href={`tel:${COMPANY_INFO.phone}`}
-              className="flex items-center gap-1.5 text-xs font-semibold text-neutral-700 hover:text-emerald-700 transition-colors"
+              className="hover-button-scale flex items-center gap-1.5 text-xs font-semibold text-neutral-700 hover:text-emerald-700 transition-colors"
               title={`Direct Line: ${COMPANY_INFO.phoneDisplay}`}
             >
               <Phone className="w-3.5 h-3.5 text-emerald-700" />
@@ -68,10 +68,10 @@ export default function Navbar() {
 
             <Link
               to="/contact"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-900 text-white text-xs font-semibold hover:bg-neutral-800 transition-colors shadow-2xs active:scale-95"
+              className="hover-button-scale inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-neutral-900 text-white text-xs font-semibold hover:bg-neutral-800 transition-colors shadow-2xs group"
             >
               <span>Book Consultation</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
 

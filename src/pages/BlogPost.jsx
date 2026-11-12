@@ -72,22 +72,22 @@ export default function BlogPost() {
       </div>
 
       {/* Author & Consultation Box */}
-      <div className="rounded-3xl bg-neutral-50 p-8 border border-neutral-200 space-y-4 mt-12">
-        <h3 className="text-xl font-bold text-neutral-950">Need advice on implementing this in your architecture?</h3>
-        <p className="text-xs text-neutral-600 leading-relaxed max-w-2xl">
+      <div className="rounded-3xl bg-neutral-50 p-8 border border-neutral-200 space-y-4 mt-12 hover-lift transition-all">
+        <h3 className="text-xl font-heading font-bold text-neutral-950">Need advice on implementing this in your architecture?</h3>
+        <p className="text-xs text-neutral-600 leading-relaxed max-w-2xl font-sans">
           Contact GreensLeaf for a confidential, NDA-backed technical assessment. Our senior engineers in London &amp; Luton can review your requirements and provide clear implementation milestones.
         </p>
         <div className="flex flex-wrap items-center gap-4 pt-2">
           <Link
             to="/contact"
-            className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition-colors inline-flex items-center gap-2 shadow-xs"
+            className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 hover-button-scale transition-colors inline-flex items-center gap-2 shadow-xs group"
           >
             <span>Book Consultation</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </Link>
           <a
             href={`tel:${COMPANY_INFO.phone}`}
-            className="px-5 py-2.5 rounded-xl bg-white border border-neutral-300 text-neutral-800 hover:text-neutral-950 font-semibold text-xs transition-colors inline-flex items-center gap-2 shadow-2xs"
+            className="px-5 py-2.5 rounded-xl bg-white border border-neutral-300 text-neutral-800 hover:text-neutral-950 hover-button-scale font-semibold text-xs transition-colors inline-flex items-center gap-2 shadow-2xs"
           >
             <Phone className="w-3.5 h-3.5 text-emerald-600" />
             <span>Call {COMPANY_INFO.phoneDisplay}</span>

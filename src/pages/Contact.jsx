@@ -104,15 +104,16 @@ export default function Contact() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-16">
       {/* Header */}
-      <div className="max-w-3xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+      <div className="max-w-3xl space-y-4 animate__animated animate__fadeInDown">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
           <span>UK Engineering Advisory</span>
         </div>
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Initiate a Technical <br />
           <span className="text-emerald-700">Consultation</span>
         </h1>
-        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-sans">
           Speak directly with our senior UK architects. We provide confidential, NDA-backed scoping for bespoke software, cloud infrastructure, and enterprise AI chatbot deployments.
         </p>
       </div>
@@ -324,7 +325,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full py-3.5 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 transition-colors shadow-xs active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="w-full py-3.5 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 hover-button-scale transition-colors shadow-xs active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {status === 'loading' ? (
                     <>
@@ -345,13 +346,13 @@ export default function Contact() {
 
         {/* Right Info Box */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="rounded-3xl bg-white p-8 border border-neutral-200/90 shadow-sm space-y-6">
+          <div className="rounded-3xl bg-white p-8 border border-neutral-200/90 shadow-sm space-y-6 hover-lift transition-all">
             <h3 className="text-xl font-heading font-bold text-neutral-950">Direct UK Contact Information</h3>
 
             <div className="space-y-4 text-xs">
               <a
                 href={`tel:${COMPANY_INFO.phone}`}
-                className="flex items-start gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 hover:border-emerald-400 transition-colors group"
+                className="flex items-start gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 hover:border-emerald-400 hover:bg-emerald-50/40 transition-all group"
               >
                 <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700 border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                   <Phone className="w-4 h-4" />
@@ -364,7 +365,7 @@ export default function Contact() {
 
               <a
                 href={`mailto:${COMPANY_INFO.email}`}
-                className="flex items-start gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 hover:border-emerald-400 transition-colors group"
+                className="flex items-start gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 hover:border-emerald-400 hover:bg-emerald-50/40 transition-all group"
               >
                 <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700 border border-emerald-200 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                   <Mail className="w-4 h-4" />

@@ -98,58 +98,58 @@ export default function Careers() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-20">
       {/* Page Header */}
-      <div className="max-w-3xl space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
-          <Briefcase className="w-3.5 h-3.5" />
+      <div className="max-w-3xl space-y-4 animate__animated animate__fadeInDown">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <Briefcase className="w-3.5 h-3.5 text-emerald-700" />
           <span>Join GreensLeaf Engineering</span>
         </div>
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Build the future of UK <br />
           <span className="text-emerald-600">Enterprise IT &amp; AI</span>
         </h1>
-        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-sans">
           We are actively hiring senior software engineers, cloud architects, and AI RAG specialists. Join an elite, autonomous engineering team delivering high-impact solutions for leading UK institutions.
         </p>
       </div>
 
       {/* Why Work at GreensLeaf Pillars */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold">
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5 hover-lift transition-all">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold font-mono text-sm shadow-2xs">
             01
           </div>
           <h3 className="font-heading font-bold text-neutral-950 text-base">Pure Engineering Culture</h3>
-          <p className="text-xs text-neutral-600 leading-relaxed">
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
             Zero bureaucracy or endless middle management. You own high-level architectural decisions and ship production code.
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold">
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5 hover-lift transition-all">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold font-mono text-sm shadow-2xs">
             02
           </div>
           <h3 className="font-heading font-bold text-neutral-950 text-base">Cutting-Edge Tech Stack</h3>
-          <p className="text-xs text-neutral-600 leading-relaxed">
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
             Build with Claude 3.5 Sonnet, Llama 3.3, Pinecone, Next.js, FastAPI, Kubernetes, and sovereign AWS/Azure infrastructures.
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold">
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5 hover-lift transition-all">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold font-mono text-sm shadow-2xs">
             03
           </div>
           <h3 className="font-heading font-bold text-neutral-950 text-base">Competitive UK Packages</h3>
-          <p className="text-xs text-neutral-600 leading-relaxed">
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
             Top-quartile UK salaries, performance-driven bonuses, private health cover, pension, and generous learning budgets.
           </p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold">
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200/90 shadow-xs space-y-2.5 hover-lift transition-all">
+          <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold font-mono text-sm shadow-2xs">
             04
           </div>
           <h3 className="font-heading font-bold text-neutral-950 text-base">Hybrid &amp; Remote Flexibility</h3>
-          <p className="text-xs text-neutral-600 leading-relaxed">
+          <p className="text-xs text-neutral-600 leading-relaxed font-sans">
             Offices in Luton &amp; London with flexible hybrid working options tailored for senior professionals across the UK.
           </p>
         </div>
@@ -174,7 +174,7 @@ export default function Careers() {
             return (
               <div
                 key={role.id}
-                className={`bg-white rounded-2xl border p-6 sm:p-8 transition-all ${
+                className={`bg-white rounded-2xl border p-6 sm:p-8 transition-all duration-300 hover-lift ${
                   isSelected 
                     ? 'border-emerald-500 shadow-md ring-1 ring-emerald-500/20' 
                     : 'border-neutral-200/90 hover:border-neutral-300 shadow-2xs'
@@ -190,7 +190,7 @@ export default function Careers() {
                         <MapPin className="w-3.5 h-3.5" />
                         {role.location}
                       </span>
-                      <span className="text-emerald-700 font-bold">
+                      <span className="text-emerald-700 font-mono font-bold">
                         {role.salary}
                       </span>
                     </div>
@@ -199,13 +199,13 @@ export default function Careers() {
                       {role.title}
                     </h3>
 
-                    <p className="text-xs text-neutral-600 leading-relaxed">
+                    <p className="text-xs text-neutral-600 leading-relaxed font-sans">
                       {role.description}
                     </p>
 
                     <div className="pt-2">
-                      <div className="text-[11px] font-bold text-neutral-800 uppercase tracking-wider mb-1">Key Requirements:</div>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-neutral-600">
+                      <div className="text-[11px] font-bold text-neutral-800 uppercase tracking-wider mb-1 font-heading">Key Requirements:</div>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-neutral-600 font-sans">
                         {role.requirements.map((req, rIdx) => (
                           <li key={rIdx} className="flex items-start gap-1.5">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
@@ -219,14 +219,14 @@ export default function Careers() {
                   <div className="lg:text-right shrink-0">
                     <button
                       onClick={() => handleSelectRole(role.title)}
-                      className={`px-5 py-2.5 rounded-xl font-bold text-xs transition-colors inline-flex items-center gap-2 ${
+                      className={`px-5 py-2.5 rounded-xl font-bold text-xs transition-colors hover-button-scale inline-flex items-center gap-2 group ${
                         isSelected
-                          ? 'bg-emerald-600 text-white'
+                          ? 'bg-emerald-600 text-white shadow-xs'
                           : 'bg-neutral-900 text-white hover:bg-neutral-800'
                       }`}
                     >
                       <span>{isSelected ? 'Selected' : 'Apply for this Role'}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
+                      <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </button>
                   </div>
                 </div>
@@ -442,7 +442,7 @@ export default function Careers() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full py-3.5 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3.5 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 hover-button-scale transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {status === 'loading' ? (
                   <>
