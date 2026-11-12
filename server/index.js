@@ -242,39 +242,212 @@ app.post('/api/inquiry', async (req, res) => {
       console.log(`✓ [JSON STORE] Saved inquiry ${newInquiry.id}`);
     }
 
-    // Dispatch Email Notification via Resend (Target: connect@greensleaf.uk)
+    // ── Email 1: Internal alert to GreensLeaf team ──
+    // ── Email 2: Confirmation to the person who submitted ──
     let emailStatus = 'skipped_no_api_key';
     if (resendClient) {
+      const internalInquiryHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="620" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e4e4e7;">
+        <!-- Header -->
+        <tr><td style="background:#09090b;padding:28px 32px;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <span style="display:inline-block;background:#059669;color:#ffffff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:4px;">New Lead</span>
+                <h1 style="margin:10px 0 0;color:#ffffff;font-size:20px;font-weight:800;letter-spacing:-0.3px;">New Business Inquiry</h1>
+                <p style="margin:4px 0 0;color:#a1a1aa;font-size:12px;">GreensLeaf Limited &bull; Internal CRM Notification</p>
+              </td>
+              <td align="right" style="vertical-align:top;">
+                <span style="font-size:28px;">📩</span>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <!-- Lead Summary Bar -->
+        <tr><td style="background:#f0fdf4;border-bottom:1px solid #bbf7d0;padding:16px 32px;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:13px;color:#065f46;"><strong>${newInquiry.fullName}</strong> &bull; ${newInquiry.companyName} &bull; ${newInquiry.industry}</td>
+              <td align="right" style="font-size:11px;color:#059669;font-weight:700;">Ref: ${newInquiry.id}</td>
+            </tr>
+          </table>
+        </td></tr>
+        <!-- Body -->
+        <tr><td style="padding:28px 32px;">
+          <!-- Contact Details -->
+          <h2 style="margin:0 0 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#71717a;border-bottom:1px solid #f4f4f5;padding-bottom:8px;">Contact Information</h2>
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <tr>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Full Name</span>
+                <span style="font-size:14px;font-weight:600;color:#09090b;">${newInquiry.fullName}</span>
+              </td>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Email Address</span>
+                <a href="mailto:${newInquiry.email}" style="font-size:14px;font-weight:600;color:#059669;text-decoration:none;">${newInquiry.email}</a>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Phone</span>
+                <a href="tel:${newInquiry.phone}" style="font-size:14px;font-weight:600;color:#09090b;text-decoration:none;">${newInquiry.phone}</a>
+              </td>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Company</span>
+                <span style="font-size:14px;font-weight:600;color:#09090b;">${newInquiry.companyName} &bull; ${newInquiry.companySize} employees</span>
+              </td>
+            </tr>
+            <tr>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Industry</span>
+                <span style="font-size:14px;font-weight:600;color:#09090b;">${newInquiry.industry}</span>
+              </td>
+              <td width="50%" style="padding:6px 0;vertical-align:top;">
+                <span style="font-size:11px;color:#a1a1aa;display:block;">Subject</span>
+                <span style="font-size:14px;font-weight:600;color:#09090b;">${newInquiry.subject}</span>
+              </td>
+            </tr>
+          </table>
+          <!-- Message -->
+          <h2 style="margin:0 0 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#71717a;border-bottom:1px solid #f4f4f5;padding-bottom:8px;">Client Message</h2>
+          <div style="background:#f9f9f9;border-left:3px solid #059669;border-radius:0 8px 8px 0;padding:16px 20px;font-size:14px;color:#27272a;line-height:1.6;white-space:pre-wrap;margin-bottom:24px;">${newInquiry.message}</div>
+          <!-- Action Button -->
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td align="center">
+                <a href="mailto:${newInquiry.email}?subject=Re: ${encodeURIComponent(newInquiry.subject)}" style="display:inline-block;background:#09090b;color:#ffffff;font-size:13px;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;letter-spacing:0.2px;">Reply to ${newInquiry.fullName} &rarr;</a>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="background:#f9f9f9;border-top:1px solid #e4e4e7;padding:16px 32px;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:11px;color:#a1a1aa;">Received: ${new Date(newInquiry.timestamp).toUTCString()}</td>
+              <td align="right" style="font-size:11px;color:#a1a1aa;">GreensLeaf Limited &bull; connect@greensleaf.uk</td>
+            </tr>
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+      const confirmationInquiryHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e4e4e7;">
+        <!-- Header -->
+        <tr><td style="background:#09090b;padding:36px 32px;text-align:center;">
+          <div style="display:inline-block;width:48px;height:48px;background:#059669;border-radius:12px;line-height:48px;font-size:22px;margin-bottom:16px;">✓</div>
+          <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:800;">Inquiry Received</h1>
+          <p style="margin:8px 0 0;color:#a1a1aa;font-size:13px;">We'll be in touch within 1 business day</p>
+        </td></tr>
+        <!-- Greeting -->
+        <tr><td style="padding:32px 32px 0;">
+          <p style="margin:0;font-size:15px;color:#27272a;line-height:1.6;">Dear <strong style="color:#09090b;">${newInquiry.fullName}</strong>,</p>
+          <p style="margin:12px 0 0;font-size:14px;color:#52525b;line-height:1.7;">Thank you for reaching out to <strong>GreensLeaf Limited</strong>. Your inquiry has been received and logged securely. A senior member of our team will review your message and respond within <strong>1 business day</strong>.</p>
+        </td></tr>
+        <!-- Summary Card -->
+        <tr><td style="padding:24px 32px;">
+          <div style="background:#f9fafb;border:1px solid #e4e4e7;border-radius:10px;padding:20px;">
+            <p style="margin:0 0 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#71717a;">Your Inquiry Summary</p>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding:5px 0;font-size:13px;color:#71717a;width:120px;">Reference</td>
+                <td style="padding:5px 0;font-size:13px;font-weight:600;color:#09090b;font-family:monospace;">${newInquiry.id}</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 0;font-size:13px;color:#71717a;">Subject</td>
+                <td style="padding:5px 0;font-size:13px;font-weight:600;color:#09090b;">${newInquiry.subject}</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 0;font-size:13px;color:#71717a;">Company</td>
+                <td style="padding:5px 0;font-size:13px;font-weight:600;color:#09090b;">${newInquiry.companyName}</td>
+              </tr>
+              <tr>
+                <td style="padding:5px 0;font-size:13px;color:#71717a;">Submitted</td>
+                <td style="padding:5px 0;font-size:13px;font-weight:600;color:#09090b;">${new Date(newInquiry.timestamp).toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' })}</td>
+              </tr>
+            </table>
+          </div>
+        </td></tr>
+        <!-- What Happens Next -->
+        <tr><td style="padding:0 32px 24px;">
+          <p style="margin:0 0 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#71717a;">What Happens Next</p>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="vertical-align:top;padding:0 12px 12px 0;width:28px;">
+                <div style="width:24px;height:24px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;text-align:center;line-height:24px;font-size:11px;font-weight:700;color:#059669;">1</div>
+              </td>
+              <td style="padding-bottom:12px;font-size:13px;color:#52525b;line-height:1.5;"><strong style="color:#09090b;">Expert Review</strong><br>Our technical team will assess your requirements and identify the best solution approach.</td>
+            </tr>
+            <tr>
+              <td style="vertical-align:top;padding:0 12px 12px 0;">
+                <div style="width:24px;height:24px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;text-align:center;line-height:24px;font-size:11px;font-weight:700;color:#059669;">2</div>
+              </td>
+              <td style="padding-bottom:12px;font-size:13px;color:#52525b;line-height:1.5;"><strong style="color:#09090b;">Direct Response</strong><br>A senior engineer will reply to this email address within 1 business day with tailored recommendations.</td>
+            </tr>
+            <tr>
+              <td style="vertical-align:top;padding:0 12px 0 0;">
+                <div style="width:24px;height:24px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;text-align:center;line-height:24px;font-size:11px;font-weight:700;color:#059669;">3</div>
+              </td>
+              <td style="font-size:13px;color:#52525b;line-height:1.5;"><strong style="color:#09090b;">Scoping Call</strong><br>We'll schedule a no-obligation discovery call to discuss your project in detail.</td>
+            </tr>
+          </table>
+        </td></tr>
+        <!-- Contact -->
+        <tr><td style="padding:0 32px 32px;">
+          <div style="background:#09090b;border-radius:10px;padding:20px;text-align:center;">
+            <p style="margin:0 0 4px;font-size:13px;color:#a1a1aa;">Need an urgent response?</p>
+            <a href="mailto:connect@greensleaf.uk" style="font-size:15px;font-weight:700;color:#34d399;text-decoration:none;">connect@greensleaf.uk</a>
+          </div>
+        </td></tr>
+        <!-- Footer -->
+        <tr><td style="background:#f9f9f9;border-top:1px solid #e4e4e7;padding:16px 32px;text-align:center;">
+          <p style="margin:0;font-size:11px;color:#a1a1aa;">GreensLeaf Limited &bull; Registered in England &amp; Wales &bull; <a href="https://greensleaf.uk" style="color:#059669;text-decoration:none;">greensleaf.uk</a></p>
+          <p style="margin:6px 0 0;font-size:10px;color:#d4d4d8;">This email was sent because you submitted an inquiry via our website. Please do not reply to this automated message.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
       try {
-        const emailResponse = await resendClient.emails.send({
+        // Internal alert to team
+        await resendClient.emails.send({
           from: SENDER_EMAIL,
           to: [TARGET_EMAIL],
           replyTo: newInquiry.email,
-          subject: `[GreensLeaf Lead] New Inquiry: ${newInquiry.subject} from ${newInquiry.fullName}`,
-          html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e4e4e7; border-radius: 8px;">
-              <h2 style="color: #09090b; border-bottom: 2px solid #22c55e; padding-bottom: 8px;">New GreensLeaf Inquiry Received</h2>
-              <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 15px;">
-                <tr><td style="padding: 8px; font-weight: bold; width: 140px; color: #52525b;">Client Name:</td><td style="padding: 8px;">${newInquiry.fullName}</td></tr>
-                <tr><td style="padding: 8px; font-weight: bold; color: #52525b;">Email:</td><td style="padding: 8px;"><a href="mailto:${newInquiry.email}">${newInquiry.email}</a></td></tr>
-                <tr><td style="padding: 8px; font-weight: bold; color: #52525b;">Phone:</td><td style="padding: 8px;">${newInquiry.phone}</td></tr>
-                <tr><td style="padding: 8px; font-weight: bold; color: #52525b;">Company:</td><td style="padding: 8px;">${newInquiry.companyName} (${newInquiry.companySize})</td></tr>
-                <tr><td style="padding: 8px; font-weight: bold; color: #52525b;">Industry:</td><td style="padding: 8px;">${newInquiry.industry}</td></tr>
-                <tr><td style="padding: 8px; font-weight: bold; color: #52525b;">Subject:</td><td style="padding: 8px;">${newInquiry.subject}</td></tr>
-              </table>
-              <div style="margin-top: 20px; padding: 15px; background: #f4f4f5; border-radius: 6px;">
-                <strong style="color: #09090b;">Message:</strong>
-                <p style="margin-top: 8px; white-space: pre-wrap; color: #27272a;">${newInquiry.message}</p>
-              </div>
-              <p style="margin-top: 25px; font-size: 12px; color: #a1a1aa; text-align: center;">GreensLeaf Limited • Enterprise IT &amp; AI Systems • connect@greensleaf.uk</p>
-            </div>
-          `,
+          subject: `[New Lead] ${newInquiry.subject} — ${newInquiry.fullName} (${newInquiry.companyName})`,
+          html: internalInquiryHtml,
+        });
+        // Confirmation to submitter
+        await resendClient.emails.send({
+          from: SENDER_EMAIL,
+          to: [newInquiry.email],
+          replyTo: TARGET_EMAIL,
+          subject: `Inquiry Received — GreensLeaf Limited (Ref: ${newInquiry.id})`,
+          html: confirmationInquiryHtml,
         });
         emailStatus = 'sent';
-        console.log('[EMAIL NOTIFICATION SENT]', emailResponse);
+        console.log(`✓ [EMAIL] Inquiry emails dispatched for ${newInquiry.id}`);
       } catch (err) {
         emailStatus = 'failed: ' + err.message;
-        console.warn('[EMAIL NOTIFICATION NOTICE] Resend returned:', err.message);
+        console.warn('[EMAIL] Resend error:', err.message);
       }
     }
 
@@ -579,7 +752,161 @@ app.post('/api/career', async (req, res) => {
             </div>
           `,
         });
-        console.log(`✓ [EMAIL] Candidate dossier dispatched via Resend for ${newApplication.id}`);
+        console.log(`✓ [EMAIL] Candidate dossier dispatched to team for ${newApplication.id}`);
+
+        // ── Candidate Confirmation Email ──────────────────────────────────────
+        const submissionDate = new Date(newApplication.timestamp).toLocaleDateString('en-GB', {
+          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+        });
+        const candidateConfirmHtml = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
+          <body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:40px 0;">
+              <tr><td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+
+                  <!-- Header -->
+                  <tr><td style="background:#09090b;border-radius:12px 12px 0 0;padding:36px 40px;text-align:center;">
+                    <div style="font-size:11px;font-weight:700;letter-spacing:3px;color:#059669;text-transform:uppercase;margin-bottom:12px;">GreensLeaf Limited</div>
+                    <div style="font-size:26px;font-weight:800;color:#ffffff;margin-bottom:6px;">Application Received</div>
+                    <div style="font-size:14px;color:#a1a1aa;">We have received your application and will be in touch shortly.</div>
+                  </td></tr>
+
+                  <!-- Ref Banner -->
+                  <tr><td style="background:#059669;padding:12px 40px;text-align:center;">
+                    <span style="font-size:12px;font-weight:700;color:#ffffff;letter-spacing:1px;">Reference: ${newApplication.id}</span>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span style="font-size:12px;color:#d1fae5;">${submissionDate}</span>
+                  </td></tr>
+
+                  <!-- Body -->
+                  <tr><td style="background:#ffffff;padding:36px 40px;">
+
+                    <p style="font-size:16px;color:#09090b;margin:0 0 20px;">Dear <strong>${newApplication.fullName}</strong>,</p>
+                    <p style="font-size:14px;color:#3f3f46;line-height:1.7;margin:0 0 24px;">
+                      Thank you for submitting your application to <strong>GreensLeaf Limited</strong>. We are pleased to confirm that your application has been successfully received and is currently under review by our technical recruitment panel.
+                    </p>
+
+                    <!-- Application Summary Box -->
+                    <div style="background:#f9fafb;border:1px solid #e4e4e7;border-radius:8px;padding:20px 24px;margin-bottom:28px;">
+                      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#059669;margin-bottom:14px;">Application Summary</div>
+                      <table width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;border-collapse:collapse;">
+                        <tr>
+                          <td style="padding:7px 0;color:#71717a;width:160px;border-bottom:1px solid #f4f4f5;">Position Applied For</td>
+                          <td style="padding:7px 0;font-weight:600;color:#09090b;border-bottom:1px solid #f4f4f5;">${newApplication.role}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding:7px 0;color:#71717a;border-bottom:1px solid #f4f4f5;">Applicant Name</td>
+                          <td style="padding:7px 0;font-weight:600;color:#09090b;border-bottom:1px solid #f4f4f5;">${newApplication.fullName}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding:7px 0;color:#71717a;border-bottom:1px solid #f4f4f5;">Email Address</td>
+                          <td style="padding:7px 0;font-weight:600;color:#09090b;border-bottom:1px solid #f4f4f5;">${newApplication.email}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding:7px 0;color:#71717a;border-bottom:1px solid #f4f4f5;">Date Submitted</td>
+                          <td style="padding:7px 0;font-weight:600;color:#09090b;border-bottom:1px solid #f4f4f5;">${submissionDate}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding:7px 0;color:#71717a;">Application Reference</td>
+                          <td style="padding:7px 0;font-family:monospace;font-weight:700;color:#059669;">${newApplication.id}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <!-- What Happens Next -->
+                    <div style="margin-bottom:28px;">
+                      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#09090b;margin-bottom:16px;">What Happens Next</div>
+
+                      <!-- Step 1 -->
+                      <div style="display:flex;margin-bottom:16px;">
+                        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                          <td style="vertical-align:top;width:36px;padding-right:12px;">
+                            <div style="width:28px;height:28px;background:#059669;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:700;color:#ffffff;">1</div>
+                          </td>
+                          <td style="vertical-align:top;">
+                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Technical Panel Review</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Your application will be reviewed by our technical panel within <strong>2–3 business days</strong>. We assess each application thoroughly against the role requirements.</div>
+                          </td>
+                        </tr></table>
+                      </div>
+
+                      <!-- Step 2 -->
+                      <div style="margin-bottom:16px;">
+                        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                          <td style="vertical-align:top;width:36px;padding-right:12px;">
+                            <div style="width:28px;height:28px;background:#059669;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:700;color:#ffffff;">2</div>
+                          </td>
+                          <td style="vertical-align:top;">
+                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Initial Screening Call</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">If shortlisted, a member of our recruitment team will contact you to schedule a brief screening call to discuss your background and the role in more detail.</div>
+                          </td>
+                        </tr></table>
+                      </div>
+
+                      <!-- Step 3 -->
+                      <div style="margin-bottom:16px;">
+                        <table cellpadding="0" cellspacing="0" width="100%"><tr>
+                          <td style="vertical-align:top;width:36px;padding-right:12px;">
+                            <div style="width:28px;height:28px;background:#059669;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:700;color:#ffffff;">3</div>
+                          </td>
+                          <td style="vertical-align:top;">
+                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Technical Assessment</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Shortlisted candidates may be invited to complete a technical assessment tailored to the role. Full instructions will be provided at that stage.</div>
+                          </td>
+                        </tr></table>
+                      </div>
+                    </div>
+
+                    <!-- Contact -->
+                    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:16px 20px;margin-bottom:24px;">
+                      <div style="font-size:13px;color:#065f46;line-height:1.7;">
+                        If you have any questions regarding your application, please do not hesitate to contact us at
+                        <a href="mailto:connect@greensleaf.uk" style="color:#059669;font-weight:600;text-decoration:none;">connect@greensleaf.uk</a>
+                        quoting your reference number <strong>${newApplication.id}</strong>.
+                      </div>
+                    </div>
+
+                    <p style="font-size:14px;color:#3f3f46;line-height:1.7;margin:0 0 8px;">
+                      We appreciate the time you have taken to apply and wish you the best of luck with your application.
+                    </p>
+                    <p style="font-size:14px;color:#3f3f46;margin:0 0 24px;">
+                      Kind regards,<br/>
+                      <strong style="color:#09090b;">GreensLeaf Recruitment Team</strong><br/>
+                      <span style="color:#71717a;font-size:13px;">GreensLeaf Limited &bull; <a href="https://greensleaf.uk" style="color:#059669;text-decoration:none;">greensleaf.uk</a></span>
+                    </p>
+
+                  </td></tr>
+
+                  <!-- GDPR Footer -->
+                  <tr><td style="background:#09090b;border-radius:0 0 12px 12px;padding:20px 40px;text-align:center;">
+                    <p style="font-size:11px;color:#71717a;margin:0;line-height:1.7;">
+                      Your personal data is processed in accordance with the <strong style="color:#a1a1aa;">UK General Data Protection Regulation (UK GDPR)</strong> and the Data Protection Act 2018.
+                      Data is held securely and used solely for the purpose of assessing your suitability for the applied role.
+                      You may request deletion of your data at any time by contacting <a href="mailto:connect@greensleaf.uk" style="color:#059669;text-decoration:none;">connect@greensleaf.uk</a>.
+                      <br/><br/>
+                      &copy; ${new Date().getFullYear()} GreensLeaf Limited. All rights reserved. Registered in England &amp; Wales.
+                    </p>
+                  </td></tr>
+
+                </table>
+              </td></tr>
+            </table>
+          </body>
+          </html>
+        `;
+
+        await resendClient.emails.send({
+          from: SENDER_EMAIL,
+          to: [newApplication.email],
+          replyTo: TARGET_EMAIL,
+          subject: `Application Received — GreensLeaf Limited (Ref: ${newApplication.id})`,
+          html: candidateConfirmHtml,
+        });
+        console.log(`✓ [EMAIL] Candidate confirmation dispatched to ${newApplication.email} for ${newApplication.id}`);
+
       } catch (e) {
         console.warn('! [EMAIL NOTIFICATION NOTICE] Resend returned:', e.message);
       }
