@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Download, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { Phone, Mail, MapPin, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import Logo from './Logo';
 import NewsletterSignup from './NewsletterSignup';
 import { COMPANY_INFO } from '../mockData';
 
-export default function Footer({ onOpenLogoModal }) {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -40,17 +40,6 @@ export default function Footer({ onOpenLogoModal }) {
                 <MapPin className="w-3.5 h-3.5 text-neutral-400 shrink-0 mt-0.5" />
                 <span>{COMPANY_INFO.address}</span>
               </div>
-            </div>
-
-            {/* Brand Kit / PNG Download Trigger */}
-            <div className="pt-2">
-              <button
-                onClick={onOpenLogoModal}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-xs text-neutral-700 hover:text-neutral-950 hover:border-neutral-300 transition-colors shadow-xs"
-              >
-                <Download className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Download GreensLeaf Logo (PNG / SVG)</span>
-              </button>
             </div>
           </div>
 
@@ -154,7 +143,7 @@ export default function Footer({ onOpenLogoModal }) {
         {/* Bottom Legal Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 text-center sm:text-left">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
-            <span>&copy; {currentYear} GreensLeaf IT Agency Ltd. All rights reserved.</span>
+            <span>&copy; {currentYear} GreensLeaf Limited. All rights reserved.</span>
             <span className="hidden sm:inline">&bull;</span>
             <span className="text-neutral-600">Registered in England &amp; Wales</span>
           </div>

@@ -1,6 +1,6 @@
 export const COMPANY_INFO = {
   name: 'GreensLeaf',
-  fullName: 'GreensLeaf IT Agency Ltd',
+  fullName: 'GreensLeaf Limited',
   tagline: 'Enterprise IT Engineering & Intelligent AI Systems',
   phone: '02034884882',
   phoneDisplay: '020 3488 4882',

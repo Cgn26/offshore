@@ -22,25 +22,9 @@ export default function Home({ onOpenLogoModal }) {
   return (
     <div className="space-y-20 sm:space-y-28 pb-24">
       {/* HERO SECTION */}
-      <section className="relative pt-12 sm:pt-20 lg:pt-24 overflow-hidden">
-        {/* Subtle light ambient glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-emerald-100/50 via-neutral-100/40 to-transparent blur-[120px] rounded-full pointer-events-none" />
-        <div className="absolute inset-0 grid-bg opacity-70 pointer-events-none" />
-
+      <section className="relative bg-white border-b border-neutral-200/80 pt-16 pb-20 sm:pt-24 sm:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto space-y-7">
-            {/* Top Pill */}
-            <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-white border border-neutral-200/90 shadow-xs glow-pill max-w-full">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-              <span className="text-[11px] sm:text-xs font-semibold text-neutral-800">
-                UK Enterprise IT Agency &bull; Luton &amp; London
-              </span>
-              <span className="text-neutral-300 hidden sm:inline">&bull;</span>
-              <span className="text-[11px] sm:text-xs text-emerald-700 font-bold">
-                Direct UK Senior Engineers
-              </span>
-            </div>
-
+          <div className="text-center max-w-4xl mx-auto space-y-8">
             {/* Main Bold Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
               High-Reliability <br className="hidden sm:inline" />
@@ -49,7 +33,7 @@ export default function Home({ onOpenLogoModal }) {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-neutral-700 max-w-2xl mx-auto leading-relaxed">
               GreensLeaf designs, deploys, and maintains cloud infrastructure and private conversational AI for UK businesses. Direct access to named senior UK engineers, fixed-scope proposals, and strict sovereign data governance.
             </p>
 
@@ -57,7 +41,7 @@ export default function Home({ onOpenLogoModal }) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Link
                 to="/contact"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-neutral-900 text-white font-bold text-base hover:bg-neutral-800 transition-all duration-200 shadow-md flex items-center justify-center gap-2 active:scale-95"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-neutral-950 text-white font-bold text-sm sm:text-base hover:bg-neutral-800 transition-all duration-200 shadow-sm flex items-center justify-center gap-2 active:scale-95"
               >
                 <span>Book Technical Consultation</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -65,29 +49,29 @@ export default function Home({ onOpenLogoModal }) {
               
               <a
                 href={`tel:${COMPANY_INFO.phone}`}
-                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-white text-neutral-900 font-semibold text-base hover:bg-neutral-50 border border-neutral-300 shadow-xs transition-all duration-200 flex items-center justify-center gap-2.5 active:scale-95"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-white text-neutral-900 font-semibold text-sm sm:text-base hover:bg-neutral-50 border border-neutral-300 shadow-2xs transition-all duration-200 flex items-center justify-center gap-2.5 active:scale-95"
               >
-                <Phone className="w-4 h-4 text-emerald-600" />
+                <Phone className="w-4 h-4 text-emerald-700" />
                 <span>Call {COMPANY_INFO.phoneDisplay}</span>
               </a>
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 sm:gap-x-8 text-xs font-medium text-neutral-600">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 sm:gap-x-8 text-xs font-semibold text-neutral-700">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+                <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>Cyber Essentials Plus Ready</span>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <Lock className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+                <Lock className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>UK GDPR &amp; DPA 2018 Compliant</span>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <Award className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+                <Award className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>ISO 27001 Aligned Controls</span>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <Server className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-neutral-50 border border-neutral-200">
+                <Server className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>London Sovereign VPCs</span>
               </div>
             </div>

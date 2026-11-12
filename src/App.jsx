@@ -13,6 +13,7 @@ import Services from './pages/Services';
 import AIChatbotService from './pages/AIChatbotService';
 import Industries from './pages/Industries';
 import About from './pages/About';
+import Careers from './pages/Careers';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
@@ -29,7 +30,7 @@ export default function App() {
       {/* Fix for Issue 4: Global Scroll Restoration on Route Change */}
       <ScrollToTop />
 
-      <div className="min-h-screen flex flex-col bg-[#08090d] text-neutral-100 selection:bg-emerald-500/30 selection:text-emerald-200">
+      <div className="min-h-screen flex flex-col bg-[#fbfbfd] text-neutral-900 selection:bg-emerald-100 selection:text-emerald-900">
         {/* Navigation */}
         <Navbar onOpenLogoModal={() => setLogoModalOpen(true)} />
 
@@ -41,6 +42,7 @@ export default function App() {
             <Route path="/services/ai-chatbot" element={<AIChatbotService />} />
             <Route path="/industries" element={<Industries />} />
             <Route path="/about" element={<About onOpenLogoModal={() => setLogoModalOpen(true)} />} />
+            <Route path="/careers" element={<Careers />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />

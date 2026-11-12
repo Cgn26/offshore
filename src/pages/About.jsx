@@ -106,15 +106,6 @@ export default function About({ onOpenLogoModal }) {
               </div>
             </div>
           </div>
-
-          <div className="pt-2 border-t border-neutral-200">
-            <button
-              onClick={onOpenLogoModal}
-              className="w-full py-2.5 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-800 hover:text-neutral-950 hover:bg-neutral-200 transition-colors"
-            >
-              Download GreensLeaf Brand Assets (PNG/SVG)
-            </button>
-          </div>
         </div>
       </div>
 
