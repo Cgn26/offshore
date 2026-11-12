@@ -125,6 +125,8 @@ app.use(express.json());
 // Resend Email Client Initialization
 // ===================================================
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+const SENDER_EMAIL = process.env.RESEND_FROM || 'GreensLeaf Leads <notifications@greensleaf.uk>';
+const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || 'connect@greensleaf.uk';
 let resendClient = null;
 if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
   try {
@@ -219,8 +221,8 @@ app.post('/api/inquiry', async (req, res) => {
     if (resendClient) {
       try {
         const emailResponse = await resendClient.emails.send({
-          from: 'GreensLeaf Leads <onboarding@resend.dev>',
-          to: ['connect@greensleaf.uk'],
+          from: SENDER_EMAIL,
+          to: [TARGET_EMAIL],
           replyTo: newInquiry.email,
           subject: `[GreensLeaf Lead] New Inquiry: ${newInquiry.subject} from ${newInquiry.fullName}`,
           html: `
@@ -431,8 +433,8 @@ app.post('/api/career', async (req, res) => {
     if (resendClient) {
       try {
         await resendClient.emails.send({
-          from: 'GreensLeaf Careers <onboarding@resend.dev>',
-          to: ['connect@greensleaf.uk'],
+          from: SENDER_EMAIL,
+          to: [TARGET_EMAIL],
           replyTo: newApplication.email,
           subject: `[GreensLeaf Career Application] ${newApplication.role}: ${newApplication.fullName}`,
           html: `
