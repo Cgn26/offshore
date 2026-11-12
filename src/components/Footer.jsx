@@ -112,11 +112,6 @@ export default function Footer() {
                   Engineering Blog
                 </Link>
               </li>
-              <li>
-                <Link to="/admin/inquiries" className="text-neutral-400 hover:text-neutral-700 transition-colors text-xs">
-                  Inquiries Portal (Admin)
-                </Link>
-              </li>
             </ul>
           </div>
 

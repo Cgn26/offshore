@@ -6,6 +6,16 @@ import {
 import { COMPANY_INFO } from '../mockData';
 
 export default function AdminInquiries() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    try {
+      return sessionStorage.getItem('gl_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [passcode, setPasscode] = useState('');
+  const [passError, setPassError] = useState('');
+
   const [activeTab, setActiveTab] = useState('inquiries'); // 'inquiries' | 'careers'
   const [inquiries, setInquiries] = useState([]);
   const [careers, setCareers] = useState([]);
@@ -39,8 +49,31 @@ export default function AdminInquiries() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [isAuthenticated]);
+
+  const handleAuthSubmit = (e) => {
+    e.preventDefault();
+    if (passcode.trim() === 'greensleaf' || passcode.trim() === 'admin' || passcode.trim() === 'greensleaf2025') {
+      try {
+        sessionStorage.setItem('gl_admin_auth', 'true');
+      } catch {}
+      setIsAuthenticated(true);
+      setPassError('');
+    } else {
+      setPassError('Access denied: Invalid operations access key.');
+    }
+  };
+
+  const handleLogout = () => {
+    try {
+      sessionStorage.removeItem('gl_admin_auth');
+    } catch {}
+    setIsAuthenticated(false);
+    setPasscode('');
+  };
 
   const filteredInquiries = inquiries.filter((inq) => {
     const q = searchTerm.toLowerCase();
@@ -73,6 +106,45 @@ export default function AdminInquiries() {
     downloadAnchor.click();
     downloadAnchor.remove();
   };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-20 sm:py-28">
+        <div className="rounded-3xl bg-white p-8 border border-neutral-200/90 shadow-sm space-y-6 text-center animate__animated animate__fadeInDown">
+          <div className="w-12 h-12 rounded-2xl bg-neutral-100 border border-neutral-200 text-neutral-800 flex items-center justify-center mx-auto shadow-2xs">
+            <ShieldCheck className="w-6 h-6 text-emerald-600" />
+          </div>
+          <div className="space-y-1.5">
+            <h1 className="text-xl font-heading font-bold text-neutral-950">Internal Operations Portal</h1>
+            <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+              Restricted management area. Inquiries &amp; candidate profiles are protected under UK GDPR.
+            </p>
+          </div>
+          <form onSubmit={handleAuthSubmit} className="space-y-4 pt-2">
+            {passError && (
+              <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700">
+                {passError}
+              </div>
+            )}
+            <input
+              type="password"
+              value={passcode}
+              onChange={(e) => { setPasscode(e.target.value); setPassError(''); }}
+              placeholder="Enter authorization key..."
+              className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 shadow-2xs"
+              autoFocus
+            />
+            <button
+              type="submit"
+              className="w-full py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 hover-button-scale transition-colors shadow-xs"
+            >
+              Authenticate &amp; Unlock
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 space-y-8">
@@ -107,6 +179,12 @@ export default function AdminInquiries() {
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export {activeTab === 'inquiries' ? 'Leads' : 'Applicants'}</span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="px-3.5 py-2 rounded-xl bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-700 hover:text-neutral-950 hover:bg-neutral-200 transition-colors"
+          >
+            Lock Session
           </button>
         </div>
       </div>
