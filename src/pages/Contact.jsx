@@ -16,9 +16,9 @@ export default function Contact() {
     email: '',
     phone: '',
     companyName: '',
-    companySize: '11-50',
-    industry: preselectedIndustry || 'Technology',
-    subject: preselectedService ? `Inquiry regarding ${preselectedService}` : 'Enterprise IT & AI Consultation',
+    companySize: '',
+    industry: preselectedIndustry || '',
+    subject: preselectedService ? `Consultation: ${preselectedService}` : '',
     message: '',
     consent: false,
   });
@@ -82,9 +82,9 @@ export default function Contact() {
           email: '',
           phone: '',
           companyName: '',
-          companySize: '11-50',
-          industry: 'Technology',
-          subject: 'Enterprise IT & AI Consultation',
+          companySize: '',
+          industry: '',
+          subject: '',
           message: '',
           consent: false,
         });
@@ -129,32 +129,32 @@ export default function Contact() {
           </div>
 
           {status === 'success' ? (
-            <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4 animate-in fade-in duration-300">
-              <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+            <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-center space-y-4 animate-in fade-in duration-300">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h4 className="text-xl font-bold text-neutral-950">Inquiry Received</h4>
+              <h4 className="text-xl font-heading font-bold text-neutral-950">Inquiry Registered</h4>
               <p className="text-sm text-neutral-700 max-w-md mx-auto leading-relaxed">
                 {feedbackMessage}
               </p>
               {inquiryId && (
-                <div className="text-xs font-mono text-emerald-800">
-                  Reference ID: <span className="text-neutral-950 font-bold">{inquiryId}</span>
+                <div className="text-xs font-mono text-emerald-800 bg-white/70 py-1.5 px-3 rounded-lg border border-emerald-200 inline-block">
+                  Consultation Reference: <span className="text-neutral-950 font-bold">{inquiryId}</span>
                 </div>
               )}
-              <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={() => setStatus('idle')}
-                  className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 hover-button-scale transition-colors shadow-2xs"
                 >
-                  Submit Another Inquiry
+                  Submit Additional Specifications
                 </button>
                 <a
                   href={`mailto:${COMPANY_INFO.email}`}
-                  className="px-5 py-2.5 rounded-xl bg-neutral-100 border border-neutral-200 text-neutral-800 hover:text-neutral-950 text-xs font-semibold transition-colors flex items-center gap-2"
+                  className="px-5 py-2.5 rounded-xl bg-white border border-neutral-300 text-neutral-800 hover:text-neutral-950 hover:bg-neutral-50 text-xs font-semibold hover-button-scale transition-colors flex items-center justify-center gap-2 shadow-2xs"
                 >
-                  <Mail className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Email Advisory ({COMPANY_INFO.email})</span>
+                  <Mail className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>Email Advisory Directly</span>
                 </a>
               </div>
             </div>
@@ -245,6 +245,7 @@ export default function Contact() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                   >
+                    <option value="">Select organization size...</option>
                     <option value="1-10">1 - 10 employees (Startup / Boutique)</option>
                     <option value="11-50">11 - 50 employees (Mid-Market SME)</option>
                     <option value="51-200">51 - 200 employees (Established Firm)</option>
@@ -264,13 +265,14 @@ export default function Contact() {
                     onChange={handleChange}
                     className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                   >
+                    <option value="">Select industry sector...</option>
                     <option value="FinTech & Banking">FinTech &amp; Financial Services</option>
                     <option value="Healthcare & MedTech">Healthcare &amp; MedTech</option>
                     <option value="High-Volume E-Commerce">E-Commerce &amp; Retail</option>
                     <option value="Legal & Professional Services">Legal &amp; Professional Services</option>
                     <option value="Technology & SaaS">Technology &amp; SaaS</option>
                     <option value="Logistics & Supply Chain">Logistics &amp; Supply Chain</option>
-                    <option value="Other">Other Regulated Sector</option>
+                    <option value="Public Sector & Other">Public Sector / Other Regulated</option>
                   </select>
                 </div>
               </div>
@@ -285,7 +287,8 @@ export default function Contact() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
+                  placeholder="e.g. Cloud Infrastructure Migration, Private AI Chatbot, or Security Audit"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-emerald-600"
                 />
               </div>
 

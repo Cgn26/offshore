@@ -43,11 +43,7 @@ export default function Services() {
             <div
               key={srv.id}
               id={srv.id}
-              className={`rounded-3xl bg-white p-8 sm:p-12 border relative overflow-hidden transition-all duration-300 hover-lift ${
-                isAi 
-                  ? 'border-emerald-300 bg-gradient-to-br from-emerald-50/40 via-white to-white shadow-sm ring-1 ring-emerald-500/20' 
-                  : 'border-neutral-200/90 shadow-xs'
-              }`}
+              className="rounded-3xl bg-white p-8 sm:p-12 border border-neutral-200/90 shadow-2xs hover:border-neutral-300 hover:shadow-md relative overflow-hidden transition-all duration-300 hover-lift"
             >
               {isAi && (
                 <div className="absolute top-6 right-6 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase shadow-2xs">

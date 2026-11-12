@@ -6,15 +6,15 @@ import {
 import { CAREER_ROLES, COMPANY_INFO } from '../mockData';
 
 export default function Careers() {
-  const [selectedRole, setSelectedRole] = useState(CAREER_ROLES[0].title);
+  const [selectedRole, setSelectedRole] = useState(null);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
-    role: CAREER_ROLES[0].title,
-    experience: 'Junior / Entry Level (0-2 years)',
+    role: '',
+    experience: '',
     portfolio: '',
-    availability: '1 Month',
+    availability: '',
     coverNote: '',
     consent: false,
   });
@@ -48,9 +48,9 @@ export default function Careers() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.phone.trim()) {
+    if (!formData.fullName.trim() || !formData.email.trim() || !formData.phone.trim() || !formData.role) {
       setStatus('error');
-      setFeedbackMessage('Please complete all mandatory candidate fields (Name, Email, Phone).');
+      setFeedbackMessage('Please complete all mandatory fields (Name, Email, Phone, and Position Applied For).');
       return;
     }
 
@@ -80,10 +80,10 @@ export default function Careers() {
           fullName: '',
           email: '',
           phone: '',
-          role: selectedRole,
-          experience: 'Senior (5+ years)',
+          role: '',
+          experience: '',
           portfolio: '',
-          availability: '1 Month',
+          availability: '',
           coverNote: '',
           consent: false,
         });
@@ -235,7 +235,7 @@ export default function Careers() {
                           : 'bg-neutral-900 text-white hover:bg-neutral-800'
                       }`}
                     >
-                      <span>{isSelected ? 'Selected' : 'Apply for this Role'}</span>
+                      <span>{isSelected ? 'Role Selected' : 'Apply for this Role'}</span>
                       <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </button>
                   </div>
@@ -251,37 +251,46 @@ export default function Careers() {
         <div className="space-y-1 border-b border-neutral-200 pb-4">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Fast-Track Candidate Inquiry</span>
+            <span>GreensLeaf Engineering Recruitment</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-heading font-bold text-neutral-950">
             Candidate Application Form
           </h2>
           <p className="text-xs text-neutral-600">
-            Submit your inquiry directly to the GreensLeaf engineering leadership team. We review all submissions within 2 business days.
+            Submit your background and portfolio directly to the GreensLeaf engineering leadership team. We review all applications within 2 business days.
           </p>
         </div>
 
         {status === 'success' ? (
-          <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+          <div className="p-8 sm:p-10 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-2xs">
               <CheckCircle2 className="w-6 h-6" />
             </div>
-            <h4 className="text-xl font-bold text-neutral-950">Application Received</h4>
+            <h4 className="text-xl font-heading font-bold text-neutral-950">Application Registered</h4>
             <p className="text-sm text-neutral-700 max-w-md mx-auto leading-relaxed">
               {feedbackMessage}
             </p>
             {applicationId && (
-              <div className="text-xs font-mono text-emerald-800">
+              <div className="text-xs font-mono text-emerald-800 bg-white/70 py-1.5 px-3 rounded-lg border border-emerald-200 inline-block">
                 Application Reference: <span className="text-neutral-950 font-bold">{applicationId}</span>
               </div>
             )}
-            <div className="pt-2">
+            <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
-                onClick={() => setStatus('idle')}
-                className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 transition-colors"
+                onClick={() => {
+                  setStatus('idle');
+                  setSelectedRole(null);
+                }}
+                className="px-5 py-2.5 rounded-xl bg-neutral-900 text-white font-bold text-xs hover:bg-neutral-800 hover-button-scale transition-colors shadow-2xs"
               >
-                Submit Another Candidate Inquiry
+                Return to Open Roles
               </button>
+              <a
+                href={`mailto:${COMPANY_INFO.email}?subject=Candidate%20Application%20Inquiry`}
+                className="px-5 py-2.5 rounded-xl bg-white border border-neutral-300 text-neutral-800 font-semibold text-xs hover:bg-neutral-50 hover-button-scale transition-colors shadow-2xs"
+              >
+                Contact Recruitment ({COMPANY_INFO.email})
+              </a>
             </div>
           </div>
         ) : (
@@ -351,16 +360,18 @@ export default function Careers() {
                 </label>
                 <select
                   name="role"
+                  required
                   value={formData.role}
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                 >
+                  <option value="">Select an open role (or choose from list above)...</option>
                   {CAREER_ROLES.map((r) => (
                     <option key={r.id} value={r.title}>
-                      {r.title}
+                      {r.title} ({r.department})
                     </option>
                   ))}
-                  <option value="General Engineering Inquiry">General Engineering Inquiry (Other)</option>
+                  <option value="General Technical Inquiry">General Technical Inquiry (Speculative)</option>
                 </select>
               </div>
             </div>
@@ -377,9 +388,10 @@ export default function Careers() {
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                 >
+                  <option value="">Select experience level...</option>
                   <option value="Junior / Entry Level (0-2 years)">Junior / Entry Level (0 - 2 years &bull; Training Provided)</option>
-                  <option value="Mid-Level (2-4 years)">Mid-Level (2 - 4 years)</option>
-                  <option value="Senior (5+ years)">Senior (5+ years)</option>
+                  <option value="Mid-Level (2-4 years)">Mid-Level Engineer (2 - 4 years)</option>
+                  <option value="Senior (5+ years)">Senior Engineer / Specialist (5+ years)</option>
                   <option value="Lead / Staff Architect (8+ years)">Lead / Staff Architect (8+ years)</option>
                 </select>
               </div>
@@ -410,10 +422,11 @@ export default function Careers() {
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
                 >
+                  <option value="">Select notice period / availability...</option>
                   <option value="Immediate">Immediate</option>
-                  <option value="2 Weeks">2 Weeks</option>
-                  <option value="1 Month">1 Month</option>
-                  <option value="2-3 Months">2 - 3 Months</option>
+                  <option value="2 Weeks">2 Weeks notice</option>
+                  <option value="1 Month">1 Month notice</option>
+                  <option value="2-3 Months">2 - 3 Months notice</option>
                 </select>
               </div>
             </div>

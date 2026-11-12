@@ -8,7 +8,7 @@ import {
 import { COMPANY_INFO, CORE_METRICS, SERVICES, INDUSTRIES, TESTIMONIALS, FAQS, CLIENT_LOGOS } from '../mockData';
 
 export default function Home({ onOpenLogoModal }) {
-  const [openFaq, setOpenFaq] = useState(0);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const iconMap = {
     Bot: Bot,
@@ -149,11 +149,7 @@ export default function Home({ onOpenLogoModal }) {
             return (
               <div
                 key={service.id}
-                className={`hover-lift bg-white p-8 rounded-2xl flex flex-col justify-between relative overflow-hidden group border transition-all ${
-                  isAi 
-                    ? 'border-emerald-300 bg-gradient-to-b from-emerald-50/40 via-white to-white shadow-sm ring-1 ring-emerald-500/10 hover:border-emerald-500' 
-                    : 'border-neutral-200/90 hover:border-neutral-300 shadow-xs hover:shadow-md'
-                }`}
+                className="hover-lift bg-white p-8 rounded-2xl flex flex-col justify-between relative overflow-hidden group border border-neutral-200/90 hover:border-neutral-300 shadow-2xs hover:shadow-md transition-all"
               >
                 {/* AI Spotlight Badge */}
                 {isAi && (
