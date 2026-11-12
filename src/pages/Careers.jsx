@@ -172,7 +172,7 @@ export default function Careers() {
 
       if (response.ok && data.success) {
         setStatus('success');
-        setFeedbackMessage(data.message || 'Application and candidate resume submitted successfully! Our technical team will review your profile.');
+        setFeedbackMessage(data.message || 'Application submitted successfully! Our technical team will review your profile.');
         setApplicationId(data.applicationId || '');
         setFormData(initialFormState);
       } else {
@@ -994,7 +994,7 @@ export default function Careers() {
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>Submit Formal Candidate Application &amp; Resume</span>
+                    <span>Submit Formal Candidate Application </span>
                     <Send className="w-4 h-4 ml-1" />
                   </>
                 )}
