@@ -125,7 +125,7 @@ const initPostgres = async () => {
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS institution VARCHAR(255);`;
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS graduation_year VARCHAR(32);`;
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS uk_experience TEXT;`;
-      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS declarations TEXT;`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS declarations TEXT;`;\n      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS nationality VARCHAR(128);`;
     } catch (migErr) {
       console.log('ℹ [POSTGRES] Career columns migration note:', migErr.message);
     }
@@ -402,6 +402,7 @@ app.post('/api/career', async (req, res) => {
       addressLine1,
       city,
       postcode,
+      nationality,
       rtwStatus,
       rtwShareCode,
       educationLevel,
@@ -453,6 +454,7 @@ app.post('/api/career', async (req, res) => {
       postcode: cleanPostcode,
       rtwStatus: rtwStatus || 'N/A',
       rtwShareCode: (rtwShareCode || '').trim().toUpperCase() || 'N/A',
+      nationality: nationality ? nationality.trim() : 'N/A',
       educationLevel: educationLevel || 'N/A',
       educationField: educationField ? educationField.trim() : 'N/A',
       institution: institution ? institution.trim() : 'N/A',
@@ -475,12 +477,12 @@ app.post('/api/career', async (req, res) => {
         await sql`
           INSERT INTO careers (
             id, full_name, email, phone, dob, address, postcode,
-            rtw_status, rtw_share_code, education_level, education_field, institution, graduation_year,
+            nationality, rtw_status, rtw_share_code, education_level, education_field, institution, graduation_year,
             uk_experience, role, experience, portfolio, availability, cover_note, declarations, consent, timestamp, status
           )
           VALUES (
             ${newApplication.id}, ${newApplication.fullName}, ${newApplication.email}, ${newApplication.phone}, ${newApplication.dob}, ${newApplication.address}, ${newApplication.postcode},
-            ${newApplication.rtwStatus}, ${newApplication.rtwShareCode}, ${newApplication.educationLevel}, ${newApplication.educationField}, ${newApplication.institution}, ${newApplication.graduationYear},
+            ${newApplication.nationality}, ${newApplication.rtwStatus}, ${newApplication.rtwShareCode}, ${newApplication.educationLevel}, ${newApplication.educationField}, ${newApplication.institution}, ${newApplication.graduationYear},
             ${newApplication.ukExperience}, ${newApplication.role}, ${newApplication.experience}, ${newApplication.portfolio}, ${newApplication.availability}, ${newApplication.coverNote}, ${newApplication.declarations}, ${newApplication.consent}, ${newApplication.timestamp}, ${newApplication.status}
           )
         `;

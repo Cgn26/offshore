@@ -19,7 +19,8 @@ export default function Careers() {
     city: '',
     postcode: '',
 
-    // 2. Right to Work Verification
+    // 2. Nationality & Right to Work Verification
+    nationality: '',
     rtwStatus: '',
     rtwShareCode: '',
 
@@ -125,13 +126,20 @@ export default function Careers() {
       return;
     }
 
-    if (!formData.rtwStatus) {
+    if (!formData.nationality) {
+      setStatus('error');
+      setFeedbackMessage('Please select your nationality.');
+      return;
+    }
+
+    const isBritishIrish = formData.nationality === 'British / Irish';
+    if (!isBritishIrish && !formData.rtwStatus) {
       setStatus('error');
       setFeedbackMessage('Please select your UK Right to Work immigration status.');
       return;
     }
 
-    if (formData.rtwStatus !== 'British Citizen / Irish Citizen' && !formData.rtwShareCode.trim()) {
+    if (!isBritishIrish && formData.rtwStatus !== 'British Citizen / Irish Citizen' && !formData.rtwShareCode.trim()) {
       setStatus('error');
       setFeedbackMessage('Please provide your 9-character Home Office RTW Share Code for online verification.');
       return;
@@ -161,11 +169,18 @@ export default function Careers() {
     setStatus('loading');
     setFeedbackMessage('');
 
+    // Auto-set RTW fields for British/Irish nationals
+    const submissionData = { ...formData };
+    if (formData.nationality === 'British / Irish') {
+      submissionData.rtwStatus = 'British Citizen / Irish Citizen';
+      submissionData.rtwShareCode = 'N/A – British/Irish Citizen';
+    }
+
     try {
       const response = await fetch('/api/career', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
       });
 
       const data = await response.json();
@@ -435,6 +450,39 @@ export default function Careers() {
                 </div>
               </div>
 
+              {/* Nationality */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-neutral-800">
+                  Nationality <span className="text-emerald-600">*</span>
+                </label>
+                <select
+                  name="nationality"
+                  required
+                  value={formData.nationality}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
+                >
+                  <option value="">Select your nationality...</option>
+                  <option value="British / Irish">British / Irish</option>
+                  <option value="EU / EEA National">EU / EEA National</option>
+                  <option value="Indian">Indian</option>
+                  <option value="Pakistani">Pakistani</option>
+                  <option value="Bangladeshi">Bangladeshi</option>
+                  <option value="Nigerian">Nigerian</option>
+                  <option value="Other">Other (please specify in cover note)</option>
+                </select>
+                {formData.nationality && formData.nationality !== 'British / Irish' && (
+                  <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg">
+                    As a non-British/Irish national, you will need to provide your UK Right to Work details in Section 02.
+                  </p>
+                )}
+                {formData.nationality === 'British / Irish' && (
+                  <p className="text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg">
+                    British / Irish citizens are not required to provide an RTW Share Code.
+                  </p>
+                )}
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Email Address */}
                 <div className="space-y-1.5">
@@ -525,57 +573,69 @@ export default function Careers() {
                 <h3 className="font-heading font-bold text-neutral-950 text-base">UK Right to Work (RTW) Verification</h3>
               </div>
 
-              <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-xs space-y-1 text-emerald-950">
-                <div className="flex items-center gap-2 font-semibold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <span>Statutory Home Office Online Verification Notice</span>
+              {formData.nationality === 'British / Irish' ? (
+                <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3">
+                  <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="text-xs text-emerald-900 space-y-0.5">
+                    <p className="font-semibold">No RTW Share Code Required</p>
+                    <p className="text-[11px] text-emerald-700">British and Irish citizens are automatically eligible to work in the UK. GreensLeaf will verify your identity using your passport or birth certificate at the onboarding stage.</p>
+                  </div>
                 </div>
-                <p className="text-[11px] text-neutral-600 leading-relaxed">
-                  Under UK Home Office statutory guidance, GreensLeaf Limited must verify right to work status before employment commencement. Non-British/Irish citizens can generate a free 9-character share code (e.g. <code>W12 345 678</code>) instantly at <a href="https://www.gov.uk/prove-right-to-work" target="_blank" rel="noreferrer" className="text-emerald-700 font-semibold underline">gov.uk/prove-right-to-work</a>. British or Irish citizens can state their passport status.
-                </p>
-              </div>
+              ) : (
+                <>
+                  <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-xs space-y-1 text-emerald-950">
+                    <div className="flex items-center gap-2 font-semibold">
+                      <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                      <span>Statutory Home Office Online Verification Notice</span>
+                    </div>
+                    <p className="text-[11px] text-neutral-600 leading-relaxed">
+                      Under UK Home Office statutory guidance, GreensLeaf Limited must verify right to work status before employment commencement. Non-British/Irish citizens can generate a free 9-character share code (e.g. <code>W12 345 678</code>) instantly at <a href="https://www.gov.uk/prove-right-to-work" target="_blank" rel="noreferrer" className="text-emerald-700 font-semibold underline">gov.uk/prove-right-to-work</a>.
+                    </p>
+                  </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* RTW Status */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-neutral-800">
-                    UK Immigration / RTW Status <span className="text-emerald-600">*</span>
-                  </label>
-                  <select
-                    name="rtwStatus"
-                    required
-                    value={formData.rtwStatus}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
-                  >
-                    <option value="">Select your Right to Work status...</option>
-                    <option value="British Citizen / Irish Citizen">British Citizen / Irish Citizen</option>
-                    <option value="EU Settlement Scheme (Settled Status)">EU Settlement Scheme (Settled Status)</option>
-                    <option value="EU Settlement Scheme (Pre-Settled Status)">EU Settlement Scheme (Pre-Settled Status)</option>
-                    <option value="Skilled Worker Visa (Requires Sponsorship or Transfer)">Skilled Worker Visa (Requires Sponsorship/Transfer)</option>
-                    <option value="Graduate Visa (Unrestricted UK Work Rights)">Graduate Visa (Unrestricted UK Work Rights)</option>
-                    <option value="Indefinite Leave to Remain (ILR)">Indefinite Leave to Remain (ILR)</option>
-                    <option value="Youth Mobility / Ancestry Visa">Youth Mobility / Ancestry Visa</option>
-                    <option value="Other UK Work Permission">Other UK Work Permission</option>
-                  </select>
-                </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* RTW Status */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-neutral-800">
+                        UK Immigration / RTW Status <span className="text-emerald-600">*</span>
+                      </label>
+                      <select
+                        name="rtwStatus"
+                        required={formData.nationality !== 'British / Irish'}
+                        value={formData.rtwStatus}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 focus:outline-none focus:border-emerald-600"
+                      >
+                        <option value="">Select your Right to Work status...</option>
+                        <option value="EU Settlement Scheme (Settled Status)">EU Settlement Scheme (Settled Status)</option>
+                        <option value="EU Settlement Scheme (Pre-Settled Status)">EU Settlement Scheme (Pre-Settled Status)</option>
+                        <option value="Skilled Worker Visa (Requires Sponsorship or Transfer)">Skilled Worker Visa (Requires Sponsorship/Transfer)</option>
+                        <option value="Graduate Visa (Unrestricted UK Work Rights)">Graduate Visa (Unrestricted UK Work Rights)</option>
+                        <option value="Indefinite Leave to Remain (ILR)">Indefinite Leave to Remain (ILR)</option>
+                        <option value="Youth Mobility / Ancestry Visa">Youth Mobility / Ancestry Visa</option>
+                        <option value="Other UK Work Permission">Other UK Work Permission</option>
+                      </select>
+                    </div>
 
-                {/* RTW Share Code */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-neutral-800">
-                    Home Office RTW Share Code / Passport Reference <span className="text-emerald-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="rtwShareCode"
-                    value={formData.rtwShareCode}
-                    onChange={handleChange}
-                    placeholder="e.g. W12 345 678 (or UK Passport number for British citizens)"
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-mono uppercase"
-                  />
-                  <p className="text-[10px] text-neutral-500">Provide the 9-character code from gov.uk or your British/Irish passport number.</p>
-                </div>
-              </div>
+                    {/* RTW Share Code */}
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-neutral-800">
+                        Home Office RTW Share Code <span className="text-emerald-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="rtwShareCode"
+                        required={formData.nationality !== 'British / Irish'}
+                        value={formData.rtwShareCode}
+                        onChange={handleChange}
+                        placeholder="e.g. W12 345 678"
+                        className="w-full px-4 py-2.5 rounded-xl bg-white border border-neutral-300 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-mono uppercase"
+                      />
+                      <p className="text-[10px] text-neutral-500">9-character code from gov.uk/prove-right-to-work</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* SECTION 3: Education & Academic Credentials */}
@@ -871,12 +931,11 @@ export default function Careers() {
                 {/* LinkedIn or GitHub */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-neutral-800">
-                    Portfolio, GitHub or LinkedIn URL <span className="text-emerald-600">*</span>
+                    Portfolio, GitHub or LinkedIn URL <span className="text-neutral-400 font-normal">(Optional)</span>
                   </label>
                   <input
                     type="url"
                     name="portfolio"
-                    required
                     value={formData.portfolio}
                     onChange={handleChange}
                     placeholder="https://github.com/username or https://linkedin.com/in/username"
