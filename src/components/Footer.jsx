@@ -152,14 +152,14 @@ export default function Footer({ onOpenLogoModal }) {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
-          <div className="flex items-center gap-2">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500 text-center sm:text-left">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1">
             <span>&copy; {currentYear} GreensLeaf IT Agency Ltd. All rights reserved.</span>
-            <span>&bull;</span>
+            <span className="hidden sm:inline">&bull;</span>
             <span className="text-neutral-600">Registered in England &amp; Wales</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-4 sm:gap-x-6 gap-y-2">
             <Link to="/privacy" className="hover:text-neutral-800 transition-colors">
               Privacy Policy (UK GDPR)
             </Link>

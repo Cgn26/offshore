@@ -27,7 +27,7 @@ export default function CookieBanner() {
 
   return (
     <div 
-      className="fixed bottom-6 left-6 right-6 sm:left-6 sm:right-auto sm:max-w-md z-50 animate-in slide-in-from-bottom-5 duration-300"
+      className="fixed bottom-3 left-3 right-3 sm:bottom-6 sm:left-6 sm:right-auto sm:max-w-md z-50 animate-in slide-in-from-bottom-5 duration-300"
       role="region"
       aria-label="Cookie consent banner"
     >

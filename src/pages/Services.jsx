@@ -24,11 +24,11 @@ export default function Services() {
           <Layers className="w-3.5 h-3.5" />
           <span>UK Engineering Practices</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Comprehensive <br />
           <span className="text-emerald-700">Enterprise IT Services</span>
         </h1>
-        <p className="text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
           From custom AI agents to multi-region cloud infrastructures, GreensLeaf delivers battle-tested technology with senior UK engineers and guaranteed uptime SLAs.
         </p>
       </div>

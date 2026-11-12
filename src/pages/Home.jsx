@@ -30,19 +30,19 @@ export default function Home({ onOpenLogoModal }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-7">
             {/* Top Pill */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-neutral-200/90 shadow-xs glow-pill">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-semibold text-neutral-800">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-white border border-neutral-200/90 shadow-xs glow-pill max-w-full">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+              <span className="text-[11px] sm:text-xs font-semibold text-neutral-800">
                 UK Enterprise IT Agency &bull; Luton &amp; London
               </span>
-              <span className="text-neutral-300">&bull;</span>
-              <span className="text-xs text-emerald-700 font-bold">
+              <span className="text-neutral-300 hidden sm:inline">&bull;</span>
+              <span className="text-[11px] sm:text-xs text-emerald-700 font-bold">
                 Direct UK Senior Engineers
               </span>
             </div>
 
             {/* Main Bold Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
               High-Reliability <br className="hidden sm:inline" />
               <span className="text-neutral-950">Cloud Platforms &amp; </span>
               <span className="text-emerald-700">Private AI</span>
@@ -73,21 +73,21 @@ export default function Home({ onOpenLogoModal }) {
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-8 flex flex-wrap items-center justify-center gap-y-3 gap-x-8 text-xs font-medium text-neutral-600">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <div className="pt-6 sm:pt-8 flex flex-wrap items-center justify-center gap-y-2.5 gap-x-4 sm:gap-x-8 text-xs font-medium text-neutral-600">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>Cyber Essentials Plus Ready</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Lock className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>UK GDPR &amp; DPA 2018 Compliant</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Award className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>ISO 27001 Aligned Controls</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Server className="w-4 h-4 text-emerald-600" />
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <Server className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>London Sovereign VPCs</span>
               </div>
             </div>
@@ -114,11 +114,11 @@ export default function Home({ onOpenLogoModal }) {
 
       {/* CORE METRICS STRIP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {CORE_METRICS.map((metric, idx) => (
             <div 
               key={idx}
-              className="bg-white p-6 sm:p-8 rounded-2xl border border-neutral-200/90 text-center space-y-1 relative group hover:border-neutral-300 hover:shadow-md transition-all shadow-xs"
+              className="bg-white p-5 sm:p-6 lg:p-8 rounded-2xl border border-neutral-200/90 text-center space-y-1 relative group hover:border-neutral-300 hover:shadow-md transition-all shadow-xs"
             >
               <div className="text-3xl sm:text-4xl font-heading font-extrabold text-neutral-950">
                 {metric.value}

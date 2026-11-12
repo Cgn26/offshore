@@ -13,11 +13,11 @@ export default function Industries() {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
           <span>Regulated UK Sectors</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Industries &amp; Proven <br />
           <span className="text-emerald-700">Enterprise Case Studies</span>
         </h1>
-        <p className="text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
           High-assurance software engineering designed specifically to address strict regulatory compliance, low-latency transaction demands, and data sovereignty in the UK.
         </p>
       </div>

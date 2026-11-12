@@ -32,7 +32,7 @@ export default function Navbar({ onOpenLogoModal }) {
                 key={link.path}
                 to={link.path}
                 className={({ isActive }) =>
-                  `px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative ${
+                  `px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative ${
                     isActive
                       ? 'text-neutral-950 bg-neutral-100 font-semibold shadow-xs'
                       : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-100/70'
@@ -55,7 +55,7 @@ export default function Navbar({ onOpenLogoModal }) {
           </nav>
 
           {/* Actions: Direct UK Phone & Book CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             {/* Direct Phone Dial */}
             <a
               href={`tel:${COMPANY_INFO.phone}`}
@@ -78,29 +78,31 @@ export default function Navbar({ onOpenLogoModal }) {
             </Link>
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Tablet & Mobile Hamburger and Quick Phone */}
+          <div className="flex lg:hidden items-center gap-2">
             <a
               href={`tel:${COMPANY_INFO.phone}`}
-              className="p-2 rounded-lg text-emerald-700 bg-emerald-50 border border-emerald-200"
+              className="p-2.5 rounded-xl text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors flex items-center justify-center"
               aria-label="Call GreensLeaf"
+              title="Call GreensLeaf Direct"
             >
               <Phone className="w-4 h-4" />
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-colors"
-              aria-label="Toggle menu"
+              className="p-2.5 rounded-xl text-neutral-700 hover:text-neutral-950 hover:bg-neutral-100 transition-colors flex items-center justify-center border border-neutral-200/80"
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-neutral-200 bg-white px-4 pt-2 pb-6 space-y-2 animate-in slide-in-from-top-3 duration-200 shadow-xl">
+        <div className="lg:hidden border-b border-neutral-200 bg-white px-4 pt-2 pb-6 space-y-2 animate-in slide-in-from-top-3 duration-200 shadow-xl max-h-[calc(100vh-5rem)] overflow-y-auto">
           <div className="space-y-1">
             {navLinks.map((link) => (
               <NavLink

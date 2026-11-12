@@ -108,18 +108,18 @@ export default function Contact() {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
           <span>UK Engineering Advisory</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Initiate a Technical <br />
           <span className="text-emerald-700">Consultation</span>
         </h1>
-        <p className="text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
           Speak directly with our senior UK architects. We provide confidential, NDA-backed scoping for bespoke software, cloud infrastructure, and enterprise AI chatbot deployments.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Contact Form */}
-        <div className="lg:col-span-7 rounded-3xl bg-white p-8 sm:p-10 border border-neutral-200/90 shadow-sm space-y-6">
+        <div className="lg:col-span-7 rounded-3xl bg-white p-6 sm:p-10 border border-neutral-200/90 shadow-sm space-y-6">
           <div className="space-y-1 border-b border-neutral-200 pb-4">
             <h3 className="text-xl font-heading font-bold text-neutral-950">Project Inquiry Specification</h3>
             <p className="text-xs text-neutral-500">

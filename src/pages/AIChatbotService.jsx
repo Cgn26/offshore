@@ -104,13 +104,13 @@ export default function AIChatbotService() {
 
         <div className="max-w-3xl mx-auto rounded-2xl bg-white border border-neutral-200 overflow-hidden shadow-lg">
           {/* Chat Header */}
-          <div className="px-6 py-4 border-b border-neutral-200 bg-neutral-50 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700">
+          <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-neutral-200 bg-neutral-50 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
                 <Bot className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-neutral-950 font-mono">GreensLeaf Enterprise AI Agent</h4>
+                <h4 className="text-xs font-bold text-neutral-950 font-mono truncate max-w-[180px] sm:max-w-none">GreensLeaf Enterprise AI Agent</h4>
                 <div className="flex items-center gap-1.5 text-[10px] text-neutral-500">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                   <span>London Sovereign VPC &bull; Active</span>
@@ -126,7 +126,7 @@ export default function AIChatbotService() {
                   },
                 ])
               }
-              className="text-neutral-400 hover:text-neutral-700 p-1 rounded-md"
+              className="text-neutral-400 hover:text-neutral-700 p-1.5 rounded-md"
               title="Reset conversation"
             >
               <RefreshCw className="w-4 h-4" />
@@ -134,11 +134,11 @@ export default function AIChatbotService() {
           </div>
 
           {/* Chat Messages */}
-          <div className="p-6 h-80 overflow-y-auto space-y-4 text-xs bg-neutral-50/40">
+          <div className="p-4 sm:p-6 h-80 overflow-y-auto space-y-4 text-xs bg-neutral-50/40">
             {messages.map((m, idx) => (
               <div
                 key={idx}
-                className={`flex gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex gap-2.5 sm:gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {m.role === 'assistant' && (
                   <div className="w-6 h-6 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200">
@@ -146,7 +146,7 @@ export default function AIChatbotService() {
                   </div>
                 )}
                 <div
-                  className={`max-w-[80%] rounded-2xl p-3.5 leading-relaxed ${
+                  className={`max-w-[88%] sm:max-w-[80%] rounded-2xl p-3 sm:p-3.5 leading-relaxed text-xs ${
                     m.role === 'user'
                       ? 'bg-neutral-900 text-white font-medium'
                       : 'bg-white border border-neutral-200 text-neutral-800 shadow-2xs'
@@ -165,13 +165,13 @@ export default function AIChatbotService() {
           </div>
 
           {/* Quick Prompt Suggestions */}
-          <div className="px-6 py-2 border-t border-neutral-200 bg-neutral-50 flex items-center gap-2 overflow-x-auto text-[11px]">
-            <span className="text-neutral-500 shrink-0">Try asking:</span>
+          <div className="px-3 sm:px-6 py-2.5 border-t border-neutral-200 bg-neutral-50 flex items-center gap-2 overflow-x-auto text-[11px] no-scrollbar">
+            <span className="text-neutral-500 shrink-0 hidden sm:inline">Try asking:</span>
             {samplePrompts.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(p)}
-                className="px-2.5 py-1 rounded-full bg-white border border-neutral-200 text-neutral-700 hover:text-neutral-950 hover:border-neutral-400 shrink-0 transition-colors shadow-2xs"
+                className="px-2.5 py-1 rounded-full bg-white border border-neutral-200 text-neutral-700 hover:text-neutral-950 hover:border-neutral-400 shrink-0 transition-colors shadow-2xs whitespace-nowrap"
               >
                 {p}
               </button>
@@ -184,7 +184,7 @@ export default function AIChatbotService() {
               e.preventDefault();
               handleSend();
             }}
-            className="p-4 border-t border-neutral-200 bg-white flex items-center gap-2"
+            className="p-3 sm:p-4 border-t border-neutral-200 bg-white flex items-center gap-2"
           >
             <input
               type="text"

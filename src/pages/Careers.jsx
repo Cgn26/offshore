@@ -103,11 +103,11 @@ export default function Careers() {
           <Briefcase className="w-3.5 h-3.5" />
           <span>Join GreensLeaf Engineering</span>
         </div>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-950 tracking-tight">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-950 tracking-tight">
           Build the future of UK <br />
           <span className="text-emerald-600">Enterprise IT &amp; AI</span>
         </h1>
-        <p className="text-lg text-neutral-600 leading-relaxed">
+        <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
           We are actively hiring senior software engineers, cloud architects, and AI RAG specialists. Join an elite, autonomous engineering team delivering high-impact solutions for leading UK institutions.
         </p>
       </div>
