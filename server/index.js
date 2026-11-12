@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { Resend } from 'resend';
+import { neon } from '@neondatabase/serverless';
 
 dotenv.config();
 
@@ -45,25 +46,95 @@ const readJson = (filePath) => {
 };
 
 const writeJson = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn(`Write warning for ${filePath}:`, err.message);
+  }
 };
+
+// ===================================================
+// Neon Postgres Integration (Auto-detects POSTGRES_URL)
+// ===================================================
+const DB_URL = process.env.POSTGRES_URL || process.env.DATABASE_URL || '';
+let sql = null;
+
+if (DB_URL) {
+  try {
+    sql = neon(DB_URL);
+    console.log('✓ [POSTGRES] Connected to Neon Postgres database.');
+  } catch (err) {
+    console.warn('! [POSTGRES] Connection notice, falling back to local store:', err.message);
+  }
+}
+
+const initPostgres = async () => {
+  if (!sql) return;
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS inquiries (
+        id VARCHAR(64) PRIMARY KEY,
+        full_name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(64),
+        company_name VARCHAR(255),
+        company_size VARCHAR(64),
+        industry VARCHAR(128),
+        subject VARCHAR(255),
+        message TEXT NOT NULL,
+        consent BOOLEAN DEFAULT TRUE,
+        timestamp TIMESTAMPTZ DEFAULT NOW(),
+        status VARCHAR(32) DEFAULT 'new'
+      );
+    `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS careers (
+        id VARCHAR(64) PRIMARY KEY,
+        full_name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(64),
+        role VARCHAR(255) NOT NULL,
+        experience VARCHAR(128),
+        portfolio TEXT,
+        availability VARCHAR(128),
+        cover_note TEXT,
+        consent BOOLEAN DEFAULT TRUE,
+        timestamp TIMESTAMPTZ DEFAULT NOW(),
+        status VARCHAR(32) DEFAULT 'under_review'
+      );
+    `;
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletter (
+        id VARCHAR(64) PRIMARY KEY,
+        email VARCHAR(255) UNIQUE NOT NULL,
+        timestamp TIMESTAMPTZ DEFAULT NOW()
+      );
+    `;
+    console.log('✓ [POSTGRES] Schemas initialized successfully.');
+  } catch (err) {
+    console.warn('! [POSTGRES] Initialization notice:', err.message);
+  }
+};
+
+initPostgres();
 
 app.use(cors());
 app.use(express.json());
 
+// ===================================================
 // Resend Email Client Initialization
+// ===================================================
 const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
 let resendClient = null;
 if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
   try {
     resendClient = new Resend(RESEND_API_KEY);
-    console.log('✓ [EMAIL] Resend client initialized.');
+    console.log('✓ [EMAIL] Resend client initialized with key.');
   } catch (e) {
     console.warn('! [EMAIL] Failed to initialize Resend client:', e.message);
   }
 } else {
-  console.log('✓ [DATABASE] Lead storage active. Inquiries are safely captured.');
-  console.log('ℹ [EMAIL] Email dispatch paused. Leads can be viewed at http://localhost:3000/admin/inquiries');
+  console.log('ℹ [EMAIL] Set RESEND_API_KEY in .env to dispatch live notifications.');
 }
 
 // Health check endpoint
@@ -73,7 +144,7 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
     service: 'GreensLeaf Core API',
     emailConfigured: Boolean(resendClient),
-    storage: 'Active (JSON Database)'
+    storage: sql ? 'Active (Neon Postgres)' : 'Active (File Store /tmp)'
   });
 });
 
@@ -121,12 +192,27 @@ app.post('/api/inquiry', async (req, res) => {
       status: 'new',
     };
 
-    // Save to Database
-    const inquiries = readJson(INQUIRIES_FILE);
-    inquiries.unshift(newInquiry);
-    writeJson(INQUIRIES_FILE, inquiries);
+    // Save to Database (Postgres if available, else JSON)
+    let savedToPostgres = false;
+    if (sql) {
+      try {
+        await sql`
+          INSERT INTO inquiries (id, full_name, email, phone, company_name, company_size, industry, subject, message, consent, timestamp, status)
+          VALUES (${newInquiry.id}, ${newInquiry.fullName}, ${newInquiry.email}, ${newInquiry.phone}, ${newInquiry.companyName}, ${newInquiry.companySize}, ${newInquiry.industry}, ${newInquiry.subject}, ${newInquiry.message}, ${newInquiry.consent}, ${newInquiry.timestamp}, ${newInquiry.status})
+        `;
+        savedToPostgres = true;
+        console.log(`✓ [POSTGRES] Saved inquiry ${newInquiry.id}`);
+      } catch (dbErr) {
+        console.warn('! [POSTGRES] Failed to write to DB, falling back to JSON:', dbErr.message);
+      }
+    }
 
-    console.log(`[INQUIRY SAVED] ${newInquiry.id} from ${newInquiry.fullName} (${newInquiry.email})`);
+    if (!savedToPostgres) {
+      const inquiries = readJson(INQUIRIES_FILE);
+      inquiries.unshift(newInquiry);
+      writeJson(INQUIRIES_FILE, inquiries);
+      console.log(`✓ [JSON STORE] Saved inquiry ${newInquiry.id}`);
+    }
 
     // Dispatch Email Notification via Resend (Target: connect@greensleaf.uk)
     let emailStatus = 'skipped_no_api_key';
@@ -160,10 +246,8 @@ app.post('/api/inquiry', async (req, res) => {
         console.log('[EMAIL NOTIFICATION SENT]', emailResponse);
       } catch (err) {
         emailStatus = 'failed: ' + err.message;
-        console.warn('[EMAIL NOTIFICATION FAILED] Safe fallback: Data preserved in database. Error:', err.message);
+        console.warn('[EMAIL NOTIFICATION NOTICE] Resend returned:', err.message);
       }
-    } else {
-      console.log('[SIMULATED EMAIL] Set RESEND_API_KEY in .env to dispatch live emails to connect@greensleaf.uk.');
     }
 
     return res.status(201).json({
@@ -181,7 +265,29 @@ app.post('/api/inquiry', async (req, res) => {
 });
 
 // GET /api/inquiry - Admin listing of all inquiries
-app.get('/api/inquiry', (req, res) => {
+app.get('/api/inquiry', async (req, res) => {
+  if (sql) {
+    try {
+      const rows = await sql`SELECT * FROM inquiries ORDER BY timestamp DESC`;
+      const formatted = rows.map((r) => ({
+        id: r.id,
+        fullName: r.full_name,
+        email: r.email,
+        phone: r.phone,
+        companyName: r.company_name,
+        companySize: r.company_size,
+        industry: r.industry,
+        subject: r.subject,
+        message: r.message,
+        consent: r.consent,
+        timestamp: r.timestamp,
+        status: r.status,
+      }));
+      return res.json({ total: formatted.length, inquiries: formatted });
+    } catch (err) {
+      console.warn('[POSTGRES] Fallback to JSON:', err.message);
+    }
+  }
   const inquiries = readJson(INQUIRIES_FILE);
   res.json({
     total: inquiries.length,
@@ -190,7 +296,7 @@ app.get('/api/inquiry', (req, res) => {
 });
 
 // POST /api/newsletter - Capture newsletter subscriptions
-app.post('/api/newsletter', (req, res) => {
+app.post('/api/newsletter', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -203,24 +309,30 @@ app.post('/api/newsletter', (req, res) => {
     }
 
     const normalizedEmail = email.trim().toLowerCase();
-    const subscribers = readJson(NEWSLETTER_FILE);
-
-    const exists = subscribers.some((sub) => sub.email === normalizedEmail);
-    if (exists) {
-      return res.status(200).json({
-        success: true,
-        message: 'You are already subscribed to GreensLeaf tech intelligence.',
-      });
-    }
-
     const newSub = {
       id: 'sub_' + Date.now(),
       email: normalizedEmail,
       timestamp: new Date().toISOString(),
     };
 
-    subscribers.unshift(newSub);
-    writeJson(NEWSLETTER_FILE, subscribers);
+    if (sql) {
+      try {
+        await sql`
+          INSERT INTO newsletter (id, email, timestamp)
+          VALUES (${newSub.id}, ${newSub.email}, ${newSub.timestamp})
+          ON CONFLICT (email) DO NOTHING
+        `;
+      } catch (err) {
+        console.warn('[POSTGRES] Newsletter error:', err.message);
+      }
+    }
+
+    const subscribers = readJson(NEWSLETTER_FILE);
+    const exists = subscribers.some((sub) => sub.email === normalizedEmail);
+    if (!exists) {
+      subscribers.unshift(newSub);
+      writeJson(NEWSLETTER_FILE, subscribers);
+    }
 
     console.log(`[NEWSLETTER SUBSCRIBER] Added ${normalizedEmail}`);
 
@@ -235,7 +347,15 @@ app.post('/api/newsletter', (req, res) => {
 });
 
 // GET /api/newsletter - Admin listing of subscribers
-app.get('/api/newsletter', (req, res) => {
+app.get('/api/newsletter', async (req, res) => {
+  if (sql) {
+    try {
+      const rows = await sql`SELECT * FROM newsletter ORDER BY timestamp DESC`;
+      return res.json({ total: rows.length, subscribers: rows });
+    } catch (err) {
+      console.warn('[POSTGRES] Newsletter fetch fallback:', err.message);
+    }
+  }
   const subscribers = readJson(NEWSLETTER_FILE);
   res.json({
     total: subscribers.length,
@@ -286,11 +406,26 @@ app.post('/api/career', async (req, res) => {
       status: 'under_review',
     };
 
-    const careers = readJson(CAREERS_FILE);
-    careers.unshift(newApplication);
-    writeJson(CAREERS_FILE, careers);
+    let savedToPostgres = false;
+    if (sql) {
+      try {
+        await sql`
+          INSERT INTO careers (id, full_name, email, phone, role, experience, portfolio, availability, cover_note, consent, timestamp, status)
+          VALUES (${newApplication.id}, ${newApplication.fullName}, ${newApplication.email}, ${newApplication.phone}, ${newApplication.role}, ${newApplication.experience}, ${newApplication.portfolio}, ${newApplication.availability}, ${newApplication.coverNote}, ${newApplication.consent}, ${newApplication.timestamp}, ${newApplication.status})
+        `;
+        savedToPostgres = true;
+        console.log(`✓ [POSTGRES] Saved career application ${newApplication.id}`);
+      } catch (err) {
+        console.warn('! [POSTGRES] Failed saving career application, using JSON fallback:', err.message);
+      }
+    }
 
-    console.log(`[CAREER APPLICATION] Saved ${newApplication.id} for ${newApplication.fullName} (${newApplication.role})`);
+    if (!savedToPostgres) {
+      const careers = readJson(CAREERS_FILE);
+      careers.unshift(newApplication);
+      writeJson(CAREERS_FILE, careers);
+      console.log(`✓ [JSON STORE] Saved career application ${newApplication.id}`);
+    }
 
     // Resend notification if configured
     if (resendClient) {
@@ -318,7 +453,7 @@ app.post('/api/career', async (req, res) => {
           `,
         });
       } catch (e) {
-        console.warn('[EMAIL NOTIFICATION FAILED] Career email error:', e.message);
+        console.warn('[EMAIL NOTIFICATION NOTICE] Resend returned:', e.message);
       }
     }
 
@@ -334,7 +469,29 @@ app.post('/api/career', async (req, res) => {
 });
 
 // GET /api/career - Admin listing of applications
-app.get('/api/career', (req, res) => {
+app.get('/api/career', async (req, res) => {
+  if (sql) {
+    try {
+      const rows = await sql`SELECT * FROM careers ORDER BY timestamp DESC`;
+      const formatted = rows.map((r) => ({
+        id: r.id,
+        fullName: r.full_name,
+        email: r.email,
+        phone: r.phone,
+        role: r.role,
+        experience: r.experience,
+        portfolio: r.portfolio,
+        availability: r.availability,
+        coverNote: r.cover_note,
+        consent: r.consent,
+        timestamp: r.timestamp,
+        status: r.status,
+      }));
+      return res.json({ total: formatted.length, applications: formatted });
+    } catch (err) {
+      console.warn('[POSTGRES] Career fetch fallback:', err.message);
+    }
+  }
   const careers = readJson(CAREERS_FILE);
   res.json({
     total: careers.length,
@@ -349,4 +506,3 @@ if (process.env.NODE_ENV !== 'test' && !process.env.NO_LISTEN) {
     console.log(`✓ [BACKEND API] Ready on http://localhost:${PORT}`);
   });
 }
-

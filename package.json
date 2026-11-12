@@ -14,6 +14,7 @@
     "gen:logo": "node scripts/generate-logo-png.js"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.0",
     "animate.css": "^4.1.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
