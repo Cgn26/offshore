@@ -41,16 +41,16 @@ export default function Home({ onOpenLogoModal }) {
               </span>
             </div>
 
-            {/* Main Apple-Style Bold Headline */}
+            {/* Main Bold Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 leading-[1.08]">
-              Mission-Critical <br className="hidden sm:inline" />
-              <span className="text-neutral-950">IT Engineering &amp; </span>
-              <span className="text-emerald-600">Intelligent AI</span>
+              High-Reliability <br className="hidden sm:inline" />
+              <span className="text-neutral-950">Cloud Platforms &amp; </span>
+              <span className="text-emerald-700">Private AI</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-              GreensLeaf designs, deploys, and manages high-performance cloud platforms and sovereign AI chatbots for UK enterprises. Guaranteed SLAs, fixed-scope proposals, zero offshore handoffs.
+              GreensLeaf designs, deploys, and maintains cloud infrastructure and private conversational AI for UK businesses. Direct access to named senior UK engineers, fixed-scope proposals, and strict sovereign data governance.
             </p>
 
             {/* Dual CTAs */}
@@ -95,17 +95,17 @@ export default function Home({ onOpenLogoModal }) {
         </div>
       </section>
 
-      {/* CLIENT TRUST STRIP */}
+      {/* PRACTICE SECTORS STRIP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl border border-neutral-200/90 p-6 sm:p-8 shadow-xs space-y-4">
-          <div className="text-center text-xs font-bold uppercase tracking-wider text-neutral-400">
-            Trusted by UK Enterprise Leaders Across Regulated Sectors
+          <div className="text-center text-xs font-bold uppercase tracking-wider text-neutral-500">
+            Specialist Practice Focus Across UK Regulated Sectors
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-left">
             {CLIENT_LOGOS.map((c, idx) => (
-              <div key={idx} className="p-3 rounded-xl bg-neutral-50/70 border border-neutral-200/60">
+              <div key={idx} className="p-3.5 rounded-xl bg-neutral-50/80 border border-neutral-200/70 hover:border-neutral-300 transition-colors">
                 <div className="font-heading font-bold text-xs text-neutral-900">{c.name}</div>
-                <div className="text-[10px] text-neutral-500 mt-0.5">{c.sector}</div>
+                <div className="text-[11px] text-neutral-500 mt-1 leading-relaxed">{c.sector}</div>
               </div>
             ))}
           </div>
@@ -224,64 +224,57 @@ export default function Home({ onOpenLogoModal }) {
 
       {/* AI SPOTLIGHT BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl bg-neutral-900 p-8 sm:p-12 lg:p-16 border border-neutral-800 text-white overflow-hidden shadow-xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/15 rounded-full blur-[100px] pointer-events-none" />
-
+        <div className="relative rounded-3xl bg-white p-8 sm:p-12 lg:p-14 border border-emerald-200/90 text-neutral-900 overflow-hidden shadow-xs bg-gradient-to-br from-emerald-50/40 via-white to-white">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
-                <Bot className="w-3.5 h-3.5" />
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                <Bot className="w-3.5 h-3.5 text-emerald-700" />
                 <span>Private Enterprise RAG Systems</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                Empower your workforce with <br className="hidden sm:inline" />
-                <span className="text-emerald-400">custom AI agents.</span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-950 tracking-tight leading-tight">
+                Private AI assistants engineered for <br className="hidden sm:inline" />
+                <span className="text-emerald-700">internal UK operations.</span>
               </h2>
-              <p className="text-base text-neutral-300 leading-relaxed max-w-xl">
-                Trained on your private documentation with zero-data leakage. We engineer bespoke AI chatbots capable of answering complex Tier-1 IT requests, client queries, and document synthesis under strict UK GDPR compliance.
+              <p className="text-base text-neutral-600 leading-relaxed max-w-xl">
+                Trained on your private documentation and technical manuals with zero external data sharing. We engineer retrieval-augmented systems for staff policy lookup, automated Tier-1 support triage, and document synthesis under strict UK GDPR compliance.
               </p>
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/services/ai-chatbot"
-                  className="px-6 py-3 rounded-xl bg-emerald-500 text-neutral-950 font-bold text-sm hover:bg-emerald-400 transition-all flex items-center gap-2 shadow-lg"
+                  className="px-6 py-3 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 transition-all flex items-center gap-2 shadow-sm"
                 >
-                  <span>Explore AI Chatbot Solutions</span>
+                  <span>Explore AI Architecture &amp; Demo</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  to="/contact"
-                  className="px-6 py-3 rounded-xl bg-neutral-800 text-neutral-200 hover:text-white border border-neutral-700 font-semibold text-sm transition-all"
+                  to="/contact?service=AI+Chatbot+Development"
+                  className="px-6 py-3 rounded-xl bg-white text-neutral-800 hover:text-neutral-950 border border-neutral-300 font-semibold text-sm transition-all shadow-2xs"
                 >
-                  Request Architecture Review
+                  Request Technical Feasibility Review
                 </Link>
               </div>
             </div>
 
             {/* Visual Simulator Preview */}
             <div className="lg:col-span-5">
-              <div className="rounded-2xl bg-neutral-950 border border-neutral-800 p-5 shadow-2xl space-y-4">
-                <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
+              <div className="rounded-2xl bg-neutral-50 border border-neutral-200/90 p-5 shadow-xs space-y-4">
+                <div className="flex items-center justify-between border-b border-neutral-200 pb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-xs font-bold text-white font-mono">GreensLeaf Assistant v2.5</span>
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-xs font-bold text-neutral-900 font-mono">GreensLeaf Assistant</span>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-mono">London VPC &bull; 38ms</span>
+                  <span className="text-[10px] text-neutral-500 font-mono">London VPC &bull; Sub-100ms</span>
                 </div>
 
-                <div className="space-y-3 text-xs">
-                  <div className="p-3 rounded-xl bg-neutral-900 text-neutral-200 border border-neutral-800">
-                    <strong className="text-neutral-400 block text-[10px] uppercase mb-1">User Query:</strong>
-                    "Can we automate our client KYC verification while keeping all documents inside UK borders?"
+                <div className="space-y-2.5 text-xs">
+                  <div className="p-3 rounded-xl bg-white text-neutral-700 border border-neutral-200/80 shadow-2xs">
+                    <strong className="text-neutral-400 block text-[10px] uppercase mb-1">Staff Query:</strong>
+                    "Can we verify policy section 4.2 eligibility without sending customer PII to external APIs?"
                   </div>
-                  <div className="p-3 rounded-xl bg-emerald-950/40 text-neutral-100 border border-emerald-500/30">
-                    <strong className="text-emerald-400 block text-[10px] uppercase mb-1">GreensLeaf AI Engine:</strong>
-                    "Yes. We configure localized Llama 3 or Claude via private London VPC endpoints. Document analysis occurs with zero external retention, producing verified audit trails aligned with FCA and DPA 2018 guidelines."
+                  <div className="p-3 rounded-xl bg-emerald-50/70 text-neutral-800 border border-emerald-200/80">
+                    <strong className="text-emerald-800 block text-[10px] uppercase mb-1">GreensLeaf Private Engine:</strong>
+                    "Yes. Embeddings and document chunks remain within your UK VPC. Analysis produces verified section citations with zero external retention, aligned with DPA 2018 and FCA requirements."
                   </div>
-                </div>
-
-                <div className="text-[11px] text-neutral-400 flex items-center justify-between pt-1">
-                  <span>99.4% Citation Accuracy</span>
-                  <span className="text-emerald-400 font-semibold">Ready for deployment</span>
                 </div>
               </div>
             </div>
@@ -448,28 +441,28 @@ export default function Home({ onOpenLogoModal }) {
 
       {/* BOTTOM CTA BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-neutral-900 text-white p-8 sm:p-14 text-center border border-neutral-800 space-y-6 relative overflow-hidden shadow-xl">
+        <div className="rounded-3xl bg-neutral-100/80 text-neutral-950 p-8 sm:p-14 text-center border border-neutral-200/90 space-y-6 relative overflow-hidden shadow-xs">
           <div className="relative z-10 max-w-2xl mx-auto space-y-4">
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-              Ready to modernize your <br />
-              <span className="text-emerald-400">enterprise IT infrastructure?</span>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-950 tracking-tight">
+              Ready to review your <br />
+              <span className="text-emerald-700">cloud or AI infrastructure?</span>
             </h2>
-            <p className="text-base text-neutral-300">
-              Speak directly with a senior UK solution architect. No sales fluff — just clear technical roadmaps, fixed-scope proposals, and guaranteed delivery.
+            <p className="text-base text-neutral-600">
+              Speak directly with a senior UK solution architect. No sales intermediaries — just clear technical roadmaps, fixed-scope proposals, and transparent pricing.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link
                 to="/contact"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-neutral-950 font-bold text-sm hover:bg-neutral-100 transition-colors shadow-lg active:scale-95 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-800 transition-colors shadow-sm active:scale-95 flex items-center justify-center gap-2"
               >
                 <span>Request Technical Proposal</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
               <a
                 href={`tel:${COMPANY_INFO.phone}`}
-                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-neutral-800 border border-neutral-700 text-white font-semibold text-sm hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-7 py-4 rounded-xl bg-white border border-neutral-300 text-neutral-900 font-semibold text-sm hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2 shadow-2xs"
               >
-                <Phone className="w-4 h-4 text-emerald-400" />
+                <Phone className="w-4 h-4 text-emerald-700" />
                 <span>Call {COMPANY_INFO.phoneDisplay}</span>
               </a>
             </div>

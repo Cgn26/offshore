@@ -1,0 +1,16 @@
+[
+  {
+    "id": "app_1794494013881_acwa",
+    "fullName": "Sarah Jenkins",
+    "email": "sarah.jenkins@devuk.org",
+    "phone": "07123456789",
+    "role": "Senior Full-Stack Engineer (React & Python/Node)",
+    "experience": "Senior (5+ years)",
+    "portfolio": "https://github.com/sarahjenkins",
+    "availability": "1 Month",
+    "coverNote": "Excited about GreensLeaf enterprise cloud & RAG systems.",
+    "consent": true,
+    "timestamp": "2026-11-12T14:33:33.881Z",
+    "status": "under_review"
+  }
+]
