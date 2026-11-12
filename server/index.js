@@ -13,7 +13,8 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const DATA_DIR = path.join(__dirname, 'data');
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DATA_DIR = IS_VERCEL ? path.join('/tmp', 'greensleaf-data') : path.join(__dirname, 'data');
 const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json');
 const NEWSLETTER_FILE = path.join(DATA_DIR, 'newsletter.json');
 const CAREERS_FILE = path.join(DATA_DIR, 'careers.json');
@@ -151,7 +152,7 @@ app.post('/api/inquiry', async (req, res) => {
                 <strong style="color: #09090b;">Message:</strong>
                 <p style="margin-top: 8px; white-space: pre-wrap; color: #27272a;">${newInquiry.message}</p>
               </div>
-              <p style="margin-top: 25px; font-size: 12px; color: #a1a1aa; text-align: center;">GreensLeaf IT Agency • 02034884882 • connect@greensleaf.uk</p>
+              <p style="margin-top: 25px; font-size: 12px; color: #a1a1aa; text-align: center;">GreensLeaf Limited • Enterprise IT &amp; AI Systems • connect@greensleaf.uk</p>
             </div>
           `,
         });
@@ -174,7 +175,7 @@ app.post('/api/inquiry', async (req, res) => {
   } catch (error) {
     console.error('Error processing inquiry:', error);
     return res.status(500).json({
-      error: 'An unexpected internal error occurred while saving your inquiry. Please try again or call us at 02034884882.',
+      error: 'An unexpected internal error occurred while saving your inquiry. Please try again or email us at connect@greensleaf.uk.',
     });
   }
 });
