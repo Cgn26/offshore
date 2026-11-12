@@ -342,7 +342,7 @@ export default function Careers() {
             <span>GreensLeaf Limited &bull; Employment Application &amp; Resume Dossier</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-neutral-950">
-            Candidate Application &amp; Professional Resume
+            Candidate Application
           </h2>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
             Please complete all sections thoroughly. As an enterprise IT and AI consultancy operating across UK regulated industries, GreensLeaf conducts statutory Home Office Right to Work checks, academic verification, and past 12-month employment reviews.
