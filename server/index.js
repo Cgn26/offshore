@@ -7,10 +7,11 @@ import dotenv from 'dotenv';
 import { Resend } from 'resend';
 import { neon } from '@neondatabase/serverless';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '..', '.env') });
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -52,7 +53,13 @@ const writeJson = (filePath, data) => {
 // ===================================================
 // Neon Postgres Integration (Auto-detects POSTGRES_URL)
 // ===================================================
-const DB_URL = process.env.POSTGRES_URL || process.env.DATABASE_URL || '';
+const DB_URL = process.env.POSTGRES_URL 
+  || process.env.DATABASE_URL 
+  || process.env.Postgres_url 
+  || process.env.postgres_url 
+  || process.env.Database_url 
+  || process.env.database_url 
+  || '';
 let sql = null;
 
 if (DB_URL) {
@@ -121,7 +128,8 @@ const initPostgres = async () => {
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS institution VARCHAR(255);`;
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS graduation_year VARCHAR(32);`;
       await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS uk_experience TEXT;`;
-      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS declarations TEXT;`;\n      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS nationality VARCHAR(128);`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS declarations TEXT;`;
+      await sql`ALTER TABLE careers ADD COLUMN IF NOT EXISTS nationality VARCHAR(128);`;
     } catch (migErr) {
       console.log('ℹ [POSTGRES] Career columns migration note:', migErr.message);
     }
@@ -146,9 +154,18 @@ app.use(express.json());
 // ===================================================
 // Resend Email Client Initialization
 // ===================================================
-const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
-const SENDER_EMAIL = process.env.RESEND_FROM || 'GreensLeaf Leads <notifications@greensleaf.uk>';
-const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || 'connect@greensleaf.uk';
+const RESEND_API_KEY = process.env.RESEND_API_KEY 
+  || process.env.Resend_api_key 
+  || process.env.resend_api_key 
+  || '';
+const SENDER_EMAIL = process.env.RESEND_FROM 
+  || process.env.Resend_from 
+  || process.env.resend_from 
+  || 'GreensLeaf Leads <notifications@greensleaf.uk>';
+const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL 
+  || process.env.Notification_email 
+  || process.env.notification_email 
+  || 'connect@greensleaf.uk';
 let resendClient = null;
 if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
   try {
@@ -162,18 +179,22 @@ if (RESEND_API_KEY && RESEND_API_KEY.startsWith('re_')) {
 }
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'GreensLeaf Core API',
     emailConfigured: Boolean(resendClient),
+    resendKeyFound: Boolean(RESEND_API_KEY),
+    resendKeyPrefix: RESEND_API_KEY ? RESEND_API_KEY.substring(0, 5) + '...' : 'none',
+    senderEmail: SENDER_EMAIL,
+    targetEmail: TARGET_EMAIL,
     storage: sql ? 'Active (Neon Postgres)' : 'Active (File Store /tmp)'
   });
 });
 
 // POST /api/inquiry - Capture form inquiries
-app.post('/api/inquiry', async (req, res) => {
+app.post(['/api/inquiry', '/inquiry'], async (req, res) => {
   try {
     const {
       fullName,
@@ -462,7 +483,7 @@ app.post('/api/inquiry', async (req, res) => {
 });
 
 // GET /api/inquiry - Admin listing of all inquiries
-app.get('/api/inquiry', async (req, res) => {
+app.get(['/api/inquiry', '/inquiry'], async (req, res) => {
   if (sql) {
     try {
       const rows = await sql`SELECT * FROM inquiries ORDER BY timestamp DESC`;
@@ -493,7 +514,7 @@ app.get('/api/inquiry', async (req, res) => {
 });
 
 // POST /api/newsletter - Capture newsletter subscriptions
-app.post('/api/newsletter', async (req, res) => {
+app.post(['/api/newsletter', '/newsletter'], async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -544,7 +565,7 @@ app.post('/api/newsletter', async (req, res) => {
 });
 
 // GET /api/newsletter - Admin listing of subscribers
-app.get('/api/newsletter', async (req, res) => {
+app.get(['/api/newsletter', '/newsletter'], async (req, res) => {
   if (sql) {
     try {
       const rows = await sql`SELECT * FROM newsletter ORDER BY timestamp DESC`;
@@ -561,7 +582,7 @@ app.get('/api/newsletter', async (req, res) => {
 });
 
 // POST /api/career - Submit a candidate application & digital resume
-app.post('/api/career', async (req, res) => {
+app.post(['/api/career', '/career'], async (req, res) => {
   try {
     const {
       fullName,
@@ -920,7 +941,7 @@ app.post('/api/career', async (req, res) => {
 });
 
 // GET /api/career - Admin listing of applications
-app.get('/api/career', async (req, res) => {
+app.get(['/api/career', '/career'], async (req, res) => {
   if (sql) {
     try {
       const rows = await sql`SELECT * FROM careers ORDER BY timestamp DESC`;
