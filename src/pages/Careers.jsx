@@ -370,11 +370,11 @@ export default function Careers() {
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <div className="space-y-1">
-              <h4 className="text-2xl font-heading font-bold text-neutral-950">Application Dossier Registered</h4>
-              <p className="text-xs text-emerald-800 font-mono">Formal UK Employment Submission</p>
+              <h4 className="text-2xl font-heading font-bold text-neutral-950">Application Registered</h4>
+            
             </div>
             <p className="text-sm text-neutral-700 max-w-lg mx-auto leading-relaxed">
-              Thank you for submitting your candidate dossier to GreensLeaf Limited. Your qualifications, Right to Work details, and employment history have been recorded securely. Our senior technical panel will evaluate your credentials and respond within 2 to 3 business days.
+              Thank you for submitting your application to GreensLeaf Limited. Your qualifications, Right to Work details, and employment history have been recorded securely. Our senior technical panel will evaluate your credentials and respond within 2 to 3 business days.
             </p>
             {applicationId && (
               <div className="text-xs font-mono text-emerald-800 bg-white py-2 px-4 rounded-xl border border-emerald-200 inline-block shadow-2xs">
@@ -1032,7 +1032,7 @@ export default function Careers() {
                     className="w-4 h-4 rounded border-neutral-300 bg-white text-emerald-600 focus:ring-emerald-500 mt-0.5"
                   />
                   <label htmlFor="consentGdpr" className="text-xs text-neutral-700 leading-snug cursor-pointer">
-                    <strong className="text-neutral-950">UK GDPR &amp; Data Protection Act 2018 Consent:</strong> I consent to GreensLeaf Limited processing and securely storing my candidate dossier and verification credentials strictly for technical recruitment and statutory compliance purposes. All records are handled under UK sovereign data governance. <span className="text-emerald-600">*</span>
+                    <strong className="text-neutral-950">UK GDPR &amp; Data Protection Act 2018 Consent:</strong> I consent to GreensLeaf Limited processing and securely storing my personal details and verification credentials strictly for technical recruitment and statutory compliance purposes. All records are handled under UK sovereign data governance. <span className="text-emerald-600">*</span>
                   </label>
                 </div>
               </div>
@@ -1048,7 +1048,7 @@ export default function Careers() {
                 {status === 'loading' ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Transmitting Candidate Application &amp; RTW Dossier...</span>
+                    <span>Transmitting Candidate Application &amp; RTW Documents...</span>
                   </>
                 ) : (
                   <>
