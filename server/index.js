@@ -20,18 +20,14 @@ const INQUIRIES_FILE = path.join(DATA_DIR, 'inquiries.json');
 const NEWSLETTER_FILE = path.join(DATA_DIR, 'newsletter.json');
 const CAREERS_FILE = path.join(DATA_DIR, 'careers.json');
 
-// Ensure data folder and storage files exist
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
-if (!fs.existsSync(INQUIRIES_FILE)) {
-  fs.writeFileSync(INQUIRIES_FILE, JSON.stringify([], null, 2));
-}
-if (!fs.existsSync(NEWSLETTER_FILE)) {
-  fs.writeFileSync(NEWSLETTER_FILE, JSON.stringify([], null, 2));
-}
-if (!fs.existsSync(CAREERS_FILE)) {
-  fs.writeFileSync(CAREERS_FILE, JSON.stringify([], null, 2));
+// Ensure data folder and storage files exist (wrapped for serverless safety)
+try {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  if (!fs.existsSync(INQUIRIES_FILE)) fs.writeFileSync(INQUIRIES_FILE, JSON.stringify([], null, 2));
+  if (!fs.existsSync(NEWSLETTER_FILE)) fs.writeFileSync(NEWSLETTER_FILE, JSON.stringify([], null, 2));
+  if (!fs.existsSync(CAREERS_FILE)) fs.writeFileSync(CAREERS_FILE, JSON.stringify([], null, 2));
+} catch (fsErr) {
+  console.warn('[STORAGE] File store init warning (non-fatal):', fsErr.message);
 }
 
 // Helpers for reading/writing persistent store
