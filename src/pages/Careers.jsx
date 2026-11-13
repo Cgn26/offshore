@@ -349,7 +349,7 @@ export default function Careers() {
         </div>
       </div>
 
-      {/* Formal Candidate Application */}
+      {/* Formal Job Application */}
       <div id="application-form" className="rounded-3xl bg-white p-6 sm:p-12 border border-neutral-200/90 shadow-sm space-y-8">
         <div className="space-y-2 border-b border-neutral-200 pb-5">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700">
@@ -357,7 +357,7 @@ export default function Careers() {
             <span>GreensLeaf Limited &bull; Employment Application </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-heading font-extrabold text-neutral-950">
-            Candidate Application
+            Job Application
           </h2>
           <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed max-w-3xl">
             Please complete all sections thoroughly. As an enterprise IT and AI consultancy operating across UK regulated industries, GreensLeaf conducts statutory Home Office Right to Work checks, academic verification, and past 12-month employment reviews.
@@ -1053,7 +1053,7 @@ export default function Careers() {
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                    <span>Submit Formal Candidate Application </span>
+                    <span>Submit Application </span>
                     <Send className="w-4 h-4 ml-1" />
                   </>
                 )}
