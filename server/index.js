@@ -146,7 +146,7 @@ const initPostgres = async () => {
   }
 };
 
-initPostgres();
+initPostgres().catch((err) => console.warn('! [POSTGRES] Init rejection:', err.message));
 
 app.use(cors());
 app.use(express.json());
