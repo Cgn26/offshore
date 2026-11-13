@@ -838,14 +838,14 @@ app.post(['/api/career', '/career'], async (req, res) => {
                       <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#09090b;margin-bottom:16px;">What Happens Next</div>
 
                       <!-- Step 1 -->
-                      <div style="display:flex;margin-bottom:16px;">
+                      <div style="margin-bottom:16px;">
                         <table cellpadding="0" cellspacing="0" width="100%"><tr>
                           <td style="vertical-align:top;width:36px;padding-right:12px;">
                             <div style="width:28px;height:28px;background:#059669;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:700;color:#ffffff;">1</div>
                           </td>
                           <td style="vertical-align:top;">
-                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Technical Panel Review</div>
-                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Your application will be reviewed by our technical panel within <strong>2–3 business days</strong>. We assess each application thoroughly against the role requirements.</div>
+                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Recruitment Panel</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Our recruitment team reviews your profile, verifies your Right to Work status, and checks all submitted documentation.</div>
                           </td>
                         </tr></table>
                       </div>
@@ -857,8 +857,8 @@ app.post(['/api/career', '/career'], async (req, res) => {
                             <div style="width:28px;height:28px;background:#059669;border-radius:50%;text-align:center;line-height:28px;font-size:13px;font-weight:700;color:#ffffff;">2</div>
                           </td>
                           <td style="vertical-align:top;">
-                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Initial Screening Call</div>
-                            <div style="font-size:13px;color:#71717a;line-height:1.6;">If shortlisted, a member of our recruitment team will contact you to schedule a brief screening call to discuss your background and the role in more detail.</div>
+                            <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Technical Panel Review</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Our engineering leadership panel evaluates your qualifications, domain expertise, and technical alignment with the role.</div>
                           </td>
                         </tr></table>
                       </div>
@@ -871,7 +871,7 @@ app.post(['/api/career', '/career'], async (req, res) => {
                           </td>
                           <td style="vertical-align:top;">
                             <div style="font-size:14px;font-weight:600;color:#09090b;margin-bottom:3px;">Technical Assessment</div>
-                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Shortlisted candidates may be invited to complete a technical assessment tailored to the role. Full instructions will be provided at that stage.</div>
+                            <div style="font-size:13px;color:#71717a;line-height:1.6;">Shortlisted candidates are invited to complete a technical assessment tailored to the position. Full instructions are provided at that stage.</div>
                           </td>
                         </tr></table>
                       </div>
