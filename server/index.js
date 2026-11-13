@@ -967,7 +967,7 @@ app.get('/api/career', async (req, res) => {
 
 export { app };
 
-if (process.env.NODE_ENV !== 'test' && !process.env.NO_LISTEN) {
+if (!IS_VERCEL && process.env.NODE_ENV !== 'test' && !process.env.NO_LISTEN) {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`✓ [BACKEND API] Ready on http://localhost:${PORT}`);
   });
